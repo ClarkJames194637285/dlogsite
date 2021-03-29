@@ -46,10 +46,10 @@
 
     <div class="content">
         <h1 class="page-title"><?=$this->lang->line('forgot_password_heading');?></h1>
-        <?php if($this->session->userdata('lang')=='japanese'){?>
-            <p class="nrl login-pg-link"><a href="<?php echo base_url(); ?>" class="login-link">ログイン</a>ページに移動します。</p>
-        <?php }else{?>
+        <?php if($this->session->userdata('lang')=='english'){?>
             <p class="nrl login-pg-link">Please return to the <a href="<?php echo base_url(); ?>" class="login-link">Login</a> page.</p>
+        <?php }else{?>
+            <p class="nrl login-pg-link"><a href="<?php echo base_url(); ?>" class="login-link">ログイン</a>ページに移動します。</p>
         <?php }?>
         
 
