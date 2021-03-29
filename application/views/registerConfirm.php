@@ -56,7 +56,7 @@
             <h1 class="page-title">ユーザー設定</h1>
             <section class="main-content flexlyr">
                 <div class="content-grid">
-                    <a href="home.php" class="confirm-btn">ホームに戻る</a>
+                    <a href="<?php echo base_url();?>" class="confirm-btn">ホームに戻る</a>
                 </div>
             </section>
         </div>
