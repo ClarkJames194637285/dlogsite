@@ -33,7 +33,7 @@ class User extends CI_Controller
 	{
 		$language = ($language != "") ? $language : "japanese";
 		$this->session->set_userdata('lang', $language);
-        redirect('user');
+        redirect(base_url());
 	}
 
 	public function logout() {
