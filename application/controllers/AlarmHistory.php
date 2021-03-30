@@ -29,6 +29,6 @@ class AlarmHistory extends MY_Controller
 		$data['unread']=$this->unread_message;
 		$data['user_name']=$this->session->userdata('user_name');
 		$this->load->view('header',$data);
-		$this->load->view('alarmHistory',$sensorinfo);
+		$this->load->view('alarmHistory');
 	}
 }
