@@ -56,10 +56,10 @@
         <!-- Page Content  -->
         <div class="content">
             <h1 class="page-title"><?=$this->lang->line('register_title');?></h1>
-            <?php if($this->session->userdata('lang')=='japanese'){?>
-                <p class="nrl login-pg-link"><a href="<?php echo base_url(); ?>" class="login-link">ログイン</a>ページに移動します。</p>
-            <?php }else{?>
+            <?php if($this->session->userdata('lang')=='english'){?>
                 <p class="nrl login-pg-link">If you have already registered, go to the <a href="<?php echo base_url(); ?>" class="login-link">Login</a> page.</p>
+            <?php }else{?>
+                <p class="nrl login-pg-link"><a href="<?php echo base_url(); ?>" class="login-link">ログイン</a>ページに移動します。</p>
             <?php }?>
            
             <ul class="list-unstyled lead">
@@ -89,10 +89,10 @@
                         <p class=" confirm-msg"><?=$this->lang->line('authentication');?></p>
                         <p class=" confirm-input"><input type="text" required name="captcha"></p>
                     </div>
-                    <?php if($this->session->userdata('lang')=='japanese'){?>
-                        <p class="nrl">「<a href="" class="policy-link">dlog-cloud 利用規約</a>」と「<a href="" class="policy-link">個人情報保護方針</a>」を読み、「同意してユーザー登録する」を押してください。</p>
-                    <?php }else{?>
+                    <?php if($this->session->userdata('lang')=='english'){?>
                         <p class="nrl">「<a href="" class="policy-link">dlog-cloud Terms of service</a>」and「<a href="" class="policy-link">Privacy policy</a>」read and 「Please agree and register as a user。</p>
+                    <?php }else{?>
+                        <p class="nrl">「<a href="" class="policy-link">dlog-cloud 利用規約</a>」と「<a href="" class="policy-link">個人情報保護方針</a>」を読み、「同意してユーザー登録する」を押してください。</p>
                     <?php }?>
                     
                     <button id="update" class="confirm-btn"><?=$this->lang->line('agree_button');?></button>
