@@ -183,12 +183,12 @@ if (isset($_POST['login'])) {
         <div class="login_window">
             <div class="login-form">
                 <div class="form-language">
-                    <?php if($this->session->userdata('lang')=='japanese'){?>
-                        <a href="<?php echo base_url();?>user/langset/japanese" class="active">日本語</a>
-                        <a href="<?php echo base_url();?>user/langset/english">English</a>
-                    <?php }else{?>
+                    <?php if($this->session->userdata('lang')=='english'){?>
                         <a href="<?php echo base_url();?>user/langset/japanese">日本語</a>
                         <a href="<?php echo base_url();?>user/langset/english" class="active">English</a>
+                    <?php }else{?>
+                        <a href="<?php echo base_url();?>user/langset/japanese" class="active">日本語</a>
+                        <a href="<?php echo base_url();?>user/langset/english">English</a>
                     <?php }?>
                 </div>
                 <div class="form-input">
