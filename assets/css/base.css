@@ -1,0 +1,184 @@
+/* CSS Document */
+
+/************* CSS reset ***********************/
+
+@charset "UTF-8";
+/*------------------------------------------------------------
+Default
+------------------------------------------------------------*/
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, dialog, figure, footer, header, button,
+hgroup, menu, nav, section,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 1em;
+}
+
+html {
+	font-size: 62.5%;
+    font-family: HKGProNW3;
+    text-align: center;
+    scroll-behavior: smooth;
+    color: #262626;
+}
+@media (max-width: 768px) {
+    html {
+        font-size: 1.8vw;
+    }
+}
+
+body, table,
+input, textarea, select, option, button,
+h1, h2, h3, h4, h5, h6 {
+	font-family: HKGProNW3, "NotoSerif", "NotoSerifJP Medium", "NotoSerifJP Regular", "HiraKaKuPro W3", "MNewsMJUpr Light";
+	line-height: 1.1;
+}
+
+@font-face{ 
+	font-family:'HKGProNW3'; 
+	src:url('../font/HiraginoKakuGothicProNW3.woff') format('woff');
+}
+@font-face{ 
+	font-family:'HKGProNW6'; 
+	src:url('../font/HiraginoKakuGothicW6.woff') format('woff');
+}
+
+table, input, textarea, select, option {
+  	line-height: 1.1;
+}
+
+ol, ul {
+  	list-style: none;
+}
+
+blockquote, q {
+  	quotes: none;
+}
+
+:focus {
+  	outline: 0;
+}
+
+ins {
+  	text-decoration: none;
+}
+
+del {
+  	text-decoration: line-through;
+}
+
+img {
+	max-width: 100%;
+	vertical-align: middle;
+}
+/* ////////////// link param change ///////////////// */
+a {
+	display: inline-block;	
+	text-decoration: none;
+    cursor: pointer;
+    color: inherit;
+}
+a:hover {	
+	color: red;
+	transition: 0.5s;
+}
+a img:hover{
+    opacity : 0.8;
+    -ms-filter : "alpha( opacity=80 )";
+        filter : alpha(opacity=80);
+}
+a:link{
+	cursor: pointer;
+	/* color: #00ff4c; */
+	/* text-decoration: underline; */
+}
+a:visited {
+	cursor: pointer;
+	/* color: #00ff4c; */
+}
+a:active {
+	cursor: pointer;
+	/* color: #00ff4c; */
+}
+
+
+/*------------------------------------------------------------
+	clearfix（float解除） // float resolve
+------------------------------------------------------------*/
+.clearfix {
+	clear: both;
+	display: block;
+	width: 0; 
+	height: 0;
+	visibility: hidden;
+}
+
+.clearfix:after {
+    display: block;
+    clear: both;
+    height: 0px;
+    line-height: 0px;
+    visibility: hidden;
+    content: ".";
+}
+/*------------------------------------------------------------
+	flexlyr（flex setting）
+------------------------------------------------------------*/
+
+.flexlyr {
+    /* position: fixed;
+    right:0; */
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.fixed {
+    position: fixed;
+}
+
+
+/* setting color with Filter */
+/* ///////////////////////// */
+.bg-green {
+    /* filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(103deg) saturate(1000%) contrast(0.8); */
+    background: #33B800;
+    border: solid #33B800 2px;
+}
+.bg-red {
+    /* filter: grayscale(100%) brightness(50%) sepia(100%) hue-rotate(315deg) saturate(1000%) contrast(1); */
+    background: #D40000;
+    border: solid #D40000 2px;
+}
+.bg-amber {
+    background: #F28C00;
+    border: solid #F28C00 2px;
+}
+.bg-gray {
+    background: #707070;
+    border: solid #707070 2px;
+}
+
+
+.nrl {
+    font-family: HKGProNW3;
+    font-size: 1.6rem;
+    line-height: 1.5;
+}
+.nrl1 {
+    font-family: HKGProNW3;
+    font-size: 1.4rem;
+    line-height: 1.5;
+}

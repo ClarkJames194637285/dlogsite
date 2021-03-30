@@ -1,0 +1,2404 @@
+/* ////////////// */
+/*   login Page   */
+/* ////////////// */
+.login_bg {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background: url(../img/login_bg.png) top center no-repeat;
+    background-size: cover;
+}
+.login_window {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    background: url(../img/login_win_bg.png) center center no-repeat;
+    background-size: cover;
+}
+.login-form {
+    width: 40rem;
+    height: 43rem;
+    padding: 5rem 0;
+    margin: auto;
+}
+.login-form .form-language {
+    font-size: 1.4rem;
+    text-align: right;
+}
+.login-form .form-language a {
+    margin: 0 1rem;
+    color: #707070;
+}
+.login-form .form-language a.active {
+    color: #2A3A62;
+}
+.login-form .form-input {
+    padding: 0 20%;
+}
+.login-form .form-input select,
+.login-form .form-input input[type="text"] {
+    width: 100%;
+    border: solid #707070 1px;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    margin: 0.5rem 0;
+}
+/* checkbox -style
+----------------------------------- */
+.container,
+.container1 {
+    display: block;
+    position: relative;
+    padding-left: 1rem;
+    padding-right: 0;
+    margin: 0.5rem 0;
+    cursor: pointer;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+    user-select: none;
+}
+.container1 {
+    /* padding: 0; */
+}
+/* checkbox -style */
+.container input[type="checkbox"],
+.container1 input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+/* Create a custom checkbox */
+.container .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    border-radius: 2px;
+    background-color: #eee;
+}
+.container1 .checkmark {
+    position: relative;
+    display: block;
+    /* top: 0; */
+    /* left: 0; */
+    height: 18px;
+    width: 18px;
+    border-radius: 2px;
+    border: solid black 2px;
+    background-color: #fff;
+}
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+.container1:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: #33B800;
+}
+.container1 input:checked ~ .checkmark {
+    background-color: black;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after,
+.container1 input:checked ~ .checkmark:after {
+    display: block;
+}
+/* Style the checkmark/indicator */
+.container .checkmark::after {
+    left: 6px;
+    top: 2px;
+    width: 7px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.container1 .checkmark::after {
+    left: 4px;
+    top: 0px;
+    width: 7px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.form-input .login-btn {
+    width: 100%;
+    background: #33B800;
+    border-radius: 5px;
+    font-family: HKGProNW6;
+    font-size: 1.4rem;
+    line-height: 1.64;
+    color: #fff;
+}
+.forget-pass {
+    display: block;
+    padding: 1rem 0;
+    text-align: right;
+    color: #2A3A62;
+    border-bottom: solid #707070 1px;
+    font-size: 1.2rem;
+}
+.login-form .register-btn {
+    width: 60%;
+    margin: 1rem 00;
+    background: #2A3A62;
+    border-radius: 5px;
+    font-family: HKGProNW6;
+    font-size: 1.4rem;
+    line-height: 1.64;
+    color: #fff;
+}
+
+.login-footer {
+    position: fixed;
+    text-align: center;
+}
+/* /////////// */
+/*   content   */
+/* /////////// */
+.content {
+    position: relative;
+    width: 100%;
+    padding: 1rem;
+    align-items: flex-start;
+    min-height: calc( 100vh - 40px );
+    max-height: calc( 100vh - 40px );
+    overflow: auto;
+}
+.content h1.page-title {
+    width: 100%;
+    font-size: 3rem;
+    line-height: 2;
+    color: #3F3F3F;
+    text-align: left;
+}
+.content .main-content {
+    width: 100%;
+    /* height: calc( 100% - 12rem ); */
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    /* align-items: stretch; */
+}
+.content .main-content .content-grid {
+   
+    position: relative;
+    width: 100%;
+}
+
+
+
+
+
+
+
+/* Top page - home
+----------------------------------------- */
+.home .content .main-content {
+    display: block;
+}
+.home .content .main-content .content-grid {
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    /* align-items: stretch; */
+    padding: 2rem 0;
+}
+.home .content .main-content .content-grid .l-block {
+    width: 100%;
+}
+.content .main-content .content-grid .shortcut-grid {
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.content .main-content .content-grid .shortcut-grid .shortcut-btn {
+    position: relative;
+    display: inline-block;
+    width: 12rem;
+    height: 10rem;
+    font-family: HKGProNW6;
+    font-size: 3.6rem;
+    color: #fff;
+    /* margin: 0 auto 9rem; */
+    margin-right: 1rem;
+    margin-bottom: 9rem;
+}
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.nonV {
+    display: none;
+}
+.content .main-content .content-grid .shortcut-grid .shortcut-btn::after {
+    position: absolute;
+    transform: translate(-50%, 0);
+    word-break: keep-all;
+    font-size: 2rem;
+    color: #262626;
+    bottom: -4rem;
+    left: 50%;
+}
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.monitor {
+    background: url(../img/btn_icon_01.png) center center no-repeat;
+    background-size: 10rem;
+}
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.monitor::after {
+    content: "センサー監視";
+}
+
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.message {
+    padding-top: 5rem;
+    background: url(../img/btn_icon_02.png) center center no-repeat;
+    background-size: 10rem;
+}
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.message::after {
+    content: "メッセージ";
+}
+
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.support,
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.update {
+    padding-top: 5rem;
+    background: url(../img/btn_icon_05.png) center center no-repeat;
+    background-size: 10rem;
+}
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.support::after {
+    content: "サポート情報";
+}
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.update::after {
+    content: "サポート情報";
+}
+
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.group,
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.sensor,
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.setting {
+    background: url(../img/btn_icon_06.png) center center no-repeat;
+    background-size: 10rem;
+}
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.group::after {
+    content: "グループ管理";
+}
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.sensor::after {
+    content: "センサー管理";
+}
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.setting::after {
+    content: "設定";
+}
+
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.logout {
+    background: url(../img/btn_icon_07.png) center center no-repeat;
+    background-size: 10rem;
+}
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.logout::after {
+    content: "ログアウト";
+}
+
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.alert {
+    padding-top: 5rem;
+    background: url(../img/btn_icon_03.png) center center no-repeat;
+    background-size: 10rem;
+}
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.alert::after {
+    content: "発生アラート";
+}
+
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.system {
+    padding-top: 2rem;
+    background: url(../img/btn_icon_04.png) center center no-repeat;
+    background-size: 10rem;
+}
+.content .main-content .content-grid .shortcut-grid .shortcut-btn.system::after {
+    content: "システム通知";
+}
+
+.content .main-content .content-grid .news-grid {
+    min-width: 100%;
+    max-width: 100%;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+.content .main-content .content-grid .news-grid .news-block {
+    width: 100%;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border: solid #707070 1px;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: #3F3F3F;
+}
+.content .main-content .content-grid .news-grid .news1-block {
+    width: 100%;
+    border: solid #707070 1px;
+    font-family: HKGProNW6;
+    font-size: 3rem;
+    color: #262626;
+}
+.content .main-content .content-grid .news-grid .news1-block img {
+    width: 8.5rem;
+}
+/* PieCharts / home
+---------------------------------------- */
+.PieChart-grid {
+    width: 100%;
+    align-items: flex-start;
+    padding: 2rem 0;
+}
+.PieChart-grid .PieCharts {
+    padding: 1rem;
+    text-align: left;
+    font-family: HKGProNW6;
+    font-size: 2rem;
+    line-height: 1.5;
+}
+.PieChart-grid .PieCharts.left-block {
+    width: 100%;
+    border: solid #707070 1px;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.PieChart-grid .PieCharts.right-block {
+    width: 100%;
+    border: solid #707070 1px;
+    justify-content: center;
+}
+.PieChart-grid .PieCharts .charts-label {
+    width: 100%;
+    color: #3F3F3F;
+}
+.PieChart-grid .PieCharts .PieChart-graph {
+    /* google charts */
+    /* width: 100%; */
+    /* height: auto; */
+
+    /* canvasJS Charts */
+    height: 210px; 
+    width: 100%;
+}
+.PieChart-grid .PieCharts.left-block .param-block1 {
+    width: 53%;
+}
+.PieChart-grid .PieCharts.left-block .param-block2 {
+    width: 20%;
+}
+.PieChart-grid .PieCharts.right-block .param-block1 {
+    width: 70%;
+}
+.PieChart-grid .PieCharts.right-block .param-block2 {
+    width: 15%;
+}
+.PieChart-grid .PieCharts .normal-param {
+    color: #33B800;
+}
+.PieChart-grid .PieCharts .warning-first {
+    color: #D40000;
+}
+.PieChart-grid .PieCharts .warning-second {
+    color: #707070;
+}
+.PieChart-grid .PieCharts .nouse-param {
+    color: #3F3F3F;
+}
+
+
+
+
+
+
+
+/*    Page2
+----------------------------------------- */
+.content .main-content .content-grid .block-title {
+    width: 100%;
+    text-align: left;
+    font-family: HKGProNW6;
+    font-size: 2rem;
+    line-height: 2;
+    /* color: #262626; */
+}
+.content .main-content .content-grid .block-grid {
+    width: 100%;
+    padding: 0 0 3rem;
+    justify-content: flex-start;
+}
+.content .main-content .content-grid .block-grid .block-sensor {
+    position: relative;
+    margin: 0 3% 2rem 0;
+    width: 30%;
+    height: 17rem;
+    color: #ffffff;
+}
+.content .main-content .content-grid .block-grid .block-sensor p.sensor-label {
+    font-family: HKGProNW6;
+    font-size: 1.4rem;
+    line-height: 2;
+}
+.content .main-content .content-grid .block-grid .block-sensor p.sensor-status {
+    display: block;
+    /* padding-left: 3rem; */
+    /* padding-right: 1rem; */
+    font-family: HKGProNW6;
+    font-size: 2rem;
+    line-height: 1.5;
+}
+.content .main-content .content-grid .block-grid .block-sensor p.sensor-status span {
+    font-family: HKGProNW6;
+    font-size: 1.4rem;
+}
+.content .main-content .content-grid .block-grid .block-sensor .sensor-grid {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    padding: 0.5rem;
+    height: 3.5rem;
+    background: #ffffff;
+    text-align: left;
+}
+.content .main-content .content-grid .block-grid .block-sensor .sensor-grid .sensor-icon {
+    display: inline-block;
+    width: 2.3rem;
+    height: 2.3rem;
+    margin: 0 0.1rem;
+    cursor: pointer;
+}
+.content .main-content .content-grid .block-grid .block-sensor .sensor-grid .sensor-icon.sensor-01-red {
+    background: url(../img/sensor_01_red.png) center center no-repeat;
+    background-size: 2.5rem;
+}
+.content .main-content .content-grid .block-grid .block-sensor .sensor-grid .sensor-icon.sensor-02-red {
+    background: url(../img/sensor_02_red.png) center center no-repeat;
+    background-size: 2.5rem;
+}
+.content .main-content .content-grid .block-grid .block-sensor .sensor-grid .sensor-icon.sensor-03-red {
+    background: url(../img/sensor_03_red.png) center center no-repeat;
+    background-size: 2.5rem;
+}
+.content .main-content .content-grid .block-grid .block-sensor .sensor-grid .sensor-icon.sensor-04-red {
+    background: url(../img/sensor_04_red.png) center center no-repeat;
+    background-size: 2.5rem;
+}
+.content .main-content .content-grid .block-grid .block-sensor .sensor-grid .sensor-icon.sensor-01-amb {
+    background: url(../img/sensor_01_amb.png) center center no-repeat;
+    background-size: 2.5rem;
+}
+.content .main-content .content-grid .block-grid .block-sensor .sensor-grid .sensor-icon.sensor-02-amb {
+    background: url(../img/sensor_02_amb.png) center center no-repeat;
+    background-size: 2.5rem;
+}
+.content .main-content .content-grid .block-grid .block-sensor .sensor-grid .sensor-icon.sensor-03-amb {
+    background: url(../img/sensor_03_amb.png) center center no-repeat;
+    background-size: 2.5rem;
+}
+.content .main-content .content-grid .block-grid .block-sensor .sensor-grid .sensor-icon.sensor-04-amb {
+    background: url(../img/sensor_04_amb.png) center center no-repeat;
+    background-size: 2.5rem;
+}
+.content .main-content .content-grid .block-grid .block-sensor .sensor-grid .sensor-infor {
+    position: absolute;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    right: 0.5rem;
+    top: 50%;
+    background: url(../img/sensor_infor.png) center center no-repeat;
+    background-size: 2.5rem;
+    z-index: 10;
+    cursor: pointer;
+}
+.sensor-01-0 {
+    background: url(../img/sensor_01_0.png) 17% center no-repeat;
+    background-size: 2.5rem;
+}
+.sensor-02-0 {
+    background: url(../img/sensor_02_0.png) 17% center no-repeat;
+    background-size: 2.5rem;
+}
+.sensor-03-0 {
+    background: url(../img/sensor_03_0.png) 17% center no-repeat;
+    background-size: 2.5rem;
+}
+.sensor-04-0 {
+    background: url(../img/sensor_04_0.png) 17% center no-repeat;
+    
+    background-size: 2.5rem;
+}
+
+.content .main-content .content-grid .block-grid .block-sensor-new {
+    border: solid #A6A6A6 2px;
+}
+.content .main-content .content-grid .block-grid .block-sensor-new .sensor-add {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+}
+
+/* /////////////////// */
+/* ///// side bar //// */
+/* /////////////////// */
+.content .main-content .side-bar {
+    /* min-width: 239px; */
+    /* max-width: 239px; */
+    min-width: 80%;
+    max-width: 80%;
+    margin: 5rem auto;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+/* view type btn
+------------------------------------------------ */
+.content .main-content .side-bar .view-type-btn-grid {
+    width: 100%;
+    padding: 1rem 0;
+    display: flex;
+    background: #3F3F3F;
+}
+.content .main-content .side-bar .view-type-btn-grid li {
+    list-style: none;
+    width: 50%;
+    text-align: center;
+}
+.content .main-content .side-bar .view-type-btn-grid li:nth-of-type(1) {
+    border-right: solid #707070 1px;
+}
+.content .main-content .side-bar .view-type-btn-grid li a.type1 {
+    width: 3.2rem;
+    height: 2.1rem;
+    background: url(../img/asset_13_0.png) center center no-repeat;
+}
+.content .main-content .side-bar .view-type-btn-grid li a.type1.active {
+    background: url(../img/asset_13_1.png) center center no-repeat;
+}
+.content .main-content .side-bar .view-type-btn-grid li a.type2 {
+    width: 3.2rem;
+    height: 2.1rem;
+    background: url(../img/asset_14_0.png) center center no-repeat;
+}
+.content .main-content .side-bar .view-type-btn-grid li a.type2.active {
+    background: url(../img/asset_14_1.png) center center no-repeat;
+}
+
+/* search filter block
+---------------------------------------------------- */
+.content .main-content .side-bar .side-bar-block {
+    width: 100%;
+    padding: 1rem;
+    border: solid #A6A6A6 2px;
+    justify-content: flex-start;
+    margin: 1rem 0 0;
+}
+.content .main-content .side-bar .side-bar-block .side-block-header {
+    width: 100%;
+    padding-left: 3rem;
+    font-family: HKGProNW3;
+    font-size: 1.6rem;
+    /* line-height: 2.5; */
+    text-align: left;
+}
+.content .main-content .side-bar .side-bar-block.srh-filter-block {
+    margin: 1rem 0;
+}
+.content .main-content .side-bar .side-bar-block .side-block-header.srh-filter {
+    background: url(../img/asset_15.png) left center no-repeat;
+}
+.content .main-content .side-bar .side-bar-block .side-block-header.column-trans {
+    background: url(../img/asset_18.png) left center no-repeat;
+}
+.content .main-content .side-bar .side-bar-block .side-block-header.map-list {
+    background: url(../img/asset_30.png) left center no-repeat;
+}
+.content .main-content .side-bar .side-bar-block .side-block-header.sensor-list {
+    background: url(../img/asset_33.png) left center no-repeat;
+}
+.content .main-content .side-bar .side-bar-block .srh-block,
+.content .main-content .side-bar .side-bar-block .trans-block,
+.content .main-content .side-bar .side-bar-block .map-block,
+.content .main-content .side-bar .side-bar-block .sensor-block {
+    padding: 1rem 0;
+    width: 100%;
+    font-size: 1.4rem;
+    text-align: left;
+}
+.content .main-content .side-bar .side-bar-block .srh-block select {
+    width: 100%;
+    border: none;
+    border-bottom: solid #707070 1px;
+}
+.content .main-content .side-bar .side-bar-block .srh-block ul {
+    width: 100%;
+    padding: 1rem 0;
+}
+.content .main-content .side-bar .side-bar-block .srh-block ul li {
+    padding-left: 5rem;
+    line-height: 2.5;
+    background: url(../img/asset_17_0.png) left center no-repeat;
+}
+.content .main-content .side-bar .side-bar-block .srh-block ul li.view-on {
+    background: url(../img/asset_17_1.png) left center no-repeat;
+}
+.content .main-content .side-bar .side-bar-block .srh-block ul li.view-off {
+    /* background: url(../img/asset_17_0.png) left center no-repeat; */
+}
+.content .main-content .side-bar .side-bar-block .srh-block .set-view {
+    width: 100%;
+    padding: 0.5rem 0;
+    text-align: right;
+    font-size: 1.2rem;
+}
+.content .main-content .side-bar .side-bar-block .srh-block ul.filter-type {
+    max-height: 30rem;
+    min-height: auto;
+    scroll-behavior: smooth;
+    overflow: auto;
+}
+
+/* trans view type 
+------------------------------------------------------------ */
+.content .main-content .side-bar .side-bar-block .trans-block .trans-btn {
+    width: 100%;
+    margin: 0.5rem 0;
+    border: solid #707070 1px;
+    border-radius: 10rem;
+    font-size: 1.8rem;
+    line-height: 1.5;
+    text-align: center;
+}
+.content .main-content .side-bar .side-bar-block .trans-block .trans-btn.select-on {
+    background: #33B800;
+    border: none;
+    color: #ffffff;
+}
+.content .main-content .side-bar .side-bar-block .trans-block .btn-view-01 {
+    background: url(../img/asset_19_off.png) 10% center no-repeat;
+}
+.content .main-content .side-bar .side-bar-block .trans-block .btn-view-01.select-on {
+    background: url(../img/asset_19_on.png) 10% center no-repeat, #33B800;
+    border: none;
+    color: #ffffff;
+}
+.content .main-content .side-bar .side-bar-block .trans-block .btn-view-02 {
+    background: url(../img/asset_20_off.png) 10% center no-repeat;
+}
+.content .main-content .side-bar .side-bar-block .trans-block .btn-view-02.select-on {
+    background: url(../img/asset_20_on.png) 10% center no-repeat, #33B800;
+    border: none;
+    color: #ffffff;
+}
+/* map view 
+------------------------------------------------------------ */
+.content .main-content .side-bar .side-bar-block .map-block .map-btn {
+    width: 100%;
+    margin: 0.5rem 0;
+    border: solid #707070 1px;
+    border-radius: 10rem;
+    font-size: 1.8rem;
+    line-height: 1.5;
+    text-align: center;
+}
+.content .main-content .side-bar .side-bar-block .map-block .select-on {
+    background: #33B800;
+    border: none;
+    color: #ffffff;
+}
+.content .main-content .side-bar .side-bar-block .set-view {
+    width: 100%;
+    padding: 0.5rem 0;
+    text-align: right;
+    font-size: 1.2rem;
+}
+/* sensor block
+---------------------------------------------------------------- */
+.content .main-content .side-bar .side-bar-block .sensor-block select {
+    width: 100%;
+    border: none;
+    border-bottom: solid #707070 1px;
+}
+.content .main-content .side-bar .side-bar-block .sensor-block ul {
+    width: 100%;
+    padding: 1rem 0;
+}
+.content .main-content .side-bar .side-bar-block .sensor-block ul li {
+    padding-left: 5rem;
+    line-height: 2.5;
+    background: url(../img/asset_34.png) left center no-repeat;
+}
+.content .main-content .side-bar .side-bar-block .sensor-block ul li.view-on {
+    background: url(../img/asset_17_1.png) left center no-repeat;
+}
+.content .main-content .side-bar .side-bar-block .sensor-block ul li.view-off {
+    /* background: url(../img/asset_34.png) left center no-repeat; */
+}
+.content .main-content .side-bar .side-bar-block .sensor-block .set-view {
+    width: 100%;
+    padding: 0.5rem 0;
+    text-align: right;
+    font-size: 1.2rem;
+}
+.content .main-content .side-bar .side-bar-block .sensor-block ul.sensor-item {
+    max-height: 30rem;
+    min-height: auto;
+    scroll-behavior: smooth;
+    overflow: auto;
+}
+
+
+
+
+
+
+
+
+/*    Page3 - mapping page
+----------------------------------------- */
+.mapping .content-grid {
+    text-align: left;
+}
+.mapping .infor-block {
+    position: relative;
+    display: inline-block;
+    z-index: 10000;
+}
+.mapping .block-title {
+    position: relative;
+}
+.mapping .color-bar {
+    padding: 2rem 0;
+}
+.mapping .color-bar p {
+    display: inline-block;
+}
+.mapping .color-bar p.param {
+    padding: 0 1rem;
+    font-family: HKGProNW3;
+    font-size: 1.2rem;
+    line-height: 2.6rem;
+}
+.mapping .color-bar p.empty {
+    padding: 0 1rem;
+}
+.mapping .color-bar p.temperature,
+.mapping .color-bar p.humidity {
+    width: 2.6rem;
+    height: 2.6rem;
+}
+.mapping .color-bar p.temperature.lvl1 {
+    background: #00B700;
+}
+.mapping .color-bar p.temperature.lvl2 {
+    background: #C4DB00;
+}
+.mapping .color-bar p.temperature.lvl3 {
+    background: #D57F00;
+}
+.mapping .color-bar p.temperature.lvl4 {
+    background: #E85700;
+}
+.mapping .color-bar p.temperature.lvl5 {
+    background: #FF0000;
+}
+.mapping .color-bar p.humidity.lvl1 {
+    background: #FFB700;
+}
+.mapping .color-bar p.humidity.lvl2 {
+    background: #DCB77C;
+}
+.mapping .color-bar p.humidity.lvl3 {
+    background: #B4B7CF;
+}
+.mapping .color-bar p.humidity.lvl4 {
+    background: #0048FF;
+}
+.mapping .color-bar p.humidity.lvl5 {
+    background: #0000FF;
+}
+.mapping .manual {
+    padding: 3rem 1rem;
+    font-size: 1.4rem;
+    line-height: 1.5;
+}
+/* ///////// map box ////////////// */
+.mapping .map-box {
+    /* position: absolute; */
+    /* width: 95%; */
+    /* padding: 5rem; */
+    position: relative;
+    width: 100%;
+    padding: 0;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 5000;
+    overflow: hidden;
+    /* border: solid red 1px; */
+}
+.mapping .map-box .zoom-btn {
+    position: absolute;
+    display: inline-block;
+    width: 1.6rem;
+    height: 1.6rem;
+    font-family: HKGProNW3;
+    font-size: 1.6rem;
+    cursor: pointer;
+    z-index: 10001;
+}
+.mapping .map-box .zoom-btn.plus {
+    right: 4rem;
+    top: 4rem;
+}
+.mapping .map-box .zoom-btn.minus {
+    right: 4rem;
+    top: 8rem;
+}
+.mapping .map-box .map-layer {
+    z-index: 100;
+    /* transform: translate(-50%, -50%); */
+    top: 50%;
+    left: 50%;
+}
+.mapping .map-box .map-layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    font-family: 'object-fit: cover;';
+}
+/* 
+    zoom0   -   0   fit-content
+    zoom1   -   120%
+    zoom2   -   140%
+    zoom3   -   160%
+    zoom4   -   180%
+    zoom5   -   200%
+*/
+.mapping .map-box .map-layer.zoom0 {
+    width: 50rem;
+    height: auto;
+}
+.mapping .map-box .map-layer.zoom1 {
+    width: calc( 50rem * 1.2 );
+    height: auto;
+}
+.mapping .map-box .map-layer.zoom2 {
+    width: calc( 50rem * 1.4 );
+    height: auto;
+}
+.mapping .map-box .map-layer.zoom3 {
+    width: calc( 50rem * 1.6 );
+    height: auto;
+    font-size: 0.8rem;
+}
+.mapping .map-box .map-layer.zoom4 {
+    width: calc( 50rem * 1.9 );
+    height: auto;
+    font-size: 0.9rem;
+}
+.mapping .map-box .map-layer.zoom5 {
+    width: calc( 50rem * 2 );
+    height: auto;
+    font-size: 1rem;
+}
+.mapping .map-box .map-layer .senseor-icon {
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    cursor: pointer;
+}
+/* 
+    sensor icon size setting
+*/
+.mapping .map-box .map-layer.zoom0 .senseor-icon {
+    width: 5.5rem;
+    height: 5.5rem;
+}
+.mapping .map-box .map-layer.zoom1 .senseor-icon {
+    width: 6.5rem;
+    height: 6.5rem;
+}
+.mapping .map-box .map-layer.zoom2 .senseor-icon {
+    width: 7.5rem;
+    height: 7.5rem;
+}
+.mapping .map-box .map-layer.zoom3 .senseor-icon {
+    width: 8.5rem;
+    height: 8.5rem;
+}
+.mapping .map-box .map-layer.zoom4 .senseor-icon {
+    width: 9.5rem;
+    height: 9.5rem;
+}
+.mapping .map-box .map-layer.zoom5 .senseor-icon {
+    width: 11rem;
+    height: 11rem;
+}
+/* 
+    sensor - type
+ ** icon 01 -   温/湿/暑さレベル
+    icon 02 -   温/湿
+    icon 03 -   温度のみのセンサーの場合
+    icon 04 -   飽差値
+    icon 05 -   温/湿/暑さレベル
+    icon 06 -   温/湿/暑さレベル
+*/
+.mapping .map-box .map-layer .senseor-icon.icon-01 .top-circle {
+    border: none;
+    height: 50%;
+    width: 100%;
+    border-radius: 10rem 10rem 0 0;
+    font-family: HKGProNW6;
+    font-size: 2em;
+    color: #ffffff;
+    text-align: center;
+    padding-top: 5%;
+}
+.mapping .map-box .map-layer .senseor-icon.icon-01 .bottom-circle {
+    border: none;
+    height: 50%;
+    width: 100%;
+    border-radius: 0 0 10rem 10rem;
+    font-family: HKGProNW6;
+    font-size: 2em;
+    color: #ffffff;
+    text-align: center;
+    padding-top: 25%;
+}
+.mapping .map-box .map-layer .senseor-icon.icon-01 .top-circle span,
+.mapping .map-box .map-layer .senseor-icon.icon-01 .bottom-circle span {
+    font-size: 0.8em;
+}
+.mapping .map-box .map-layer.zoom0 .senseor-icon.icon-01 .top-circle p,
+.mapping .map-box .map-layer.zoom0 .senseor-icon.icon-01 .bottom-circle p,
+.mapping .map-box .map-layer.zoom1 .senseor-icon.icon-01 .top-circle p,
+.mapping .map-box .map-layer.zoom1 .senseor-icon.icon-01 .bottom-circle p,
+.mapping .map-box .map-layer.zoom2 .senseor-icon.icon-01 .top-circle p,
+.mapping .map-box .map-layer.zoom2 .senseor-icon.icon-01 .bottom-circle p{
+    display: none;
+}
+.mapping .map-box .map-layer .senseor-icon.icon-01 .heat_level {
+    position: absolute;
+    display: inline-block;
+    width: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    border-radius: 12rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.mapping .map-box .map-layer .senseor-icon.icon-01 .heat_level img {
+    width: 80%;
+    height: auto;
+}
+/* 
+    sensor - type
+    icon 01 -   温/湿/暑さレベル
+ ** icon 02 -   温/湿
+    icon 03 -   温度のみのセンサーの場合
+    icon 04 -   飽差値
+    icon 05 -   温/湿/暑さレベル
+    icon 06 -   温/湿/暑さレベル
+*/
+.mapping .map-box .map-layer .senseor-icon.icon-02 .top-circle {
+    border: none;
+    height: 50%;
+    width: 100%;
+    border-radius: 10rem 10rem 0 0;
+    font-family: HKGProNW6;
+    font-size: 2em;
+    color: #ffffff;
+    text-align: center;
+    padding-top: 20%;
+}
+.mapping .map-box .map-layer .senseor-icon.icon-02 .bottom-circle {
+    border: none;
+    height: 50%;
+    width: 100%;
+    border-radius: 0 0 10rem 10rem;
+    font-family: HKGProNW6;
+    font-size: 2em;
+    color: #ffffff;
+    text-align: center;
+    padding-top: 10%;
+}
+.mapping .map-box .map-layer .senseor-icon.icon-02 .top-circle span,
+.mapping .map-box .map-layer .senseor-icon.icon-02 .bottom-circle span {
+    font-size: 0.8em;
+}
+.mapping .map-box .map-layer.zoom0 .senseor-icon.icon-02 .top-circle p,
+.mapping .map-box .map-layer.zoom0 .senseor-icon.icon-02 .bottom-circle p,
+.mapping .map-box .map-layer.zoom1 .senseor-icon.icon-02 .top-circle p,
+.mapping .map-box .map-layer.zoom1 .senseor-icon.icon-02 .bottom-circle p,
+.mapping .map-box .map-layer.zoom2 .senseor-icon.icon-02 .top-circle p,
+.mapping .map-box .map-layer.zoom2 .senseor-icon.icon-02 .bottom-circle p{
+    display: none;
+}
+/* 
+    sensor - type
+    icon 01 -   温/湿/暑さレベル
+    icon 02 -   温/湿
+ ** icon 03 -   温度のみのセンサーの場合
+    icon 04 -   飽差値
+    icon 05 -   温/湿/暑さレベル
+    icon 06 -   温/湿/暑さレベル
+*/
+.mapping .map-box .map-layer .senseor-icon.icon-03 .all-circle {
+    border: none;
+    padding: 50% 0 0;
+    height: 100%;
+    width: 100%;
+    -webkit-clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+       -moz-clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        -ms-clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+         -o-clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    font-family: HKGProNW6;
+    font-size: 2em;
+    color: #ffffff;
+    text-align: center;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.mapping .map-box .map-layer .senseor-icon.icon-03 .all-circle span {
+    font-size: 0.8em;
+}
+.mapping .map-box .map-layer.zoom0 .senseor-icon.icon-03 .all-circle p,
+.mapping .map-box .map-layer.zoom1 .senseor-icon.icon-03 .all-circle p,
+.mapping .map-box .map-layer.zoom2 .senseor-icon.icon-03 .all-circle p {
+    display: none;
+}
+/* 
+    sensor - type
+    icon 01 -   温/湿/暑さレベル
+    icon 02 -   温/湿
+    icon 03 -   温度のみのセンサーの場合
+ ** icon 04 -   飽差値  saturation value
+    icon 05 -   温/湿/暑さレベル
+    icon 06 -   温/湿/暑さレベル
+*/
+.mapping .map-box .map-layer .senseor-icon.icon-04 .all-circle {
+    border: none;
+    padding: 30% 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    font-family: HKGProNW6;
+    font-size: 2em;
+    color: #ffffff;
+    text-align: center;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.mapping .map-box .map-layer .senseor-icon.icon-04 .all-circle span {
+    width: 100%;
+    font-size: 0.8em;
+}
+.mapping .map-box .map-layer.zoom0 .senseor-icon.icon-04 .all-circle p,
+.mapping .map-box .map-layer.zoom1 .senseor-icon.icon-04 .all-circle p,
+.mapping .map-box .map-layer.zoom2 .senseor-icon.icon-04 .all-circle p {
+    display: none;
+}
+/* 
+    sensor - type
+    icon 01 -   温/湿/暑さレベル
+    icon 02 -   温/湿
+    icon 03 -   温度のみのセンサーの場合
+    icon 04 -   飽差値  saturation value
+ ** icon 05 -   温/湿/暑さレベル
+    icon 06 -   温/湿/暑さレベル
+*/
+.mapping .map-box .map-layer .senseor-icon.icon-05 .all-circle {
+    border: none;
+    padding: 30% 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    font-family: HKGProNW6;
+    font-size: 2em;
+    color: #ffffff;
+    text-align: center;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.mapping .map-box .map-layer .senseor-icon.icon-05 .all-circle span {
+    width: 100%;
+    font-size: 0.8em;
+}
+.mapping .map-box .map-layer.zoom0 .senseor-icon.icon-05 .all-circle p,
+.mapping .map-box .map-layer.zoom1 .senseor-icon.icon-05 .all-circle p,
+.mapping .map-box .map-layer.zoom2 .senseor-icon.icon-05 .all-circle p {
+    display: none;
+}
+/* 
+    sensor - type
+    icon 01 -   温/湿/暑さレベル
+    icon 02 -   温/湿
+    icon 03 -   温度のみのセンサーの場合
+    icon 04 -   飽差値  saturation value
+    icon 05 -   温/湿/暑さレベル
+ ** icon 06 -   温/湿/暑さレベル
+*/
+.mapping .map-box .map-layer .senseor-icon.icon-06 .all-circle {
+    border: none;
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.mapping .map-box .map-layer .senseor-icon.icon-06 .all-circle img {
+    width: 40%;
+    height: auto;
+}
+
+
+
+/* ///////////////////////////////////////////// */
+/* icons positions
+    example 2
+*/
+#sensor-01 {
+    z-index: 1000;
+    top: 30%;
+    left: 30%;
+}
+#sensor-02 {
+    z-index: 1001;
+    top: 30%;
+    left: 70%;
+}
+#sensor-03 {
+    z-index: 1000;
+    top: 50%;
+    left: 40%;
+}
+#sensor-04 {
+    z-index: 1001;
+    top: 50%;
+    left: 70%;
+}
+#sensor-05 {
+    z-index: 1000;
+    top: 70%;
+    left: 40%;
+}
+#sensor-06 {
+    z-index: 1001;
+    top: 70%;
+    left: 70%;
+}
+/* ///////////////////////////////////////////// */
+
+/* 
+    heat level color
+    color 1 - 3
+ */
+.mapping .map-box .map-layer .senseor-icon .lvl1 {
+    background: #33B800;
+}
+.mapping .map-box .map-layer .senseor-icon .lvl2 {
+    background: #F28C00;
+}
+.mapping .map-box .map-layer .senseor-icon .lvl3 {
+    background: #D40000;
+}
+/* 
+    temperature color
+    color 1 - 5
+*/
+.mapping .map-box .map-layer .senseor-icon .t-color1 {
+    background: #00B700;
+}
+.mapping .map-box .map-layer .senseor-icon .t-color2 {
+    background: #C4DB00;
+}
+.mapping .map-box .map-layer .senseor-icon .t-color3 {
+    background: #D57F00;
+}
+.mapping .map-box .map-layer .senseor-icon .t-color4 {
+    background: #E85700;
+}
+.mapping .map-box .map-layer .senseor-icon .t-color5 {
+    background: #FF0000;
+}
+/* 
+    humidity color
+    color 1 - 5
+*/
+.mapping .map-box .map-layer .senseor-icon .h-color1 {
+    background: #FFB700;
+}
+.mapping .map-box .map-layer .senseor-icon .h-color2 {
+    background: #DCB77C;
+}
+.mapping .map-box .map-layer .senseor-icon .h-color3 {
+    background: #B4B7CF;
+}
+.mapping .map-box .map-layer .senseor-icon .h-color4 {
+    background: #0048FF;
+}
+.mapping .map-box .map-layer .senseor-icon .h-color5 {
+    background: #0000FF;
+}
+/* 
+    saturation value color
+    color 1 - 3
+*/
+.mapping .map-box .map-layer .senseor-icon .s-color1 {
+    background: #F28C00;
+}
+.mapping .map-box .map-layer .senseor-icon .s-color2 {
+    background: #A6A6A6;
+}
+.mapping .map-box .map-layer .senseor-icon .s-color3 {
+    background: #2A3A62;
+}
+
+/* alert window - toast
+------------------------------------------ */
+
+.toast {
+    position: absolute;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    font-family: HKGProNW3;
+    font-size: 1.875rem;
+    color: #fff;
+    background-color: #000000ab;
+    border-radius: 1rem;
+}
+.toast .toast-header {
+    padding: 1rem;
+    color: #ffffff;
+    border-radius: 1rem 1rem 0 0;
+    background-color: #000000d9;
+}
+.toast .toast-body {
+    padding: 1rem;
+}
+
+/* ///////// map time slider ////////////// */
+.mapping .map-datetime {
+    /* position: absolute; */
+    /* width: 95%; */
+    position: relative;
+    width: 90%;
+    margin: 3rem auto 0;
+    padding: 3rem 0 5rem;
+    /* bottom: 0; */
+    /* left: 0; */
+    /* height: 10%; */
+    z-index: 9001;
+    border: solid #707070 1px;
+    justify-content: center;
+}
+.mapping .map-datetime .date-block {
+    width: 30%;
+    font-size: 1.6rem;
+    line-height: 1.5;
+}
+.mapping .map-datetime .date-block a {
+    margin-right: 1rem;
+}
+.mapping .map-datetime .date-block a.select {
+    color: #D40000;
+}
+.mapping .map-datetime .seek-block {
+    width: 60%;
+}
+.mapping .map-datetime .seek-block .time-line {
+    font-size: 1.4rem;
+    padding-bottom: 2rem;
+}
+.seek-bar {
+    position: relative;
+}
+
+
+
+
+input.time-ctrl {
+    position: absolute;
+    top: -10px;
+}
+progress.time-bar, input.time-ctrl {
+    width: 100%;
+}
+progress[value] {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    border: none;
+    height: 1px;
+    /* For IE10 */
+    /* color: blue; */
+}
+
+progress[value]::-webkit-progress-value {
+    background-color: blue;
+}
+progress[value]::-moz-progress-bar {
+    background-color: blue;
+}
+input[type="range"] {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -moz-apperance: none !important;
+    /* height: 4px; */
+    background: none;
+    outline: none !important;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+input[type="range"]:focus {
+    outline: none;
+    border: none;
+}
+
+input[type="range"]::-moz-range-track {
+    border: none;
+    background: transparent;
+    outline: none;
+}
+
+input[type="range"]::-ms-track {
+    border: inherit;
+    color: transparent; /* don't drawn vertical reference line */
+    background: transparent;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: #262626;
+    height: 35px;
+    width: 7px;
+    /* border-radius: 50%; */
+}
+
+input[type="range"]::-moz-range-thumb {
+    -moz-appearance: none;
+    background: #262626;
+    height: 35px;
+    width: 7px;
+    /* border-radius: 50%; */
+    border: none;
+}
+
+input[type="range"]::-ms-thumb {
+    height: 35px;
+    width: 7px;
+    /* border-radius: 50%; */
+    border: 0;
+    background: #262626;
+}
+
+input[type="range"]::-ms-fill-lower,
+input[type="range"]::-ms-fill-upper {
+  background: transparent;
+}
+
+input[type="range"]::-ms-tooltip {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*    Page4 - alarm history page
+----------------------------------------- */
+.alarm-history .content-grid {
+    /* padding: 0 5rem 0 0; */
+}
+.alarm-header {
+    display: none;
+    width: 100%;
+    padding: 1rem 0;
+    justify-content: center;
+}
+.alarm-header p {
+    font-family: HKGProNW6;
+    font-size: 1.4rem;
+    text-align: center;
+}
+.alarm-header p:nth-of-type(1) {
+    width: 20%;
+}
+.alarm-header p:nth-of-type(2) {
+    width: 40%;
+}
+.alarm-header p:nth-of-type(3) {
+    width: 15%;
+}
+.alarm-header p:nth-of-type(4) {
+    width: 15%;
+}
+
+/* alarm block
+--------------------- */
+.alarm-block {
+    width: 100%;
+    border: solid #A6A6A6 2px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+}
+.alarm-block .label {
+    /* width: 25%; */
+    width: 100%;
+    font-family: HKGProNW3;
+    font-size: 1.4rem;
+    line-height: 1.5;
+}
+.alarm-block .label label,
+.alarm-block .label p {
+    display: inline-block;
+    padding-left: 1rem;
+}
+
+.alarm-block .sensor-cell {
+    /* width: 40%; */
+    width: 100%;
+    padding: 1.5rem 0;
+    text-align: left;
+    justify-content: center;
+}
+.alarm-block .sensor-cell .sensor-item {
+    width: 40%;
+    /* width: 50%; */
+    font-family: HKGProNW6;
+    font-size: 2rem;
+    padding: 0.5rem 0 0.5rem 3rem;
+}
+.alarm-block .sensor-cell .sensor-item span {
+    font-size: 1.4rem;
+}
+/* sensor color
+    temperature - red, green, amb
+*/
+.alarm-block .sensor-cell .sensor-item.temperature-red {
+    background: url(../img/sensor_01_red.png) left center no-repeat;
+    background-size: 2.6rem;
+    color: #D40000;
+}
+.alarm-block .sensor-cell .sensor-item.temperature-green {
+    background: url(../img/sensor_01_green.png) left center no-repeat;
+    background-size: 2.6rem;
+    color: #33B800;
+}
+.alarm-block .sensor-cell .sensor-item.temperature-amb {
+    background: url(../img/sensor_01_amb.png) left center no-repeat;
+    background-size: 2.6rem;
+    color: #F28C00;
+}
+/* sensor color
+    heat - red, green, amb
+*/
+.alarm-block .sensor-cell .sensor-item.heat-red {
+    background: url(../img/sensor_03_red.png) left center no-repeat;
+    background-size: 2.6rem;
+    color: #D40000;
+}
+.alarm-block .sensor-cell .sensor-item.heat-green {
+    background: url(../img/sensor_03_green.png) left center no-repeat;
+    background-size: 2.6rem;
+    color: #33B800;
+}
+.alarm-block .sensor-cell .sensor-item.heat-amb {
+    background: url(../img/sensor_03_amb.png) left center no-repeat;
+    background-size: 2.6rem;
+    color: #F28C00;
+}
+/* sensor color
+    humidity - red, green, amb
+*/
+.alarm-block .sensor-cell .sensor-item.humidity-red {
+    background: url(../img/sensor_02_red.png) left center no-repeat;
+    background-size: 2.6rem;
+    color: #D40000;
+}
+.alarm-block .sensor-cell .sensor-item.humidity-green {
+    background: url(../img/sensor_02_green.png) left center no-repeat;
+    background-size: 2.6rem;
+    color: #33B800;
+}
+.alarm-block .sensor-cell .sensor-item.humidity-amb {
+    background: url(../img/sensor_02_amb.png) left center no-repeat;
+    background-size: 2.6rem;
+    color: #F28C00;
+}
+/* sensor color
+    saturation - red, green, amb
+*/
+.alarm-block .sensor-cell .sensor-item.saturation-red {
+    background: url(../img/sensor_04_red.png) left center no-repeat;
+    background-size: 2.6rem;
+    color: #D40000;
+}
+.alarm-block .sensor-cell .sensor-item.saturation-green {
+    background: url(../img/sensor_04_green.png) left center no-repeat;
+    background-size: 2.6rem;
+    color: #33B800;
+}
+.alarm-block .sensor-cell .sensor-item.saturation-amb {
+    background: url(../img/sensor_04_amb.png) left center no-repeat;
+    background-size: 2.6rem;
+    color: #F28C00;
+}
+
+
+
+
+.alarm-block .battery-cell {
+    width: 50%;
+}
+.alarm-block .battery-cell .battery-box {
+    position: relative;
+    width: 80%;
+    height: 2rem;
+}
+.alarm-block .battery-cell .battery-box.battery-full {
+    background: url(../img/asset_22_0.png) left center no-repeat;
+    background-size: 3.6rem;
+}
+.alarm-block .battery-cell .battery-box.battery-full::after {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    content: '';
+    width: 2rem;
+    height: 2rem;
+    background: url(../img/asset_23.png) right center no-repeat;
+    background-size: 1.5rem;
+}
+.alarm-block .battery-cell .battery-box.battery-low {
+    background: url(../img/asset_22_1.png) left center no-repeat;
+    background-size: 3.6rem;
+}
+.alarm-block .battery-cell .battery-box.battery-low::after {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    content: '';
+    width: 2rem;
+    height: 2rem;
+    background: url(../img/asset_23.png) right center no-repeat;
+    background-size: 1.5rem;
+}
+.alarm-block .battery-cell .battery-box.battery-empty {
+    background: url(../img/asset_22_2.png) left center no-repeat;
+    background-size: 3.6rem;
+}
+
+
+.alarm-block .update-time {
+    width: 30%;
+    line-height: 1.3;
+}
+.alarm-block .more-infor {
+    cursor: pointer;
+}
+
+.content-grid .compare-link {
+    margin-top: 2rem;
+    font-size: 1.4rem;
+}
+
+
+
+
+
+
+
+
+
+
+/*    Page5-1  message-admin
+----------------------------------------- */
+.message-admin .content-grid {
+    /* padding: 0 5rem 0 0; */
+}
+.content-grid .admin-send-block {
+    max-width: 100rem;
+    text-align: left;
+    justify-content: center;
+    margin: 10rem auto 0;
+    font-family: HKGProNW6;
+    font-size: 2rem;
+    line-height: 2;
+}
+.admin-send-block .confirm-msg {
+    width: 40%;
+    margin: 1rem 0 0;
+}
+.admin-send-block .confirm-input {
+    width: 55%;
+    margin: 1rem 0 0;
+}
+.admin-send-block .confirm-input select,
+.admin-send-block .confirm-input textarea,
+.admin-send-block .confirm-input input[type="text"] {
+    width: 100%;
+    font-size: 2rem;
+    line-height: 1.8;
+}
+.admin-send-block .confirm-input textarea {
+    height: 20rem;
+}
+.admin-send-block .confirm-btn {
+    text-align: center;
+    display: inline-block;
+    /* width: 19rem; */
+    padding: 0 2rem;
+    margin: 4rem auto;
+    background: #2A3A62;
+    border-radius: 8px;
+    font-family: HKGProNW6;
+    font-size: 2rem;
+    line-height: 1.64;
+    color: #fff;
+}
+
+
+
+
+
+
+
+
+/*      page5_2 - message-receive
+----------------------------------- */
+.message-receive .content-grid {
+    /* padding: 0 5rem 0 0; */
+}
+.message-receive .message_grid {
+    width: 100%;
+}
+.message-receive .message_grid .grid-header {
+    display: none;
+    width: 100%;
+    border-top: solid #A6A6A6 2px;
+    border-bottom: solid #A6A6A6 2px;
+    font-family: HKGProNW6;
+    font-size: 1.4rem;
+    line-height: 3;
+}
+.message-receive .message_grid .grid-content {
+    padding: 1rem 0;
+    border-bottom: solid #A6A6A6 1px;
+    font-family: HKGProNW3;
+    font-size: 1.4rem;
+    line-height: 1.5;
+}
+.message-receive .message_grid .cell1 {
+    width: 10%;
+}
+.message-receive .message_grid .cell2 {
+    width: 90%;
+    padding: 1.5rem 0;
+}
+.message-receive .message_grid .cell3 {
+    width: 25%;
+}
+.message-receive .message_grid .cell4 {
+    width: 25%;
+}
+.message-receive .message_grid .cell5 {
+    width: 35%;
+}
+.message-receive .message_grid .cell6 {
+    width: 15%;
+}
+.message-receive .message_grid .grid-content .cell6 a {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.message-receive .operation-block {
+    width: 100%;
+    padding: 2rem;
+    border-bottom: solid #A6A6A6 1px;
+    text-align: right;
+}
+.message-receive .operation-block .all-view-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: url(../img/asset_39.png) center center no-repeat;
+    background-size: auto;
+}
+.message-receive .operation-block .del-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: url(../img/asset_38.png) center center no-repeat;
+    background-size: auto;
+}
+.message-receive .operation-block.page-nav {
+    text-align: center;
+}
+.message-receive .operation-block a.page-btn {
+    text-align: center;
+    display: inline-block;
+    border: solid #A6A6A6 1px;
+    width: 5rem;
+    height: 3rem;
+    font-size: 1.6rem;
+    line-height: 2.8rem;
+    margin:0px 2px;
+}
+
+
+
+
+
+
+
+
+
+/*      page5_3  message-send
+------------------------------------------- */
+.message-send .content-grid {
+    /* padding: 0 5rem 0 0; */
+}
+.message-send .message_grid {
+    width: 100%;
+}
+.message-send .message_grid .grid-header {
+    display: none;
+    width: 100%;
+    border-top: solid #A6A6A6 2px;
+    border-bottom: solid #A6A6A6 2px;
+    font-family: HKGProNW6;
+    font-size: 1.4rem;
+    line-height: 3;
+}
+.message-send .message_grid .grid-content {
+    padding: 1rem 0;
+    border-bottom: solid #A6A6A6 1px;
+    font-family: HKGProNW3;
+    font-size: 1.4rem;
+    line-height: 1.5;
+}
+.message-send .message_grid .cell1 {
+    width: 10%;
+}
+.message-send .message_grid .cell2 {
+    width: 90%;
+    padding: 1.5rem 0;
+}
+.message-send .message_grid .cell3 {
+    width: 25%;
+}
+.message-send .message_grid .cell4 {
+    width: 25%;
+}
+.message-send .message_grid .cell5 {
+    width: 35%;
+}
+.message-send .message_grid .cell6 {
+    width: 15%;
+}
+.message-send .message_grid .grid-content .cell6 a {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.message-send .operation-block {
+    width: 100%;
+    padding: 2rem;
+    border-bottom: solid #A6A6A6 1px;
+    text-align: right;
+}
+.message-send .operation-block .del-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: url(../img/asset_38.png) center center no-repeat;
+    background-size: auto;
+}
+.message-send .operation-block.page-nav {
+    text-align: center;
+}
+.message-send .operation-block a.page-btn {
+    text-align: center;
+    display: inline-block;
+    border: solid #A6A6A6 1px;
+    width: 5rem;
+    height: 3rem;
+    font-size: 1.6rem;
+    line-height: 2.8rem;
+    margin:0px 2px;
+}
+
+/*      page5_4  message-type
+------------------------------------------- */
+.content-grid .msg-type-block {
+    max-width: 100rem;
+    text-align: left;
+    justify-content: center;
+    margin: 0 auto 0;
+    font-family: HKGProNW6;
+    font-size: 1.6rem;
+    line-height: 2;
+}
+.msg-type-block .confirm-label {
+    padding-top: 3rem;
+    /* text-align: left; */
+    width: 100%;
+    border-bottom: solid #eee 1px;
+    font-size: 2rem;
+}
+.msg-type-block .confirm-msg {
+    width: 40%;
+    margin: 1rem 0 0;
+}
+.msg-type-block .confirm-input {
+    width: 55%;
+    margin: 1rem 0 0;
+}
+.msg-type-block .confirm-input select {
+    width: 100%;
+    font-size: 2rem;
+    line-height: 1.8;
+}
+.msg-type-block .confirm-btn {
+    text-align: center;
+    display: inline-block;
+    width: 19rem;
+    margin: 4rem auto;
+    background: #2A3A62;
+    border-radius: 8px;
+    font-family: HKGProNW6;
+    font-size: 1.4rem;
+    line-height: 1.64;
+    color: #fff;
+}
+
+
+
+
+
+
+
+
+/*    Page6_1 - report
+----------------------------------------- */
+.report .content-grid {
+    /* padding: 0 5rem 0 0; */
+    padding: 0;
+}
+.report .report_grid {
+    width: 100%;
+    border-top: solid #A6A6A6 2px;
+}
+.report .report_grid .grid-header {
+    display: none;
+    width: 100%;
+    border-top: solid #A6A6A6 2px;
+    border-bottom: solid #A6A6A6 2px;
+    font-family: HKGProNW6;
+    font-size: 1.4rem;
+    line-height: 3;
+    /* text-align: center; */
+}
+.report .report_grid .grid-content {
+    padding: 1rem 0;
+    border-bottom: solid #A6A6A6 1px;
+    font-family: HKGProNW3;
+    font-size: 1.4rem;
+    line-height: 1.5;
+}
+.report .report_grid .cell1 {
+    width: 30%;
+}
+.report .report_grid .cell2 {
+    width: 30%;
+}
+.report .report_grid .cell3 {
+    display: none;
+    /* width: 30%; */
+}
+.report .report_grid .cell4 {
+    display: none;
+    /* width: 5%; */
+}
+.report .report_grid .cell5 {
+    display: none;
+    /* width: 5%; */
+}
+.report .report_grid .cell6 {
+    width: 15%;
+}
+.report .report_grid .cell7 {
+    display: none;
+    /* width: 15%; */
+}
+.report .report_grid .cell8 {
+    width: 15%;
+}
+.report .report_grid .cell6 span {
+    display: inline-block;
+    color: #fff;
+    border-radius: 3px;
+    padding: 0.2rem 0.3rem;
+    background-color: #3cc051;
+}
+.report .report_grid .cell6 .normal {
+    background-color: #3cc051;
+}
+.report .report_grid .cell6 .warning1 {
+    background-color: rgb(212, 208 ,18);
+}
+.report .report_grid .cell6 .warning2 {
+    background-color:red;
+}
+.report .report_grid .cell6 .danger {
+    display: inline-block;
+    background-color: #999;
+}
+
+.report .report_grid .grid-content .cell8 a {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+
+
+
+
+
+
+/*    Page6_2 - graph
+----------------------------------------- */
+.graph .content-grid {
+    padding: 0 0 0 0;
+}
+.graph .content-grid .stockChartContainer {
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+    font-size: 0.5rem;
+    color: initial;
+}
+
+
+
+
+
+
+/*    Page6_3 - graph compare
+----------------------------------------- */
+.graph-compare .content-grid {
+    padding: 0 0 0 0;
+}
+.graph-compare .content-grid .graph-compare {
+    width: 100%;
+    height: 100%;
+    font-size: 0.5rem;
+    color: initial;
+}
+
+
+
+
+
+
+
+/*  pass-forget confirm page    パスワードの再送信
+    register confirm page       新規ユーザー登録
+    page1_1                     ユーザー設定
+    page1_2                     システム設定
+----------------------------------------------- */
+.page1_1-confirm .content-grid .confirm-msg,
+.page1_2-confirm .content-grid .confirm-msg,
+.register-confirm .content-grid .confirm-msg,
+.pass-forget-confirm .content-grid .confirm-msg {
+    /* width: 100%; */
+    margin: 15rem 0 0;
+}
+.page1_1-confirm .confirm-btn,
+.page1_2-confirm .confirm-btn,
+.register-confirm .confirm-btn,
+.pass-forget-confirm .confirm-btn {
+    display: inline-block;
+    width: 19rem;
+    padding: 0 2rem;
+    margin: 8rem auto;
+    background: #2A3A62;
+    border-radius: 8px;
+    font-family: HKGProNW6;
+    font-size: 2rem;
+    line-height: 1.64;
+    color: #fff;
+}
+
+
+/*  パスワードの再送信 - pass-forget
+    新規ユーザー登録 - register
+    ユーザー設定 - page1_1
+    システム設定 - page1_2
+    サブアカウント管理 - page1_3
+----------------------------------------------- */
+.content-grid .sys-info-block,
+.content-grid .user-info-block,
+.content-grid .register-block,
+.content-grid .mail-send-block {
+    /* min-width: 70rem; */
+    max-width: 70rem;
+    text-align: left;
+    justify-content: center;
+    margin: 10rem auto 0;
+    font-family: HKGProNW6;
+    font-size: 2rem;
+    line-height: 2;
+}
+.sys-info-block .confirm-msg,
+.user-info-block .confirm-msg,
+.register-block .confirm-msg,
+.mail-send-block .confirm-msg {
+    width: 40%;
+    margin: 1rem 0 0;
+}
+.sys-info-block .confirm-input,
+.user-info-block .confirm-input,
+.register-block .confirm-input,
+.mail-send-block .confirm-input {
+    width: 55%;
+    margin: 1rem 0 0;
+}
+.sys-info-block .confirm-input select,
+.sys-info-block .confirm-input input[type="text"],
+.user-info-block .confirm-input input[type="text"],
+.register-block .confirm-input input[type="text"],
+.mail-send-block .confirm-input input[type="text"] {
+    width: 100%;
+    font-size: 2rem;
+    line-height: 1.8;
+}
+.list-setting .confirm-btn,
+.mapping-setting .confirm-btn,
+.gateway_setting .confirm-btn,
+.sensor_setting .confirm-btn,
+.group-setting .confirm-btn,
+.sub-account-list .confirm-btn,
+.system_setting .confirm-btn,
+.user_setting .confirm-btn,
+.pass-forget .confirm-btn,
+.register .confirm-btn {
+    text-align: center;
+    display: inline-block;
+    /* width: 19rem; */
+    padding: 0 2rem;
+    margin: 4rem auto;
+    background: #2A3A62;
+    border-radius: 8px;
+    font-family: HKGProNW6;
+    font-size: 2rem;
+    line-height: 1.64;
+    color: #fff;
+}
+
+
+/* /////// custom //////// */
+/* register page */
+.register .nrl {
+    font-family: HKGProNW3;
+    margin: 3rem 0;
+}
+.register .policy-link {
+    color: #1D04BF;
+}
+.register .login-pg-link {
+    position: absolute;
+    top: 26px;
+    right: 17px;
+}
+.register .login-link {
+    font-weight: bold;
+    color: initial;
+}
+/* user setting page */
+.user_setting .user-info-block {
+    margin: 3rem auto 0;
+}
+
+
+
+/* サブアカウント管理 - page1_3
+----------------------------------------------- */
+.setting-grid {
+    width: 100%;
+    border: solid #A6A6A6 2px;
+    padding: 1rem;
+    font-family: HKGProNW3;
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+}
+.sub-account-block {
+    padding: 0.5rem 0;
+}
+.edit-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: url(../img/asset_25.png) center center no-repeat;
+    background-size: auto;
+}
+.sub-account-block .account-name {
+    width: 30%;
+}
+.sub-account-block .account-role {
+    width: 50%;
+}
+.sub-account-block .account-role span {
+    color: #A6A6A6;
+    margin: 0 1rem;
+    margin: 0 1rem;
+    line-height: 1.5;
+    word-break: keep-all;
+}
+.sub-account-block .account-role span.active {
+    color: #262626;
+}
+.drop-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: url(../img/asset_28.png) center center no-repeat;
+    background-size: auto;
+}
+/* ////////// operation-block /////////// */
+.operation-block {
+    width: 100%;
+    padding: 3rem 0 0.5rem 0.6rem;
+}
+.operation-block .add-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: url(../img/asset_26.png) center center no-repeat;
+    background-size: auto;
+}
+.operation-block .del-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: url(../img/asset_27.png) center center no-repeat;
+    background-size: auto;
+}
+.operation-block .text-btn {
+    font-family: HKGProNW3;
+    font-size: 1.2rem;
+}
+
+
+
+
+
+/* グループ管理 - page1_4
+----------------------------------------------- */
+
+.grid-label {
+    text-align: left;
+    padding-left: 4rem;
+    margin-bottom: 3rem;
+    font-family: HKGProNW6;
+    font-size: 1.6rem;
+}
+.group-label {
+    background: url(../img/asset_29.png) 1rem center no-repeat;
+    background-size: 2.4rem;
+}
+.group-block {
+    padding: 0.5rem 0;
+}
+.group-block .group-name {
+    width: calc( 100% - 10rem );
+    text-align: left;
+}
+
+
+
+/* センサー管理 - page1_5
+------------------------------------------------- */
+.sensor-block {
+    padding: 0.5rem 0;
+    text-align: left;
+}
+.sensor-block .sensor-name {
+    /* width: 20rem; */
+    width: 40%;
+}
+.sensor-block .sensor-param1,
+.sensor-block .sensor-param2,
+.sensor-block .sensor-param3,
+.sensor-block .sensor-param4 {
+    display: none;
+    width: 8rem;
+}
+.sensor-block .sensor-param5 {
+    width: 40%;
+}
+
+
+
+/* ゲートウェイ管理 - page1_6
+-------------------------------------------------- */
+.gateway-block {
+    padding: 0.5rem 0;
+    text-align: left;
+}
+.gateway-block .gateway-name {
+    width: 40%;
+}
+.gateway-block .gateway-param1 {
+    width: 40%;
+}
+.gateway-block .gateway-param2 {
+    display: none;
+    width: calc( 100% - 50rem );
+}
+
+
+
+/* マッピング管理 - page1_7
+-------------------------------------------------- */
+.mapping-setting .nrl1 {
+    text-align: left;
+    padding: 3rem 0;
+}
+.mapping-label {
+    background: url(../img/asset_30.png) 1rem center no-repeat;
+    background-size: 2.4rem;
+}
+.mapping-content {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.mapping-content .mapping-grid {
+    /* margin-right: 5rem; */
+}
+.mapping-content .mapping-grid .mapping-block {
+    /* width: 30rem; */
+    width: 100%;
+    padding: 0.5rem 0;
+    text-align: left;
+}
+.mapping-content .mapping-grid .mapping-block .mapping-name {
+    /* width: 20rem; */
+    width: 75%;
+}
+.mapping-content .mapping-add,
+.mapping-content .mapping-map {
+    position: relative;
+    /* width: calc( 100% - 40rem ); */
+    width: 100%;
+    /* max-width: 50rem; */
+    height: 50rem;
+}
+.mapping-content .mapping-add .map-name,
+.mapping-content .mapping-map .map-name {
+    position: absolute;
+    left: 2rem;
+    top: 2rem;
+    font-family: HKGProNW6;
+    font-size: 1.4rem;
+}
+.mapping-content .mapping-map .edit-btn {
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+}
+/* -------- add mapping -------- */
+.mapping-content .mapping-add .add-btn {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    padding-top: 10rem;
+    background: url(../img/asset_32.png) top center no-repeat;
+    background-size: 7.5rem;
+    font-size: 1.4rem;
+}
+
+
+
+
+/* リスト管理 - page1_8
+-------------------------------------------------- */
+.list-setting .nrl1 {
+    text-align: left;
+    padding: 3rem 0;
+}
+.list1-label {
+    background: url(../img/asset_29.png) left center no-repeat;
+    background-size: 2.4rem;
+}
+.list2-label {
+    background: url(../img/asset_31.png) left center no-repeat;
+    background-size: 2.4rem;
+}
+.list-content {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.list-content .list1-grid {
+    /* margin-right: 5rem; */
+}
+.list-content .list1-grid .list-block,
+.list-content .list2-grid .list-block {
+    width: 100%;
+    padding: 0.5rem 0;
+    text-align: left;
+}
+
+
+
+
+
+
+/* pg footer */
+.pg-footer {
+    font-size: 1.6rem;
+    line-height: 4;
+    text-align: center;
+}

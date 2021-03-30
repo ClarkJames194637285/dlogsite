@@ -1,0 +1,59 @@
+/* CSS Document */
+
+/* page1_6 */
+@charset "UTF-8";
+/** ドラッグリスト */
+#columns {
+    padding: 0 0 60px;
+}
+.gateway-block {
+    width: 100%;
+    position: relative;
+    margin: 0;
+    padding: 15px 15px 15px 15px;
+    background: white;
+    cursor: move;
+}
+.gateway-block::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 15px;
+    bottom: 0;
+    display: block;
+    width: 15px;
+    height: 10px;
+    margin: auto;
+}
+.gateway-block.dragging {
+    opacity: 0.5;
+    background: hsla(180, 100%, 80%, 0.5);
+}
+.gateway-block.drag-over::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: hsl(350, 100%, 80%, 0.5);
+}
+.gateway-block.dummy {
+    border: none;
+    cursor: default;
+}
+.gateway-block.dummy.drag-over::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: hsl(350, 100%, 80%, 0.5);
+}
+.gateway-block.dummy::after {
+    display: none;
+}
+.drop-btn {
+    cursor: move;
+}
