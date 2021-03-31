@@ -1720,7 +1720,6 @@ input[type="range"]::-ms-tooltip {
     width: 100%;
 }
 .message-receive .message_grid .grid-header {
-    display: none;
     width: 100%;
     border-top: solid #A6A6A6 2px;
     border-bottom: solid #A6A6A6 2px;
