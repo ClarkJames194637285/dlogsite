@@ -20,31 +20,6 @@ $wbgtcheck = array(25, 31);
 $voltcheck = array(3.61, 3.64);
 
 $method = new Methodclass();
-switch ($method->chDevice()) {
-    case "mobile":
-        /* スマホ用の処理 */
-        $device = "mobile";
-        break;
-    case "tablet":
-        /* タブレット用の処理 */
-        $device = "tablet";
-        break;
-    case "pc":
-        /* パソコン用の処理 */
-        $device = "pc";
-        break;
-}
-
-$user_id = $_SESSION['user_id'];
-$user_name = $_SESSION['user_name'];
-$tname = "product";
-$fieldname = "ID";
-$dlogdb = new Dbclass();
-$dbpdo = $dlogdb->dbCi($this->config->item('host'),$this->config->item('username'),$this->config->item('password'), $this->config->item('dbname'));
-
-$his_list = $dlogdb->getHistoryData($dbpdo, $user_id);
-//var_dump($his_list);
-$dlogdb = null;
 
 ?>
 

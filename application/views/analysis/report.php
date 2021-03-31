@@ -427,10 +427,10 @@ input[type="datetime-local"] {
                                     echo '<div class="ct-cell cell8">';
                                     echo '<a class="post_window" onclick="Generate(' . $dval['ProductID'] . ', ';
                                     echo '`' . $dval['ProductName'] . '`);">';
-                                    echo '<img src="<?php echo base_url()?>assets/img/asset_37.png" alt="" title="PDFを生成">';
+                                    echo '<img src="'.base_url().'assets/img/asset_37.png" alt="" title="PDFを生成">';
                                     echo '</a>';
                                     echo '<a onclick="childShow(' . $dval['ProductID'] . ');">';
-                                    echo '<img src="<?php echo base_url()?>assets/img/asset_24.png" alt="" title="レポートを表示する"></a>';
+                                    echo '<img src="'.base_url().'assets/img/asset_24.png" alt="" title="レポートを表示する"></a>';
                                     echo '</div>';
                                     echo '</div>';
                                     echo '<div id="child_' . $dval['ProductID'];

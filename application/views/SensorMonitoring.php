@@ -329,9 +329,7 @@
         }else if(saturation){
             $('.sensor-04-0').css('display','block');
         }else{
-            $('.sensor-01-0').css('display','block');
-            $('.sensor-02-0').css('display','block');
-            $('.sensor-03-0').css('display','block');
+           showAll();
            
         }
     });
