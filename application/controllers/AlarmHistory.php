@@ -22,13 +22,21 @@ class AlarmHistory extends MY_Controller
 	}
 	public function index()
 	{
-		$this->config->load('db_config');
-		$this->load->library('DbClass');
 		$this->load->library('MethodClass');
-		$this->config->load('openSSL_config');
+		$id=$this->sensor_Model->getUserId($_SESSION['user_name']);
+		$pid=$this->sensor_Model->allSensorPid($id[0]['ID']);
+		$alarmdata['his_list']=[];
+		foreach($pid as $value){
+			$temp=$this->sensor_Model->getHistoryData($id[0]['ID'],$value['ID']);
+			if(!empty($temp)){
+				foreach($temp as $val){
+					array_push($alarmdata['his_list'],$val);
+				}
+			}
+		}
 		$data['unread']=$this->unread_message;
 		$data['user_name']=$this->session->userdata('user_name');
 		$this->load->view('header',$data);
-		$this->load->view('alarmHistory');
+		$this->load->view('alarmHistory',$alarmdata);
 	}
 }
