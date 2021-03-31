@@ -321,12 +321,12 @@ input[type="datetime-local"] {
         // モーダルウィンドウを開く
         $('.post_conform').fadeOut();
         $('.modal').fadeOut();
-        location.href = "<?php echo base_url()?>assets/page6_1.php";
+        location.href = "<?php echo base_url()?>analysis/report";
     });
 
     var $actionUrl = "";
     function Generate(id, name) {
-        $actionUrl = "<?php echo base_url()?>assets/page6_1.php?M=Make_report&ids=" + id;
+        $actionUrl = "<?php echo base_url()?>analysis/report?M=Make_report&ids=" + id;
     };
     function Datacheck() {
         var begintime = document.getElementById('txtBeginTime');
@@ -472,12 +472,8 @@ input[type="datetime-local"] {
                 </div>
                 <div class="side-bar flexlyr">
                     <ul class="view-type-btn-grid">
-                        <li class="view-type-btn">
-                            <a href="page2.php" class="type1 active"></a>
-                        </li>
-                        <li class="view-type-btn">
-                            <a href="page4.php" class="type2 "></a>
-                        </li>
+                        <li class="view-type-btn"><a href="<?php echo base_url()?>sensorMonitoring" class="type1 active"></a></li>
+                        <li class="view-type-btn"><a href="<?php echo base_url()?>alarmHistory" class="type2 "></a></li>
                     </ul>
                     
                     <!-- search filter type - フィルター -->
@@ -751,7 +747,7 @@ if (serch_str.indexOf('Gu=') == -1 && serch_str.indexOf('M=') != -1) {
                 //$('<img>').attr('src', exportUrl + data).attr('width', '600px').appendTo(imgContainer);
                 search_str = location.search;
                 /* if (search_str.indexOf('Gu=') == -1) { */
-                location.href = '<?php echo base_url()?>assets/page6_1.php?Gu=' + exportUrl + data + '&F=' + filename;
+                location.href = '<?php echo base_url()?>analysis/report?Gu=' + exportUrl + data + '&F=' + filename;
                 /* } */ 
             },
             error: function (err) {
