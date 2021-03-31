@@ -24,16 +24,16 @@ class Report extends MY_Controller
 
 	public function index()
 	{
-		$this->config->load('db_config');
-		$this->load->library('DbClass');
-		$this->load->library('MethodClass');
-		$this->load->library('ReportClass');
-		$this->load->library('Tcpdf');
-		$this->config->load('openSSL_config');
-		$data['unread']=$this->unread_message;
-		$data['user_name']=$this->session->userdata('user_name');
-		$this->load->view('header',$data);
-		$this->load->view('analysis/report');
+			$this->config->load('db_config');
+			$this->load->library('DbClass');
+			$this->load->library('MethodClass');
+			$this->load->library('ReportClass');
+			$this->load->library('Tcpdf');
+			$this->config->load('openSSL_config');
+			$data['unread']=$this->unread_message;
+			$data['user_name']=$this->session->userdata('user_name');
+			$this->load->view('header',$data);
+			$this->load->view('analysis/report');
 	}
 	
 }

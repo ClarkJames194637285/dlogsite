@@ -519,7 +519,7 @@ class Reportclass
             th{
                 border-bottom: 1px solid black;
             }
-
+            
             th.data_h{
                 border-right: 1px solid black;
                 margin-left: 0;
