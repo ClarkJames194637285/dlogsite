@@ -29,6 +29,24 @@ class Sensor_Model extends CI_Model {
             
     }
 
+    public function getHistoryData($id,$pid) {
+		
+        if ($this->db->table_exists("terminalhistory".$pid) )
+         {
+         // table exists some code run query
+             $sql="SELECT * FROM (SELECT th.ID AS ID, th.UUID AS UUID, th.PID AS PID, th.Temperature AS Temperature, th.Humidity AS Humidity, th.Pressure AS Pressure, th.Voltage AS Voltage, th.Battery AS Battery, th.RSSI AS RSSI, th.RTC AS RTC, pd.IMEI AS IMEI, pd.ProductName AS ProductName, pd.TerminalDataInterval AS TerminalDataInterval, pg.GroupName AS GroupName, pg.SortID AS SortID, pt.TypeName AS TypeName, pt.Model AS Model, pd.isdelete AS Pddel FROM `product` AS pd INNER JOIN `productgroup` AS pg ON pd.GroupID=pg.ID AND pg.isdelete=0 INNER JOIN `producttype` AS pt ON pd.TypeID=pt.ID AND pt.isdelete=0 INNER JOIN terminalhistory".$pid." AS th ON pd.ID=th.PID WHERE pd.UserID=".$id." AND th.ID in (SELECT max(ID) FROM terminalhistory".$pid." GROUP BY PID )) AS thd WHERE Pddel=0 ORDER BY SortID";    
+             $query = $this->db->query($sql);
+             return $query->result_array();
+         }
+         else
+         {
+         // table does not exist
+             return false;
+         }
+         
+             
+     }
+
     public function dateTimeMap($pid,$datetime) {
 		
         $datetime=date('Y-m-d H:i:s',time()-$datetime*3600);
