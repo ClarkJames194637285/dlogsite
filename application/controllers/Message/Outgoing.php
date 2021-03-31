@@ -57,8 +57,8 @@ class Outgoing extends MY_Controller
 			'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
 			'smtp_host' => 'localhost', 
 			'smtp_port' => 25,
-			'smtp_user' => 'clark@dlog.com',
-			'smtp_pass' => 'qwert',
+			'smtp_user' => 'clark@test.com',
+			'smtp_pass' => 'clark',
 			'mailtype' => 'text', //plaintext 'text' mails or 'html'
 			'smtp_timeout' => '4', //in seconds
 			'charset' => 'utf-8',
