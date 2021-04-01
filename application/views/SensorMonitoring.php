@@ -144,8 +144,8 @@
                     <input type="text" class="form-control" id="IMEI" required>
                 </div>
                 <div class="form-group">
-                    <label for="sensorId"></span> タイプーID</label>
-                    <input type="text" class="form-control" id="sensorId" required>
+                    <label for="typeId"></span> タイプーID</label>
+                    <input type="text" class="form-control" id="typeId" required>
                 </div>
                 <div class="form-group">
                     <label for="name"></span> センサー名</label>
@@ -221,7 +221,7 @@
         $("#register").on("click",function(e){
             // e.preventDefault();
             var IMEI=$("#IMEI").val();
-            var sensorId=$("#sensorId").val();
+            var typeId=$("#typeId").val();
             var name=$("#name").val();
             if((IMEI=="")||(name==""))return;
             var that = $(this);
@@ -233,7 +233,7 @@
                 data: {
                     IMEI:IMEI,
                     groupId:groupId,
-                    sensorId:sensorId,
+                    typeId:typeId,
                     name,name
                 },
                 dataType: 'json',

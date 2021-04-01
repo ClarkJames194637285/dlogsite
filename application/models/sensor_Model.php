@@ -311,8 +311,9 @@ class Sensor_Model extends CI_Model {
      * register new sensor.
      */
 	function setSensor($data){
-        $sql="insert into product (IMEI,ID,GroupID,ProductName,UserID) values ('".$data['IMEI']."',".$data['sensorId'].",".$data['groupId'].",'".$data['name']."',".$data['userId'].")";
-        return $this->db->query($sql);
+        $sql="insert into product (IMEI,TypeID,GroupID,ProductName,UserID) values ('".$data['IMEI']."',".$data['typeId'].",".$data['groupId'].",'".$data['name']."',".$data['userId'].")";
+        $result=$this->db->query($sql);
+       return $result;
         
     }
     public function getMapInfo($user,$mapID){
