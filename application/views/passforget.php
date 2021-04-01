@@ -73,7 +73,7 @@
                     <p class=" confirm-msg"><?=$this->lang->line('authentication');?></p>
                     <p class=" confirm-input"><input type="text" required name="captcha"></p>
 
-                    <button id="update" class="confirm-btn" onclick="formSubmit();"><?=$this->lang->line('Send');?></button>
+                    <button id="update" class="confirm-btn" onclick="formSubmit();"><?=$this->lang->line('send');?></button>
                 </div>
             </div>
         </section>

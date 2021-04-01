@@ -49,7 +49,7 @@
                             <!-- メッセージ - message -->
                             <a href="<?php echo base_url()?>Message/inbox" class="shortcut-btn message">888</a>
                             <!-- サポート情報 - support information -->
-                            <a href="<?php echo base_url()?>AlarmHistory" class="shortcut-btn support"></a>
+                            <a href="https://www.dlog.jp/" class="shortcut-btn support"></a>
                             <!-- アップデート情報 - update information -->
                             <a href="<?php echo base_url()?>Setting/GroupManagement" class="shortcut-btn group"></a>
                             <!-- センサー管理 - sensor manage -->
