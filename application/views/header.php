@@ -21,7 +21,7 @@
 <div class="pg-header flexlyr">
     <a href="<?php echo base_url()?>home" class="logo-icon"><img src="<?php echo base_url()?>assets/img/asset_01.png" alt=""></a>
     <div class="user-infor flexlyr">
-        <a href="<?php echo base_url()?>Message/inbox" class="user-comment"><img src="<?php echo base_url()?>assets/img/asset_08.png" alt="">
+        <a href="<?php echo base_url()?>alarmhistory" class="user-comment"><img src="<?php echo base_url()?>assets/img/asset_08.png" alt="">
             <?php if($unread<1){?><p style="display:none;"><?php echo $unread;?></p><?php }else{?><p><?php echo $unread;?></p><?php }?>
         </a>
         <a href="<?php echo base_url()?>User/logout" class="user-name"><img src="<?php echo base_url()?>assets/img/asset_02.png" alt=""><span><?php echo $user_name;?></span></a>

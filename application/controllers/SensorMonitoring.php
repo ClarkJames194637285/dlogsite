@@ -20,25 +20,25 @@ class SensorMonitoring extends MY_Controller
 				$this->lang->load(array('menu','monitoring'),$site_lang);
 					} else {
 				$this->lang->load(array('menu','monitoring'),'japanese');
-					}
+			}
     }
 	public function index()
 	{
-		$data['unread']=$this->unread_message;
-        $data['user_name']=$_SESSION['user_name'];
-		// $this->load->view('sensorMonitoring');
-		$sensorinfo['Sensors']=$this->ShowSensor($_SESSION['user_name']);
-		$id=$this->sensor_Model->getUserId($_SESSION['user_name']);
-		$sensorinfo['Group']=$this->sensor_Model->GetGroupId($id[0]['ID']);
-		$this->load->helper('language');
-		$site_lang=$this->session->userdata('lang');
-		if ($site_lang) {
-			$this->lang->load(array('menu','monitoring'),$site_lang);
-        } else {
-			$this->lang->load(array('menu','monitoring'),'japanese');
-        }
-		$this->load->view('header',$data);
-		$this->load->view('sensorMonitoring',$sensorinfo);
+			$data['unread']=$this->unread_message;
+			$data['user_name']=$_SESSION['user_name'];
+			// $this->load->view('sensorMonitoring');
+			$sensorinfo['Sensors']=$this->ShowSensor($_SESSION['user_name']);
+			$id=$this->sensor_Model->getUserId($_SESSION['user_name']);
+			$sensorinfo['Group']=$this->sensor_Model->GetGroupId($id[0]['ID']);
+			$this->load->helper('language');
+			$site_lang=$this->session->userdata('lang');
+			if ($site_lang) {
+				$this->lang->load(array('menu','monitoring'),$site_lang);
+					} else {
+				$this->lang->load(array('menu','monitoring'),'japanese');
+					}
+			$this->load->view('header',$data);
+			$this->load->view('sensorMonitoring',$sensorinfo);
 	}
 
 	//--------------------------------------------------------------------
@@ -112,112 +112,112 @@ class SensorMonitoring extends MY_Controller
 						else{
 							
 							
-							/**
-							 * ET means water vapor pressure
-							 * VH means saturated water vapor amount
-							 * HD means 飽差
-							 * */
-							if(!$check){
-								$ET=6.1078*pow(10,(7.5*$temp/($temp+273.15)));
-								$VH=217*$ET/($temp+273.15);
-								// echo $VH.'<br>';
-								$HD=(100-$hum)*$VH/100;
-								// echo $HD.'<br>';
-			
-								$wbgt=$a[0]+$a[1]*$temp+$a[2]*($hum*$a[3]*exp(($a[4]*$temp)/($a[5]+$temp)))+$b[0]*pow(($temp-$b[1]),2)+$b[2]*pow(($hum-$b[3]),2);
-							
-								$bool=$this->sensor_Model->requireBattery($datavalue['ID']);
-								if($bool&&($wbgt>25))
-									$str.='<div class="block-sensor battery warning';	
-								else if($bool&&($wbgt<25))
-									$str.='<div class="block-sensor battery';
-								else if(!$bool&&($wbgt>25))
-								$str.='<div class="block-sensor warning';
-								else $str.='<div class="block-sensor';
-								foreach($sensorInfo[0] as $key=>$value){
-									if($key=='PID'){
-										if($wbgt>=27.9)$str.=' bg-red';
-										if($wbgt<27.9&&$wbgt>=25)	$str.=' bg-amber';
-										if($wbgt<=24.9&&$wbgt>0)$str.=' bg-green';
-										$str.=' humidity" id="sensor'.$value.'">
-											<p class="sensor-label">'.$datavalue['ProductName'].'</p>
-											
-											<p class="sensor-status sensor-01-0">';
-									}
-									if($key=="Temperature")
-										$str.=round($value,1).'<span>℃</span></p>
-											<p class="sensor-status sensor-02-0">';
-									if($key=="Humidity")
-										$str.=round($value*100).'<span>%</span></p>
-											<p class="sensor-status sensor-03-0">'.round($HD,1).'<span>℃</span></p>
-											<p class="sensor-status sensor-04-0" style="display:none;">'.round($HD).'<span>g/m3</span></p>';
-									
-			
-									if($key=="Pressure"){
-										// $str.=round($value,1).'<span>Pa</span></p>
-										// 	<div class="sensor-grid">';
-										$str.='
-											<div class="sensor-grid">';
-										if($temp>40)
-											$str.='<p class="sensor-icon sensor-01-red"></p>';
-										else if($temp>25)
-											$str.='<p class="sensor-icon sensor-01-amb"></p>';
-										if($hum*100<50)	
-											$str.='<p class="sensor-icon sensor-02-amb"></p>';
-										if($HD>28)	
-											$str.='<p class="sensor-icon sensor-03-red"></p>';
-										else if($HD>25)	
-											$str.='<p class="sensor-icon sensor-03-amb"></p>';
-										if($VH>5.9)
-											$str.='<p class="sensor-icon sensor-04-amb"></p>';
+								/**
+								 * ET means water vapor pressure
+								 * VH means saturated water vapor amount
+								 * HD means 飽差
+								 * */
+								if(!$check){
+									$ET=6.1078*pow(10,(7.5*$temp/($temp+273.15)));
+									$VH=217*$ET/($temp+273.15);
+									// echo $VH.'<br>';
+									$HD=(100-$hum)*$VH/100;
+									// echo $HD.'<br>';
+				
+									$wbgt=$a[0]+$a[1]*$temp+$a[2]*($hum*$a[3]*exp(($a[4]*$temp)/($a[5]+$temp)))+$b[0]*pow(($temp-$b[1]),2)+$b[2]*pow(($hum-$b[3]),2);
+								
+									$bool=$this->sensor_Model->requireBattery($datavalue['ID']);
+									if($bool&&($wbgt>25))
+										$str.='<div class="block-sensor battery warning';	
+									else if($bool&&($wbgt<25))
+										$str.='<div class="block-sensor battery';
+									else if(!$bool&&($wbgt>25))
+									$str.='<div class="block-sensor warning';
+									else $str.='<div class="block-sensor';
+									foreach($sensorInfo[0] as $key=>$value){
+										if($key=='PID'){
+											if($wbgt>=27.9)$str.=' bg-red';
+											if($wbgt<27.9&&$wbgt>=25)	$str.=' bg-amber';
+											if($wbgt<=24.9&&$wbgt>0)$str.=' bg-green';
+											$str.=' humidity" id="sensor'.$value.'">
+												<p class="sensor-label">'.$datavalue['ProductName'].'</p>
+												
+												<p class="sensor-status sensor-01-0">';
+										}
+										if($key=="Temperature")
+											$str.=round($value,1).'<span>℃</span></p>
+												<p class="sensor-status sensor-02-0">';
+										if($key=="Humidity")
+											$str.=round($value*100).'<span>%</span></p>
+												<p class="sensor-status sensor-03-0">'.round($HD,1).'<span>℃</span></p>
+												<p class="sensor-status sensor-04-0" style="display:none;">'.round($HD).'<span>g/m3</span></p>';
 										
-												
-											$str.='<p class="sensor-infor"></p>
-												</div>
-											</div>';
-									}
-									
-								}
-							}else{
-								$bool=$this->sensor_Model->requireBattery($datavalue['ID']);
-								if($bool&&($temp>40))
-									$str.='<div class="block-sensor battery warning';	
-								else if($bool&&($temp<40))
-									$str.='<div class="block-sensor battery';
-								else if(!$bool&&($temp>25))
-								$str.='<div class="block-sensor warning';
-								else $str.='<div class="block-sensor';
-								foreach($sensorInfo[0] as $key=>$value){
-									if($key=='PID'){
-										if($temp>=27.9)$str.=' bg-red';
-										if($temp<27.9&&$temp>=25)	$str.=' bg-amber';
-										if($temp<=24.9&&$temp>0)$str.=' bg-green';
-										$str.=' temperature" id="sensor'.$value.'">
-											<p class="sensor-label">'.$datavalue['ProductName'].'</p>
+				
+										if($key=="Pressure"){
+											// $str.=round($value,1).'<span>Pa</span></p>
+											// 	<div class="sensor-grid">';
+											$str.='
+												<div class="sensor-grid">';
+											if($temp>40)
+												$str.='<p class="sensor-icon sensor-01-red"></p>';
+											else if($temp>25)
+												$str.='<p class="sensor-icon sensor-01-amb"></p>';
+											if($hum*100<50)	
+												$str.='<p class="sensor-icon sensor-02-amb"></p>';
+											if($HD>28)	
+												$str.='<p class="sensor-icon sensor-03-red"></p>';
+											else if($HD>25)	
+												$str.='<p class="sensor-icon sensor-03-amb"></p>';
+											if($VH>5.9)
+												$str.='<p class="sensor-icon sensor-04-amb"></p>';
 											
-											<p class="sensor-status sensor-01-0">';
+													
+												$str.='<p class="sensor-infor"></p>
+													</div>
+												</div>';
+										}
+										
 									}
-									if($key=="Temperature")
-										$str.=round($value,1).'<span>℃</span></p>
-											<p class="sensor-status sensor-02-0">';
-									
-									if($key=="Pressure"){
-										// $str.=round($value,1).'<span>Pa</span></p>
-										// 	<div class="sensor-grid">';
-										$str.='
-											<div class="sensor-grid">';
-										if($temp>40)
-											$str.='<p class="sensor-icon sensor-01-red"></p>';
-										else if($temp>25)
-											$str.='<p class="sensor-icon sensor-01-amb"></p>';
+								}else{
+									$bool=$this->sensor_Model->requireBattery($datavalue['ID']);
+									if($bool&&($temp>40))
+										$str.='<div class="block-sensor battery warning';	
+									else if($bool&&($temp<40))
+										$str.='<div class="block-sensor battery';
+									else if(!$bool&&($temp>25))
+									$str.='<div class="block-sensor warning';
+									else $str.='<div class="block-sensor';
+									foreach($sensorInfo[0] as $key=>$value){
+										if($key=='PID'){
+											if($temp>=27.9)$str.=' bg-red';
+											if($temp<27.9&&$temp>=25)	$str.=' bg-amber';
+											if($temp<=24.9&&$temp>0)$str.=' bg-green';
+											$str.=' temperature" id="sensor'.$value.'">
+												<p class="sensor-label">'.$datavalue['ProductName'].'</p>
 												
-											$str.='<p class="sensor-infor"></p>
-												</div>
-											</div>';
+												<p class="sensor-status sensor-01-0">';
+										}
+										if($key=="Temperature")
+											$str.=round($value,1).'<span>℃</span></p>
+												<p class="sensor-status sensor-02-0">';
+										
+										if($key=="Pressure"){
+											// $str.=round($value,1).'<span>Pa</span></p>
+											// 	<div class="sensor-grid">';
+											$str.='
+												<div class="sensor-grid">';
+											if($temp>40)
+												$str.='<p class="sensor-icon sensor-01-red"></p>';
+											else if($temp>25)
+												$str.='<p class="sensor-icon sensor-01-amb"></p>';
+													
+												$str.='<p class="sensor-infor"></p>
+													</div>
+												</div>';
+										}
+										
 									}
-									
 								}
-							}
 						}
 						$Sensors.=$str;
 					
@@ -243,13 +243,12 @@ class SensorMonitoring extends MY_Controller
 		$this->load->model('sensor_Model');
 		$data['IMEI'] = $this->input->post('IMEI');
 		$data['groupId'] = $this->input->post('groupId');
-		$data['sensorId'] = $this->input->post('sensorId');
+		$data['typeId'] = $this->input->post('typeId');
 		$data['name'] = $this->input->post('name');
 		$id=$this->sensor_Model->getUserId($_SESSION['user_name']);
 		$data['userId']=$id[0]['ID'];
-		
 		$result=$this->sensor_Model->setSensor($data);
-		echo json_encode($result);
+		echo $result;
 		
 	}
 	public function getSensorInfo(){
