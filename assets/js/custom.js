@@ -40,6 +40,10 @@ $( window ).on( "load", function() {
             $('#pageSubmenu').collapse("show");
             $(".menu1_8").addClass('select');
             break;
+        case 'useroperation':        //page1_8.php
+            $('#pageSubmenu').collapse("show");
+            $(".menu1_9").addClass('select');
+        break;
 
 
             

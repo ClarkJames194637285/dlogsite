@@ -75,13 +75,13 @@
                         <p class=" confirm-input"><input type="text" id="username" name="username" placeholder="<?=$this->lang->line('username');?>" required value="<?= set_value('username'); ?>"></p>
 
                         <p class=" confirm-msg"><?=$this->lang->line('mailaddress');?></p>
-                            <p class=" confirm-input" ><input type="text" id="email" name="email" placeholder="<?=$this->lang->line('mailaddress');?>" required value="<?= set_value('email'); ?>"></p>
+                        <p class=" confirm-input" ><input type="text" id="email" name="email" placeholder="<?=$this->lang->line('mailaddress');?>" required value="<?= set_value('email'); ?>"></p>
 
-                            <p class=" confirm-msg"><?=$this->lang->line('password');?></p>
-                            <p class=" confirm-input"><input type="password" id="password" name="password" placeholder="<?=$this->lang->line('password');?>" required value="<?= set_value('password'); ?>"></p>
+                        <p class=" confirm-msg"><?=$this->lang->line('password');?></p>
+                        <p class=" confirm-input"><input type="password" id="password" name="password" placeholder="<?=$this->lang->line('password');?>" required value="<?= set_value('password'); ?>"></p>
 
-                            <p class=" confirm-msg"><?=$this->lang->line('confirm_pass');?></p>
-                            <p class=" confirm-input"><input type="password" id="password_confirm" name="password_confirm" placeholder="<?=$this->lang->line('confirm_pass');?>" required value="<?= set_value('password_confirm'); ?>"></p>
+                        <p class=" confirm-msg"><?=$this->lang->line('confirm_pass');?></p>
+                        <p class=" confirm-input"><input type="password" id="password_confirm" name="password_confirm" placeholder="<?=$this->lang->line('confirm_pass');?>" required value="<?= set_value('password_confirm'); ?>"></p>
 
                         <p class=" confirm-msg"></p>
                         <p class=" confirm-input"><img src="<?php echo base_url() ?>captcha/generate" alt=""></p>
