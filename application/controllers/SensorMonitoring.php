@@ -130,7 +130,7 @@ class SensorMonitoring extends MY_Controller
 								if($bool&&($wbgt>25))
 									$str.='<div class="block-sensor battery warning';	
 								else if($bool&&($wbgt<25))
-									$str.='<div class="block-sensor';
+									$str.='<div class="block-sensor battery';
 								else if(!$bool&&($wbgt>25))
 								$str.='<div class="block-sensor warning';
 								else $str.='<div class="block-sensor';
@@ -183,7 +183,7 @@ class SensorMonitoring extends MY_Controller
 								if($bool&&($temp>40))
 									$str.='<div class="block-sensor battery warning';	
 								else if($bool&&($temp<40))
-									$str.='<div class="block-sensor';
+									$str.='<div class="block-sensor battery';
 								else if(!$bool&&($temp>25))
 								$str.='<div class="block-sensor warning';
 								else $str.='<div class="block-sensor';
