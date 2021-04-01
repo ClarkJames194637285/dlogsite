@@ -152,7 +152,7 @@ class Sensor_Model extends CI_Model {
      * 
      */
     public function allSensorPid($id){
-        $sql="select ID,GroupID,ProductName from product where UserID=? ORDER BY ReceiverID";
+        $sql="select p.ID,p.GroupID,p.ProductName from product as p JOIN producttype AS t ON p.TypeID=t.ID where p.UserID=? ORDER BY ReceiverID";
         $query = $this->db->query($sql,$id);
         return $query->result_array();
     }
@@ -243,7 +243,7 @@ class Sensor_Model extends CI_Model {
     }
    
     public function allUserPid($id){
-        $sql="select p.ID from product as p JOIN productgroup AS g ON p.UserID=g.UserID AND p.GroupID=g.ID where p.UserID=?";
+        $sql="select p.ID from product as p JOIN producttype AS t ON p.TypeID=t.ID JOIN productgroup AS g ON p.UserID=g.UserID AND p.GroupID=g.ID where p.UserID=?";
         $query = $this->db->query($sql,$id);
         return $query->result_array();
     }
