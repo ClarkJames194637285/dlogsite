@@ -365,7 +365,12 @@ class Dbclass
         $query .= "FROM " . $product_tn . " AS pd ";
         $query .= "INNER JOIN " . $productg_tn . " AS pdg ";
         $query .= "ON pd.GroupID = pdg.ID ";
-        $query .= "AND pdg.isdelete = 0 ";
+        $query .= "AND pdg.isdelete = 0  AND pdg.UserID=";
+        if ($getid != null) {
+            $query .= ":id ";
+        } else {
+            $query .= ":userid ";
+        }
         $query .= "INNER JOIN " . $producttype_tn . " AS pty ";
         $query .= "ON pty.ID = pd.TypeID ";
         if ($getid != null) {
