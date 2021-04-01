@@ -243,13 +243,12 @@ class SensorMonitoring extends MY_Controller
 		$this->load->model('sensor_Model');
 		$data['IMEI'] = $this->input->post('IMEI');
 		$data['groupId'] = $this->input->post('groupId');
-		$data['sensorId'] = $this->input->post('sensorId');
+		$data['typeId'] = $this->input->post('typeId');
 		$data['name'] = $this->input->post('name');
 		$id=$this->sensor_Model->getUserId($_SESSION['user_name']);
 		$data['userId']=$id[0]['ID'];
-		
 		$result=$this->sensor_Model->setSensor($data);
-		echo json_encode($result);
+		echo $result;
 		
 	}
 	public function getSensorInfo(){
