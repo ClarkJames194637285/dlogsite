@@ -13,6 +13,7 @@ $lang['sensorManagement']                    = 'センサー管理';
 $lang['gatewayManagement']                    = 'ゲートウェイ管理';
 $lang['mapManagement']                    = 'マッピング管理';
 $lang['listManagement']                    = 'リスト管理';
+$lang['useroperation']                    = 'ユーザー操作';
 
 //Analysis
 $lang['analysis']                    = '分析';

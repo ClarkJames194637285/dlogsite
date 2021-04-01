@@ -45,6 +45,9 @@
                 <li class="menu1_8">
                     <a href="<?php echo base_url()?>setting/listManagement"><?=$this->lang->line('listManagement');?></a>
                 </li>
+                <li class="menu1_9">
+                    <a href="<?php echo base_url()?>setting/useroperation"><?=$this->lang->line('useroperation');?></a>
+                </li>
             </ul>
         </li>
         <li class="f-layer menu6 collapseItem">

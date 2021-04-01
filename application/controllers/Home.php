@@ -32,7 +32,11 @@ class Home extends MY_Controller
 			$str='<div class="param-block1">';
 			
 			foreach($sensorType as $key=>$val){
-				$str.='<p class="normal-param" style="color:'.$colors[$key%6].';">'.$val['ProductName'].'</p>';
+				if($val['ProductName']){
+					$str.='<p class="normal-param" style="color:'.$colors[$key%6].';">'.$val['ProductName'].'</p>';
+				}else{
+					$str.='<p class="normal-param" style="color:'.$colors[$key%6].';">タイプなし</p>';
+				}
 			}
 			$str.='</div>';
 			$str.='<div class="param-block2">';
