@@ -71,7 +71,7 @@ class Sensor_Model extends CI_Model {
         if ($this->db->table_exists("terminalhistory".$pid) )
         {
         // table exists some code run query
-            $sql="select count(*) as count from terminalhistory".$pid." where RTC=(select MAX(RTC) from terminalhistory".$pid.") and Voltage<3";    
+            $sql="select count(*) as count from terminalhistory".$pid." where RTC=(select MAX(RTC) from terminalhistory".$pid.") and Voltage<3.64";    
             $query = $this->db->query($sql);
             $result=$query->result_array();
             if($result[0]['count'])return true;
