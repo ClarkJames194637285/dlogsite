@@ -88,9 +88,10 @@ class Sensor_Model extends CI_Model {
         $this->db->select('p.ID,p.ProductName');
         $this->db->from('product p');
         $this->db->join('producttype t', 'p.TypeID=t.ID');
-        $this->db->join('productgroup g', 'p.UserID=g.UserID AND p.GroupID=g.ID');
+        $this->db->join('productgroup g', 'p.UserID=g.UserID AND p.GroupID=g.ID and g.isdelete=0');
         $this->db->where('p.RegionID', $mapID);
         $this->db->where('p.userID', $userId);
+        $this->db->where('p.isdelete', 0);
         $query = $this->db->get(); 
         return $query->result();
 	}
@@ -261,7 +262,7 @@ class Sensor_Model extends CI_Model {
         if ($this->db->table_exists("terminalhistory".$pid) )
         {
         // table exists some code run query
-            $sql="select p.ProductName,p.IMEI,t.TypeName from product as p left join producttype as t on p.TypeID=t.ID where p.ID=?";
+            $sql="select p.ProductName,p.IMEI,t.TypeName from product as p left join producttype as t on p.TypeID=t.ID where p.ID=? ";
             $query = $this->db->query($sql,$pid);
             return $query->result_array();
         }
