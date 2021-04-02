@@ -58,18 +58,6 @@
                 <div class="content-grid">
                     
                     <div class="admin-send-block flexlyr">
-                        <p class=" confirm-msg"><?=$this->lang->line('message_type');?></p>
-                        <p class=" confirm-input">
-                            <select name="msgtype" id="msgtype">
-                                <?php
-                                    foreach($messages as $key=>$val){
-                                        if($key==1){?> <option value="<?php echo $val['ID'];?>" selected><?php echo $val['TypeName'];?></option>
-                                       <?php }  else{ ?>
-                                            <option value="<?php echo $val['ID'];?>"><?php echo $val['TypeName'];?></option>
-                                    <?php }?>
-                                   <?php } ?>
-                            </select>
-                        </p>
                         <p class=" confirm-msg"><?=$this->lang->line('sender');?></p>
                         <p class=" confirm-input">
                             <input type="text" value="<?=$this->lang->line('system');?>" disabled="disabled">
@@ -82,11 +70,7 @@
                         
                         <button class="confirm-btn" onclick="sendMessage()"><?=$this->lang->line('send');?></button>
                     </div>
-                    
-
-
                 </div>
-
             </section>
             <div class="pg-footer">
                 <p class="footer-label">©︎2020 -  CUSTOM corporation</p>
@@ -95,21 +79,18 @@
     </div>
 <script>
     function sendMessage(){
-        var messageType=$('#msgtype option:selected').val();
         var message=$('#message').val();
         if(message=="") {alert('メッセージを入力します。');return;}
         $.ajax({
             url: 'Outgoing/recordMessage',
             type: 'post',
             data: {
-                messageType:messageType,
                 message:message
             },
             dataType: 'json',
             success: function(res) {
                 if(res==1){
                     alert('正常に送信されました。');
-                    window.location.href="<?php echo base_url()?>message/outbox";
                 }else{
                     alert('メール送信に失敗しました。');
                 }

@@ -1,60 +1,89 @@
 <?php
-/**
- * アラーム履歴
- *
- * page4
- * PHP Version >= 7.3.12
- *
- * @category   Components
- * @package    Dlog Cloud
- * @subpackage Dlog Cloud
- * @author     masa <masa@masa777.mydns.jp>
- * @license    MIT License
- * @link       https://masa777.mydns.jp
- * @since      1.0.0
- */
+    /**
+     * アラーム履歴
+     *
+     * page4
+     * PHP Version >= 7.3.12
+     *
+     * @category   Components
+     * @package    Dlog Cloud
+     * @subpackage Dlog Cloud
+     * @author     masa <masa@masa777.mydns.jp>
+     * @license    MIT License
+     * @link       https://masa777.mydns.jp
+     * @since      1.0.0
+     */
 
 
 
-$wbgtcheck = array(25, 31);
-$voltcheck = array(3.61, 3.64);
+    $wbgtcheck = array(25, 31);
+    $voltcheck = array(3.61, 3.64);
 
-$method = new Methodclass();
+    session_start();
+    if (!isset($_SESSION['user_name'])) {
+        header("Location: index.php");
+    }
+    $wbgtcheck = array(25, 31);
+    $voltcheck = array(3.61, 3.64);
+    
+    $method = new Methodclass();
+    switch ($method->chDevice()) {
+        case "mobile":
+            /* スマホ用の処理 */
+            $device = "mobile";
+            break;
+        case "tablet":
+            /* タブレット用の処理 */
+            $device = "tablet";
+            break;
+        case "pc":
+            /* パソコン用の処理 */
+            $device = "pc";
+            break;
+    }
+    
+    $user_id = $_SESSION['user_id'];
+    $user_name = $_SESSION['user_name'];
+    $tname = "product";
+    $fieldname = "ID";
+    $dlogdb = new Dbclass();
+    $dbpdo = $dlogdb->dbCi($this->config->item('host'),$this->config->item('username'),$this->config->item('password'), $this->config->item('dbname'));
+    
+    $his_list = $dlogdb->getHistoryData($dbpdo, $user_id);
+    //var_dump($his_list);
+    $aconf_tn = 'alarmconfig';
+    $like = '=';
+    $wfname = 'UserID';
+    $alarmconfig_res = $dlogdb->dbSelect($dbpdo, $aconf_tn, $like, $wfname, $user_id);
+    $alarmconfig_list = $alarmconfig_res->fetchAll(\PDO::FETCH_ASSOC);
+    //var_dump($alarmconfig_list);
+    $dlogdb = null;
 
 ?>
 
-
-
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
-    
-    <!-- BootStrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-    <!-- toast window -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    
-    
-    <!-- jquery dragable -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
-    <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <!-- img object fit -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/object-fit-images/3.2.3/ofi.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <!-- custom jscript -->
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/custom.js"></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/wow.min.js"></script>
     <!-- insert yamaguchi -->
     <script type="text/javascript">
-    // page2, 4, 5, 6 - search filter-type
+
     $(document).on('click','.srh-block li a',function () {
         // $(".trans-btn").removeClass('select-on');
         $(this).parent('li').toggleClass('view-on');
     });
+    function cgroup_syow(no) {
+        if ($('.cgroup-' + no).hasClass('view-on')) {
+            $('.cgroup-' + no).removeClass('view-on');
+            $('.cgroup-' + no).css('display', "none");
+        } else {
+            $('.cgroup-' + no).addClass('view-on');
+            $('.cgroup-' + no).css('display', "");
+        } 
+    }
     function tsyow() {
         if ($('.t-btn').hasClass('view-on')) {
             $('.btn-gtype-1').removeClass('view-on');
@@ -122,15 +151,12 @@ $method = new Methodclass();
         document.location.reload();
     },60000);
     </script>
+    <style>
+        p{
+            color:black;
+        }
+    </style>
 </head>
-
-<script>
-    objectFitImages();
-    $( function() {
-        $( "#map-layer" ).draggable();
-        $( ".senseor-icon" ).draggable().css("position", "absolute");
-    } );
-</script>
 
 <body id="pg_index" class="pg_index alarm-history">
     
@@ -257,14 +283,39 @@ $method = new Methodclass();
                                     echo '<p>' . date('Y/m/d', strtotime($val['RTC'])) . '</p>';
                                     echo '<p>' . date('A g:i s', strtotime($val['RTC'])) . '</p>';
                                     echo '</div>';
-                                    echo '<img src="./img/asset_24.png" alt="" class="more-infor">';
+                                    echo '<img src="'.base_url().'assets/img/asset_24.png" onclick="cgroup_syow(' . $key . ');"';
+                                    echo ' class="more-infor">';
+                                    echo '</div>';
+                                    echo '<div class="alarm-block flexlyr cgroup-' . $key . '" style="display: none">';
+                                    if (isset($alarmconfig_list)) {
+                                        echo '<table border=1><tbody>';
+                                            echo '<tr><td>センサー名:</td><td>' . $val['ProductName'] . '</td></tr>';
+                                            echo '<tr><td>センサーID:</td><td>' . $val['IMEI'] . '</td></tr>';
+                                            echo '<tr><td>製品名:</td><td>' . $val['Model'] . '</td></tr>';
+                                            echo '<tr><td>グループ名:</td><td>' . $val['GroupName'] . '</td></tr>';
+                                            echo '<tr><td>メモ:</td><td>' . $val['Description'] . '</td></tr>';
+                                        foreach ($alarmconfig_list as $akey => $aval) {
+                                            $aobject = explode('|', $aval['AObject']);
+                                            $av_tmp = explode('|', $aval['AEvent']);
+                                            $aevent1 = explode(',', $av_tmp[0]);
+                                            $aevent2 = explode(',', $av_tmp[1]);
+                                            if ($aval['AlarmType'] == '1' && $aobject[1] == $val['GroupID']) {
+                                                echo '<tr><td>アラーム１（低温）:</td><td>' . $aevent1[0] . '</td></tr>';
+                                                echo '<tr><td>アラーム１（高温）:</td><td>' . $aevent1[1] . '</td></tr>';
+                                                echo '<tr><td>アラーム２（低温）:</td><td>' . $aevent2[0] . '</td></tr>';
+                                                echo '<tr><td>アラーム２（高温）:</td><td>' . $aevent2[1] . '</td></tr>';
+                                                break;
+                                            }
+                                        }
+                                        echo '</tbody></table>';
+                                    }
                                     echo '</div>';
                                 }
                             }
                         }
                     }
                     ?>
-                    <a href="" class="compare-link">比較する</a>
+                    <!-- <a href="" class="compare-link">比較する</a> -->
                 </div>
 
                 <div class="side-bar flexlyr">
@@ -291,7 +342,7 @@ $method = new Methodclass();
                                 ?>
                             </ul>
                             <p class="set-view"><a onclick="allsyow();">全て表示する</a></p>
-                            <p class="set-view"><a href="<?php echo base_url()?>setting/listManagement">並び替える</a></p>
+                            <p class="set-view"><a href="<?php echo base_url()?>setting/listmanagement">並び替える</a></p>
                         </div>
 
                         <div class="srh-block">

@@ -26,69 +26,18 @@ class Outgoing extends MY_Controller
 	public function index()
 	{
 		$data['unread']=$this->unread_message;
-        $data['user_name']=$_SESSION['user_name'];
+		$data['user_name']=$_SESSION['user_name'];
         
-		$data['messages'] = $this->message->getMessageType();
 		$this->load->view('header',$data);
-		$this->load->view('message/outgoing',$data);
+		$this->load->view('message/outgoing');
 	}
 
 	//--------------------------------------------------------------------
 	public function recordMessage()
 	{
-
-		$data['messageType'] = $this->input->post('messageType');
 		$data['message'] = $this->input->post('message');
 		$data['FromAccount']=$_SESSION['user_name'];
 		$data['ToAccount']=$this->config->item('smtp_user');
-		$result1=$this->send($data);
-		if($result1==true){
-			echo $this->message->recordMessage($data);
-		}else{
-			echo 0;
-		}
-		// $this->sendMailtoAdmin($data);
-		
+		echo $this->message->recordMessage($data);
 	}
-	function send($data) {
-        
-        $this->load->library('email');
-		$config = array(
-			'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
-			'smtp_host' => 'localhost', 
-			'smtp_port' => 25,
-			'smtp_user' => 'clark@test.com',
-			'smtp_pass' => 'clark',
-			'mailtype' => 'text', //plaintext 'text' mails or 'html'
-			'smtp_timeout' => '4', //in seconds
-			'charset' => 'utf-8',
-			'wordwrap' => TRUE
-		);
-		
-		$this->email->initialize($config);
-        $from =$_SESSION['user_name'];
-		$subject = $data['messageType'];
-        $message = $data['message'] ;
-
-        
-        $this->email->set_newline("\r\n");
-        $this->email->from($config['smtp_user'],$from);
-        $this->email->to($config['smtp_user'],'admin');
-        $this->email->subject($subject);
-        $this->email->message($message);
-		try {
-			if($this->email->send()){
-				return true;
-			}else{
-				return false;
-			}
-			
-		}
-		catch (exception $e) {
-			//code to handle the exception
-			error_log($e->getMessage(), 3, APPPATH."logs/test.log");
-			return false;
-		}
-		
-    }
 }

@@ -9,14 +9,14 @@ $lang['send']                    = '送信';
 
 
 //inbox
-$lang['inbox_title']                               = 'メッセージ';
+$lang['inbox_title']                               = '受信トレイ';
 $lang['message_type']                    = 'メッセージの種類';
 $lang['receiver']                    = '受信者';
 $lang['time']                    = '時刻';
 $lang['operation']                    = '操作';
 
 //outbox
-$lang['outbox_title']                               = 'メッセージ';
+$lang['outbox_title']                               = '送信トレイ';
 $lang['system']                    = 'システム';
 //transmission type
 $lang['transmission_title']                               = 'メッセージ';

@@ -66,10 +66,7 @@ class Message extends CI_Model {
 	 * @return object the user object
 	 */
 	public function recordMessage($data) {
-		
-
 		$data = array(
-			'MessageTypeID'   => $data['messageType'],
 			'MessageTitle'      => 'test',
 			'MessageContent'   => $data['message'],
 			'FromAccount'=>  $data['FromAccount'],

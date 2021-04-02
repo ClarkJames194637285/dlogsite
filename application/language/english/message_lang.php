@@ -9,13 +9,13 @@ $lang['send']                    = 'Send';
 
 
 //inbox
-$lang['inbox_title']                               = 'Message';
+$lang['inbox_title']                               = 'InBox';
 $lang['receiver']                    = 'Receiver';
 $lang['time']                    = 'Time';
 $lang['operation']                    = 'Operation';
 
 //outbox
-$lang['outbox_title']                               = 'Message';
+$lang['outbox_title']                               = 'OutBox';
 
 //transmission type
 $lang['transmission_title']                               = 'Message';

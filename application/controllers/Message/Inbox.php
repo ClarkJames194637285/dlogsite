@@ -16,9 +16,6 @@ class Inbox extends MY_Controller
         if (!isset($_SESSION['user_id'])) {
 			redirect('/');
 		}
-        if($this->role!=="99999"){
-            redirect('message/outgoing');
-        }
         if($this->conn){
             $this->insertMessage($this->differMessage());
             $this->deleteMail();
@@ -30,8 +27,6 @@ class Inbox extends MY_Controller
         } else {
 			$this->lang->load(array('menu','message'),'japanese');
         }
-        
-        // $this->load->library("EmailReader");
     }
 
     public function index() {
