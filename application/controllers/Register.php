@@ -68,7 +68,7 @@ class Register extends CI_Controller
     public function username_check($username)
     {
         if ($this->user_model->getUserByEmailAndUsername($this->input->post('email'), $username)) {
-            $this->form_validation->set_message(__FUNCTION__, 'The Email and Username is already existed!');
+            $this->form_validation->set_message(__FUNCTION__, 'このメールアドレスは既に登録されています。');
 
             return false;
         }
