@@ -154,7 +154,6 @@ class MappingMonitoring extends MY_Controller
 				// echo $VH.'<br>';
 				$HD=(100-$hum)*$VH/100;
 				// echo $HD.'<br>';
-
 				$wbgt=$a[0]+$a[1]*$temp+$a[2]*($hum*$a[3]*exp(($a[4]*$temp)/($a[5]+$temp)))+$b[0]*pow(($temp-$b[1]),2)+$b[2]*pow(($hum-$b[3]),2);
 				$mapSensor.='<div class="sensorGroup" id="sensor-0'.$n++.'">';
 					$mapSensor.='<div class="senseor-icon icon-01 layer1">

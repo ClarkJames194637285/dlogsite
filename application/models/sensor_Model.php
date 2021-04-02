@@ -16,7 +16,7 @@ class Sensor_Model extends CI_Model {
        if ($this->db->table_exists("terminalhistory".$pid) )
         {
         // table exists some code run query
-            $sql="select PID,Temperature,Humidity,Pressure,RTC from terminalhistory".$pid." where RTC=(select MAX(RTC) from terminalhistory".$pid.")";    
+            $sql="select PID,Temperature,Humidity,Pressure,RTC from terminalhistory".$pid."  where RTC=(select MAX(RTC) from terminalhistory".$pid.")";    
             $query = $this->db->query($sql);
             return $query->result_array();
         }
@@ -94,11 +94,12 @@ class Sensor_Model extends CI_Model {
         return $query->result_array();
 	}
     public function getMapSensor($mapID,$userId) {
-        
-        $this->db->select('ID,ProductName');
-        $this->db->from('product');
-        $this->db->where('RegionID', $mapID);
-        $this->db->where('userID', $userId);
+        $this->db->select('p.ID,p.ProductName');
+        $this->db->from('product p');
+        $this->db->join('producttype t', 'p.TypeID=t.ID');
+        $this->db->join('productgroup g', 'p.UserID=g.UserID AND p.GroupID=g.ID');
+        $this->db->where('p.RegionID', $mapID);
+        $this->db->where('p.userID', $userId);
         $query = $this->db->get(); 
         return $query->result();
 	}
@@ -140,7 +141,7 @@ class Sensor_Model extends CI_Model {
      * 
      */
     public function allSensorPid($id){
-        $sql="select p.ID,p.GroupID,p.ProductName,p.RegionID from product as p JOIN producttype AS t ON p.TypeID=t.ID where p.UserID=? ORDER BY ReceiverID";
+        $sql="select p.ID,p.GroupID,p.ProductName,p.RegionID from product as p JOIN producttype AS t ON p.TypeID=t.ID JOIN productgroup AS g ON p.GroupID=g.ID AND p.UserID=g.UserID where p.UserID=? ORDER BY ReceiverID";
         $query = $this->db->query($sql,$id);
         return $query->result_array();
     }
