@@ -91,7 +91,7 @@ if (isset($_POST['login'])) {
             $cookiestr .= ',password:' . $password;
             $cookiestr .= ',TimeZone:' . $time_zone;
             $cookiestr .= ',resaved:' . $_POST['resaved'];
-            $expiration_time = time() + 60 * 60 * 24 * 30;
+            $expiration_time = time() + 60 * 60 * 24;
             setcookie('BSCM', $cookiestr, $expiration_time);
             if (isset($_COOKIE['BSCM'])) {
                 $get_cookie = $_COOKIE['BSCM'];
@@ -102,6 +102,7 @@ if (isset($_POST['login'])) {
                 }
                 $resaved = "checked";
             }
+            setcookie('register', 'false');
             redirect(base_url().'home');
             exit;
         } else {
@@ -119,7 +120,12 @@ if (isset($_POST['login'])) {
             $keyval = explode(':', $cookie_arry[$i]);
             $get_data[$keyval[0]] = $keyval[1];
         }
-        $resaved = "checked";
+        // $resaved = "checked";
+    }
+    if (isset($_COOKIE['register'])) {
+        $register=$_COOKIE['register'];
+    }else{
+        $register="false";
     }
 }
 ?>
@@ -204,19 +210,14 @@ if (isset($_POST['login'])) {
                         <input type="text" class="input-form langCng" 
                         placeholder="<?=$this->lang->line('username');?>" name="user_name"
                         <?php
-                        if (isset($get_data)&&$get_data['resaved']) {
+                        if (isset($get_data)&&$get_data['resaved']&&$register=="false") {
                             echo 'value="' . $get_data['user_name'] . '"';
                         }
                         ?> required>
                         <!-- <input type="text" class="input-form langCng" 
                         lang="en" placeholder="User Name" name="user_name_en" required> -->
                         <input type="password" class="input-form langCng" 
-                        placeholder="<?=$this->lang->line('password');?>" width="100%" name="password"
-                        <?php
-                        if (isset($get_data)&&$get_data['resaved']) {
-                            echo 'value="' . $get_data['password'] . '"';
-                        }
-                        ?> required>
+                        placeholder="<?=$this->lang->line('password');?>" width="100%" name="password" value="" required>
                         <!-- <input type="password" class="input-form langCng" 
                         lang="en" placeholder="Password" name="password_en" required> -->
                         <select name="Timezone" id="Timezone">
@@ -270,9 +271,9 @@ if (isset($_POST['login'])) {
                             <!-- <p class="langCng" lang="en">Remember Me</p> -->
                             <?php
                             echo '<input id="resaved" name="resaved" onChange="check_valset(this);"';
-                            echo 'type="checkbox" checked="';
-                            if (isset($resaved)) {
-                                echo $resaved;
+                            echo 'type="checkbox" ';
+                            if (isset($get_data['resaved'])&&$get_data['resaved']==1) {
+                                echo "checked='checked'";
                             }
                             echo '" value=';
                             if (isset($get_data)) {
