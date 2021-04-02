@@ -27,6 +27,8 @@ class Register extends CI_Controller
         } else {
             $this->lang->load('auth','japanese');
         }
+        $this->session->sess_destroy();
+        unset($_COOKIE['BSCM']);
     }
 
     public function index()

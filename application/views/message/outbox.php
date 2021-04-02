@@ -80,7 +80,7 @@
         /* border: blue; */
         outline: #29292e;
         }
-        .flexlyr{
+        .revise{
             justify-content:flex-start;
         }
         .cell1{
@@ -115,7 +115,7 @@
                 <div class="content-grid">
                     
                     <div class="message_grid">
-                        <div class="grid-header flexlyr">
+                        <div class="grid-header flexlyr revise">
                             <div class="hd-cell cell1">
                                 <label class="container1">
                                     <input type="checkbox" id="select-all">
