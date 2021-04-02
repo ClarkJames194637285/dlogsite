@@ -34,6 +34,7 @@ class Passforget extends CI_Controller
         } else {
             $this->lang->load('auth','japanese');
         }
+        setcookie('register', 'true');
     }
 
 	public function index()
