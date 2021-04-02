@@ -132,17 +132,17 @@ class Sensor_Model extends CI_Model {
      * 
      */
     public function allSensorPid($id){
-        $sql="select p.ID,p.GroupID,p.ProductName,p.RegionID from product as p JOIN producttype AS t ON p.TypeID=t.ID JOIN productgroup AS g ON p.GroupID=g.ID AND p.UserID=g.UserID and g.isdelete=0 where p.UserID=? ORDER BY ReceiverID";
+        $sql="select p.ID,p.GroupID,p.ProductName,p.RegionID from product as p JOIN producttype AS t ON p.TypeID=t.ID JOIN productgroup AS g ON p.GroupID=g.ID AND p.UserID=g.UserID and g.isdelete=0 where p.UserID=? and p.isdelete=0 ORDER BY ReceiverID";
         $query = $this->db->query($sql,$id);
         return $query->result_array();
     }
     public function getSensorType($id){
-        $sql="select t.TypeName as ProductName,count(*) as count from product as p join producttype as t on p.TypeID=t.ID JOIN productgroup AS g ON p.UserID=g.UserID AND p.GroupID=g.ID and g.isdelete=0 where p.UserID=? GROUP BY t.TypeName";
+        $sql="select t.TypeName as ProductName,count(*) as count from product as p join producttype as t on p.TypeID=t.ID JOIN productgroup AS g ON p.UserID=g.UserID AND p.GroupID=g.ID and g.isdelete=0 where p.UserID=? and p.isdelete=0 GROUP BY t.TypeName";
         $query = $this->db->query($sql,$id);
         return $query->result_array();
     }
     public function getSensorDatas($id){
-        $sql="select count(*) as y,t.TypeName as name from product as p join producttype as t on p.TypeID=t.ID JOIN productgroup AS g ON p.GroupID=g.ID AND p.UserID=g.UserID and g.isdelete=0 where p.UserID=? GROUP BY TypeID";
+        $sql="select count(*) as y,t.TypeName as name from product as p join producttype as t on p.TypeID=t.ID JOIN productgroup AS g ON p.GroupID=g.ID AND p.UserID=g.UserID and g.isdelete=0 where p.UserID=? and p.isdelete=0 GROUP BY TypeID";
         $query = $this->db->query($sql,$id);
         return $query->result_array();
     }
@@ -222,7 +222,7 @@ class Sensor_Model extends CI_Model {
     }
    
     public function allUserPid($id){
-        $sql="select p.ID from product as p JOIN producttype AS t ON p.TypeID=t.ID JOIN productgroup AS g ON p.UserID=g.UserID AND p.GroupID=g.ID where p.UserID=? and g.isdelete=0";
+        $sql="select p.ID from product as p JOIN producttype AS t ON p.TypeID=t.ID JOIN productgroup AS g ON p.UserID=g.UserID AND p.GroupID=g.ID where p.UserID=? and g.isdelete=0 and p.isdelete=0";
         $query = $this->db->query($sql,$id);
         return $query->result_array();
     }
