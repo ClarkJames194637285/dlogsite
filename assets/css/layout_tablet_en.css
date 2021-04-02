@@ -850,8 +850,8 @@
 .mapping .map-box .map-layer {
     z-index: 100;
     /* transform: translate(-50%, -50%); */
-    top: 50%;
-    left: 50%;
+    /* top: 50%;
+    left: 50%; */
 }
 .mapping .map-box .map-layer img {
     width: 100%;

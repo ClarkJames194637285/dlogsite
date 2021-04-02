@@ -23,25 +23,26 @@ class MappingMonitoring extends MY_Controller
 	}
 	public function index()
 	{
-		$data['unread']=$this->unread_message;
-        $data['user_name']=$_SESSION['user_name'];
-		$id=$this->sensor_Model->getUserId($_SESSION['user_name']);
-		$data['maps']=$this->sensor_Model->getMap($id[0]['ID']);
-		if(empty($data['maps'])){
-			$data['mapUrl']="";
-			$data['mapName']="地図なし";
-		}else{
-			foreach($data['maps'] as $key=>$val){
-				$data['mapName']=$val['name'];
-				$receive=$this->mapSensor($val['ID']);
-				break;
+			$data['unread']=$this->unread_message;
+			$data['user_name']=$_SESSION['user_name'];
+			$id=$this->sensor_Model->getUserId($_SESSION['user_name']);
+			$data['maps']=$this->sensor_Model->getMap($id[0]['ID']);
+			$data['unregSensor']=$this->unregisteredSensor($data['maps']);
+			if(empty($data['maps'])){
+				$data['mapUrl']="";
+				$data['mapName']="地図なし";
+			}else{
+				foreach($data['maps'] as $key=>$val){
+					$data['mapName']=$val['name'];
+					$receive=$this->mapSensor($val['ID']);
+					break;
+				}
 			}
-		}
-		$data['sensors'].=$receive['sensorName'];
-		$data['mapSensors']=$receive['mapSensors'];
-		$data['mapUrl']=$receive['mapUrl'];
-		$this->load->view('mappingMonitoring',$data);
-		
+			$data['sensors'].=$receive['sensorName'];
+			$data['mapSensors']=$receive['mapSensors'];
+			$data['mapUrl']=$receive['mapUrl'];
+			$this->load->view('mappingMonitoring',$data);
+			
 	}
 
 	//--------------------------------------------------------------------
@@ -56,10 +57,75 @@ class MappingMonitoring extends MY_Controller
 		$data['mapName']=$receive['mapName'];
 		echo json_encode($data);
 	}
+
+	public function unregisteredSensor($maps)
+	{
+		$n=1;
+		$a = array(1.672,0.7401,1.798,10.19,5.071,364.1);
+		$b = array(-0.000666,7.196,-3.892,-1.297);
+		$data['user_name']=$_SESSION['user_name'];
+		$id=$this->sensor_Model->getUserId($_SESSION['user_name']);
+		$maps=$this->sensor_Model->getMap($id[0]['ID']);
+		$pid=$this->sensor_Model->allSensorPid($id[0]['ID']);
+		foreach($pid as $sensorval){
+			$check=false;
+			foreach($maps as $map){
+					if($sensorval['RegionID']==$map['ID']){
+						$check=true;break;
+					}
+			}
+			if(!$check){
+				$sensorInfo=$this->sensor_Model->SensorInfo($sensorval['ID']);
+				if(empty($sensorInfo))continue;
+				if($sensorInfo[0]['Humidity']>0&&($sensorInfo[0]['Humidity']<100)){
+					$hum=$sensorInfo[0]['Humidity'];
+				}else{
+					$mapSensor.='<div class="sensorGroup senseor-icon icon-03" id="sensor-0'.$n++.'">
+					<div class="all-circle '.$this->tempComp($temp).'"><p>'.round($temp,1).'<span>℃</span></p></div>
+				</div>';continue;
+				}
+				$temp=$sensorInfo[0]['Temperature'];
+				$ET=6.1078*pow(10,(7.5*$temp/($temp+273.15)));
+				$VH=217*$ET/($temp+273.15);
+				// echo $VH.'<br>';
+				$HD=(100-$hum)*$VH/100;
+				// echo $HD.'<br>';
+				$wbgt=$a[0]+$a[1]*$temp+$a[2]*($hum*$a[3]*exp(($a[4]*$temp)/($a[5]+$temp)))+$b[0]*pow(($temp-$b[1]),2)+$b[2]*pow(($hum-$b[3]),2);
+				$mapSensor.='<div class="sensorGroup " id="sensor-0'.$n++.'">';
+					$mapSensor.='<div class="senseor-icon icon-01 layer1">
+						<div class="top-circle '.$this->tempComptop($temp).'"><p>'.round($temp,1).'<span>℃</span></p></div>
+						<div class="bottom-circle '.$this->humidityComp($hum).'"><p>'.round($hum*100,1).'<span>%</span></p></div>
+						<div class="heat_level '.$this->tempComp($HD).'"><img src="'.base_url().'assets/img/asset_35.png" alt=""></div>
+					</div>';
+					$mapSensor.='<div class="senseor-icon icon-01 layer2" style="display:none;">
+						<div class="top-circle '.$this->tempComptop($temp).'"></div>
+						<div class="bottom-circle '.$this->humidityComp($hum).'"></div>
+						<div class="heat_level '.$this->tempComp($HD).'"><img src="'.base_url().'assets/img/asset_35.png" alt=""></div>
+					</div>';
+					$mapSensor.='<div class="senseor-icon icon-03 layer3" style="display:none;">
+						<div class="all-circle '.$this->tempComp($temp).'"><p>'.round($temp,1).'<span>℃</span></p></div>
+					</div>';
+					$mapSensor.='<div class="senseor-icon icon-06 layer4" style="display:none;">
+						<div class="all-circle '.$this->tempComp($HD).'"><img src="'.base_url().'assets/img/asset_35.png" alt=""></div>
+					</div>';
+					$mapSensor.='<div class="senseor-icon icon-05 layer5" style="display:none;">
+							<div class="all-circle '.$this->VhComp($VH).'"><p>'.round($VH,1).'<br><span>mg/m3</span></p></div>
+						</div>';
+					$mapSensor.='</div>';
+			}
+		}
+		return $mapSensor;
+	}
+
+	public function registerSensor()
+	{
+
+	}
+
 	public function mapSensor($mapId){
 		$a = array(1.672,0.7401,1.798,10.19,5.071,364.1);
 		$b = array(-0.000666,7.196,-3.892,-1.297);
-        $data['user_name']=$_SESSION['user_name'];
+		$data['user_name']=$_SESSION['user_name'];
 		$id=$this->sensor_Model->getUserId($_SESSION['user_name']);
 		$data['maps']=$this->sensor_Model->getMap($id[0]['ID']);
 		$n=1;
