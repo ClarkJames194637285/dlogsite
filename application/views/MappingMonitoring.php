@@ -120,17 +120,20 @@
                         
                     </div>
                     <!-- Main Map Block -->
-                    <div class="map-box">
+                    <div class="map-box d-flex">
                         <p class="zoom-btn plus" id="plus">➕</p>
                         <p class="zoom-btn minus" id="minus">➖</p>
-                        <div class="map-layer zoom3" id="map-layer" style="margin:auto;margin-top:100px;">
+                        <div class="map-layer zoom3 col-md-9" id="map-layer" style="margin:auto;margin-top:100px;">
                             <!-- bg -->
                             <?php echo $mapUrl;?>
 
                             <?php echo $mapSensors;?>
 
                         </div>
-
+                        <div class="map-layer zoom3 col-md-3" id="unregistered-layer">
+                            <?php echo $unregSensor;?>
+                            
+                        </div>
                         <!-- Toast message -->
                         <div class="toast" data-delay="3000" id="max-zoom">
                             <div class="toast-header">Zoom</div>
