@@ -91,17 +91,15 @@
                     <a href="<?php echo base_url()?>message/outgoing"><?=$this->lang->line('outgoing');?></a>
                     <!-- <a href="page5_1.php">送信メッセージ（管理者に）</a> -->
                 </li>
-                <?php if($this->role=="99999"){?>
-                    <li class="menu5_2">
-                        <a href="<?php echo base_url()?>message/inbox"><?=$this->lang->line('inboxMessage');?></a>
-                    </li>
-                <?php }?>
+                <!-- <li class="menu5_2">
+                    <a href="<?php echo base_url()?>message/inbox"><?=$this->lang->line('inboxMessage');?></a>
+                </li> -->
                 <li class="menu5_3">
                     <a href="<?php echo base_url()?>message/outbox"><?=$this->lang->line('outboxMessage');?></a>
                 </li>
-                <li class="menu5_4">
+                <!-- <li class="menu5_4">
                     <a href="<?php echo base_url()?>message/transmissionType"><?=$this->lang->line('config');?></a>
-                </li>
+                </li> -->
             </ul>
         </li>
     </ul>
