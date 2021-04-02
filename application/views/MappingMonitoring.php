@@ -339,6 +339,7 @@
             },
             success:function(responce){
                 data=JSON.parse(responce);
+                $('#unregistered-layer').replaceWith('<div class="map-layer zoom3 col-md-3" id="unregistered-layer">'+data['unregSensor']+'</div>');
                 $('#sensorName').replaceWith(data['sensorName']);
                 $('#mapSensor').replaceWith(data['mapSensors']);
                 $('#mapUrl').replaceWith(data['mapUrl']);
@@ -387,6 +388,44 @@
         $('.layer3').css('display','none');
         $('.layer4').css('display','none');
         $('.layer5').css('display','none');
+    }
+    function registerSensor(id){
+        var mapId="";
+        $('.map-block a').each(function() {
+            var check=this.classList.contains('select-on');
+            if(check){
+                var id=this.getAttribute('id');
+                mapId=id.substring(3);
+            } 
+        });
+        $.ajax({
+                url:"<?php echo base_url()?>MappingMonitoring/registerSensor",
+                type:'post',
+                data:{
+                    'mapId':mapId,
+                    'pid':id
+                },
+                success:function(responce){
+                    if(responce==1){
+                        alert('正常にマップに登録されました。');
+                        $.ajax({
+                            url:"<?php echo base_url()?>MappingMonitoring/showMapSensor",
+                            type:'post',
+                            data:{
+                                'mapId':mapId
+                            },
+                            success:function(responce){
+                                data=JSON.parse(responce);
+                                $('#unregistered-layer').replaceWith('<div class="map-layer zoom3 col-md-3" id="unregistered-layer">'+data['unregSensor']+'</div>');
+                                $('#mapSensor').replaceWith(data['mapSensors']);
+                                $( "#map-layer" ).draggable();
+                                $( ".sensorGroup" ).draggable().css("position", "absolute");
+                            }
+                        })
+                    }
+                    else {alert('マップに登録が失敗しました。');}
+                }
+            })
     }
     </script>
 </body>

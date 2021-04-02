@@ -51,6 +51,9 @@ class MappingMonitoring extends MY_Controller
 		$mapId = $this->input->post('mapId');
 		$data=[];
 		$receive=$this->mapSensor($mapId);
+		$id=$this->sensor_Model->getUserId($_SESSION['user_name']);
+		$data['maps']=$this->sensor_Model->getMap($id[0]['ID']);
+		$data['unregSensor']=$this->unregisteredSensor($data['maps']);
 		$data['sensorName'].=$receive['sensorName'];
 		$data['mapSensors']=$receive['mapSensors'];
 		$data['mapUrl']=$receive['mapUrl'];
@@ -81,7 +84,7 @@ class MappingMonitoring extends MY_Controller
 				if($sensorInfo[0]['Humidity']>0&&($sensorInfo[0]['Humidity']<100)){
 					$hum=$sensorInfo[0]['Humidity'];
 				}else{
-					$mapSensor.='<div class="sensorGroup senseor-icon icon-03" id="sensor-0'.$n++.'">
+					$mapSensor.='<div class="sensorGroup senseor-icon icon-03" id="sensor-0'.$n++.'" onclick="registerSensor('.$sensorval['ID'].')">
 					<div class="all-circle '.$this->tempComp($temp).'"><p>'.round($temp,1).'<span>℃</span></p></div>
 				</div>';continue;
 				}
@@ -91,7 +94,7 @@ class MappingMonitoring extends MY_Controller
 				$HD=(100-$hum)*$VH/100;
 				// echo $HD.'<br>';
 				$wbgt=$a[0]+$a[1]*$temp+$a[2]*($hum*$a[3]*exp(($a[4]*$temp)/($a[5]+$temp)))+$b[0]*pow(($temp-$b[1]),2)+$b[2]*pow(($hum-$b[3]),2);
-				$mapSensor.='<div class="sensorGroup " id="sensor-0'.$n++.'">';
+				$mapSensor.='<div class="sensorGroup " id="sensor-0'.$n++.'" onclick="registerSensor('.$sensorval['ID'].')">';
 					$mapSensor.='<div class="senseor-icon icon-01 layer1">
 						<div class="top-circle '.$this->tempComptop($temp).'"><p>'.round($temp,1).'<span>℃</span></p></div>
 						<div class="bottom-circle '.$this->humidityComp($hum).'"><p>'.round($hum*100,1).'<span>%</span></p></div>
@@ -119,7 +122,10 @@ class MappingMonitoring extends MY_Controller
 
 	public function registerSensor()
 	{
-
+		$mapId = $this->input->post('mapId');
+		$pid = $this->input->post('pid');
+		$result=$this->sensor_Model->updateMapInfo($pid,$mapId);
+		echo $result;
 	}
 
 	public function mapSensor($mapId){

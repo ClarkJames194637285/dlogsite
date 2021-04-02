@@ -24,24 +24,24 @@ class SubAccountManagement extends MY_Controller
 
 	public function index()
 	{
-		$this->config->load('db_config');
-		$this->load->library('DbClass');
-		$this->load->library('MethodClass');
-		$this->config->load('openSSL_config');
-		$data['unread']=$this->unread_message;
-        $data['user_name']=$this->session->userdata('user_name');
-        $this->load->view('header',$data);
-		$this->load->view('setting/SubAccountManagement');
+				$this->config->load('db_config');
+				$this->load->library('DbClass');
+				$this->load->library('MethodClass');
+				$this->config->load('openSSL_config');
+				$data['unread']=$this->unread_message;
+				$data['user_name']=$this->session->userdata('user_name');
+				$this->load->view('header',$data);
+				$this->load->view('setting/SubAccountManagement');
 	}
 	public function edit()
 	{
-		$this->config->load('db_config');
-		$this->load->library('DbClass');
-		$this->load->library('MethodClass');
-		$this->config->load('openSSL_config');
-		$data['user_name']=$this->session->userdata('user_name');
-        $this->load->view('header',$data);
-		$this->load->view('setting/SubAccountManagement_Edit');
+				$this->config->load('db_config');
+				$this->load->library('DbClass');
+				$this->load->library('MethodClass');
+				$this->config->load('openSSL_config');
+				$data['user_name']=$this->session->userdata('user_name');
+				$this->load->view('header',$data);
+				$this->load->view('setting/SubAccountManagement_Edit');
 	}
 	
 }
