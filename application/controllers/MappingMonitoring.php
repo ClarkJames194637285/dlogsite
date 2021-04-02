@@ -76,6 +76,7 @@ class MappingMonitoring extends MY_Controller
 			}
 			if(!$check){
 				$sensorInfo=$this->sensor_Model->SensorInfo($sensorval['ID']);
+				$temp=$sensorInfo[0]['Temperature'];
 				if(empty($sensorInfo))continue;
 				if($sensorInfo[0]['Humidity']>0&&($sensorInfo[0]['Humidity']<100)){
 					$hum=$sensorInfo[0]['Humidity'];
@@ -84,7 +85,6 @@ class MappingMonitoring extends MY_Controller
 					<div class="all-circle '.$this->tempComp($temp).'"><p>'.round($temp,1).'<span>℃</span></p></div>
 				</div>';continue;
 				}
-				$temp=$sensorInfo[0]['Temperature'];
 				$ET=6.1078*pow(10,(7.5*$temp/($temp+273.15)));
 				$VH=217*$ET/($temp+273.15);
 				// echo $VH.'<br>';
@@ -138,6 +138,7 @@ class MappingMonitoring extends MY_Controller
 			$mapSensor='';
 			foreach($sensors as $sensor){
 				$sensorInfo=$this->sensor_Model->SensorInfo($sensor->ID);
+				$temp=$sensorInfo[0]['Temperature'];
 				if(empty($sensorInfo))continue;
 				$sensorName.='<li class="view-on"><a>'.$sensor->ProductName.'</a></li>';
 				if($sensorInfo[0]['Humidity']>0&&($sensorInfo[0]['Humidity']<100)){
@@ -147,7 +148,7 @@ class MappingMonitoring extends MY_Controller
 					<div class="all-circle '.$this->tempComp($temp).'"><p>'.round($temp,1).'<span>℃</span></p></div>
 				</div>';continue;
 				}
-				$temp=$sensorInfo[0]['Temperature'];
+				
 				$ET=6.1078*pow(10,(7.5*$temp/($temp+273.15)));
 				$VH=217*$ET/($temp+273.15);
 				// echo $VH.'<br>';
