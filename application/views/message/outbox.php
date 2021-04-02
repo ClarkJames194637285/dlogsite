@@ -123,7 +123,7 @@
                                 </label>
                             </div>
                             <div class="hd-cell cell5"><?=$this->lang->line('time');?></div>
-                            <div class="hd-cell cell2"><?=$this->lang->line('message');?></div>
+                            <div class="hd-cell cell2"><?=$this->lang->line('content');?></div>
                             <div class="hd-cell cell6"><?=$this->lang->line('operation');?></div>
                         </div>
                        
