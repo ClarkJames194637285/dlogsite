@@ -6,12 +6,12 @@ class User extends CI_Controller
 	function __construct() {
         parent:: __construct();
         $this->load->helper('url');
-		$this->load->helper('cookie');
-		$this->load->library(array('session'));
-		$this->load->model('user_model');
-		$this->load->helper('language');
-		$site_lang=$this->session->userdata('lang');
-		if ($site_lang) {
+				$this->load->helper('cookie');
+				$this->load->library(array('session'));
+				$this->load->model('user_model');
+				$this->load->helper('language');
+				$site_lang=$this->session->userdata('lang');
+				if ($site_lang) {
             $this->lang->load('auth',$site_lang);
         } else {
             $this->lang->load('auth','japanese');
