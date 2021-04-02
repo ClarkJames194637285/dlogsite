@@ -34,7 +34,25 @@
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/wow.min.js"></script>
 
 </head>
-
+<style>
+      .confirm-btn{
+        text-align: center;
+        display: inline-block;
+        /* width: 19rem; */
+        padding: 0 2rem;
+        margin: 4rem auto;
+        background: #2A3A62;
+        border-radius: 8px;
+        font-family: HKGProNW6;
+        font-size: 2rem;
+        line-height: 1.64;
+        color: #fff;
+      }
+      .title{
+        margin:6vw;
+        font-size:30px;
+      }
+  </style>
 <body id="pg_index" class="pg_index page1_1-confirm">
 
     <div class="pg-header flexlyr">
@@ -53,9 +71,10 @@
         </nav>
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">ユーザー設定</h1>
+            <h1 class="page-title"><?=$this->lang->line('register_title');?></h1>
             <section class="main-content flexlyr">
                 <div class="content-grid">
+                    <p class="title">アップロードに成功しました！</p>
                     <a href="<?php echo base_url();?>" class="confirm-btn">ホームに戻る</a>
                 </div>
             </section>
