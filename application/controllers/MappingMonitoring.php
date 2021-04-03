@@ -205,6 +205,8 @@ class MappingMonitoring extends MY_Controller
 		$data['sensorName']=$sensorName;
 		return $data;
 	}
+
+	
 	public function dateTimeMap(){
 		$mapId = $this->input->post('mapId');
 		$datetime = $this->input->post('datetime');

@@ -72,7 +72,7 @@
                 <div class="side-bar flexlyr side-fix">
                     <ul class="view-type-btn-grid">
                         <li class="view-type-btn"><a href="<?php echo base_url()?>sensorMonitoring" class="type1 active"></a></li>
-                        <li class="view-type-btn"><a href="<?php echo base_url()?>alarmHistory" class="type2 "></a></li>
+                        <li class="view-type-btn"><a href="<?php echo base_url()?>sensorMonitoring/listSensor" class="type2 "></a></li>
                     </ul>
                     <!-- search filter type - フィルター -->
                     <div class="side-bar-block srh-filter-block flexlyr">
