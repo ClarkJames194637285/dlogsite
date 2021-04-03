@@ -872,25 +872,25 @@
     height: auto;
 }
 .mapping .map-box .map-layer.zoom1 {
-    width: calc( 50rem * 1.2 );
+    width: calc( 50rem * 0.6 );
     height: auto;
 }
 .mapping .map-box .map-layer.zoom2 {
-    width: calc( 50rem * 1.4 );
+    width: calc( 50rem * 0.8 );
     height: auto;
 }
 .mapping .map-box .map-layer.zoom3 {
-    width: calc( 50rem * 1.6 );
+    width: calc( 50rem * 1 );
     height: auto;
     font-size: 0.8rem;
 }
 .mapping .map-box .map-layer.zoom4 {
-    width: calc( 50rem * 1.9 );
+    width: calc( 50rem * 1.3 );
     height: auto;
     font-size: 0.9rem;
 }
 .mapping .map-box .map-layer.zoom5 {
-    width: calc( 50rem * 2 );
+    width: calc( 50rem * 1.6 );
     height: auto;
     font-size: 1rem;
 }
