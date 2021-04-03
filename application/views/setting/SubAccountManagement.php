@@ -25,7 +25,7 @@ if (isset($_GET['M'])) {
             break;
         case 'Edit':
             $up_data = array(
-                'Password' => openssl_encrypt($_POST["Password"], $cipher, $key),
+                'Password' => openssl_encrypt($_POST["Password"], $this->config->item('cipher') ,$this->config->item('key')),
                 'RoleID' => bindec($_POST['RoleID']),
                 'CreateTime' => $ctime->format('Y-m-d H:i:s')
             );
@@ -34,7 +34,7 @@ if (isset($_GET['M'])) {
         case 'Add':
             $insert_data = array(
                 'UserName' => $_POST['UserName'],
-                'Password' => openssl_encrypt($_POST["Password"], $cipher, $key),
+                'Password' => openssl_encrypt($_POST["Password"], $this->config->item('cipher') ,$this->config->item('key')),
                 'RoleID' => bindec($_POST['RoleID']),
                 'CreateTime' => $ctime->format('Y-m-d H:i:s')
             );
@@ -51,9 +51,9 @@ if (isset($_GET['M'])) {
 }
 
 // userdata取得
-$like = ' LIKE ';
+$like = ' = ';
 $order = ' ORDER BY FailedCount ASC';
-$userlist = $dlogdb->dbSelect($dbpdo, $tname, ' = ', 'GroupID', "16", $order);
+$userlist = $dlogdb->dbSelect($dbpdo, $tname, $like, 'GroupID', "%", $order);
 // List読み込み
 $res = $userlist->fetchAll(\PDO::FETCH_ASSOC);
 $row = $res;

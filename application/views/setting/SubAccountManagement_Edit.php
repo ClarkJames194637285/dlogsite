@@ -21,7 +21,7 @@ if (isset($_GET['M'])) {
             $res = $userlist->fetchAll(\PDO::FETCH_ASSOC);
             $row = $res;
             $subuser_name = $row[0]['UserName'];
-            $subuser_pass = openssl_decrypt($row[0]["Password"], $cipher, $key);
+            $subuser_pass = openssl_decrypt($row[0]["Password"], $this->config->item('cipher') ,$this->config->item('key'));
             
             for ($i = 5; $i > 0; $i --) {
                 $strval = '00000' . (string)decbin($row[0]['RoleID']);

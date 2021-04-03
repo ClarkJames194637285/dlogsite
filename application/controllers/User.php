@@ -20,7 +20,6 @@ class User extends CI_Controller
 
 	public function index()
 	{
-		$tr=$_COOKIE['BSCM'];
 		$this->config->load('db_config');
 		$this->load->library('DbClass');
 		$this->load->library('MethodClass');

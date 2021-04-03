@@ -14,6 +14,9 @@ class MappingManagement extends MY_Controller
 				if (!isset($_SESSION['user_id'])) {
 					redirect('/');
 				}
+				if($this->roleid[2]!=="checked"){
+					$this->load->view('nonaccess');
+				}
 				$this->load->helper('language');
 				$site_lang=$this->session->userdata('lang');
 				if ($site_lang) {
