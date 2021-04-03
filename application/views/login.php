@@ -109,6 +109,20 @@ if (isset($_POST['login'])) {
             $text = "ユーザー名とパスワードが一致しません。";
             $alert = "<script type='text/javascript'>alert('". $text. "');</script>";
             echo $alert;
+            if (isset($_COOKIE['BSCM'])) {
+                $get_cookie = $_COOKIE['BSCM'];
+                $cookie_arry = explode(',', $get_cookie);
+                for ($i = 0; $i < count($cookie_arry); $i ++) {
+                    $keyval = explode(':', $cookie_arry[$i]);
+                    $get_data[$keyval[0]] = $keyval[1];
+                }
+                // $resaved = "checked";
+            }
+            if (isset($_COOKIE['register'])) {
+                $register=$_COOKIE['register'];
+            }else{
+                $register="false";
+            }
             // <div class="alert alert-danger" role="alert">ユーザー名とパスワードが一致しません。</div> -->
         }
     }
