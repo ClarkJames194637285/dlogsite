@@ -92,7 +92,7 @@ class Passforget extends CI_Controller
         $this->email->initialize($config);
         $link = base_url() . "Passforget/reset?payload={$payload}&token={$token}";
         $from = $this->config->item('smtp_user');
-        $message = "<a href='{$link}'>Click here to reset your password</a>";
+        $message = "<a href='{$link}'>パスワードをリセットするには、ここをクリックしてください。</a>";
 
         $this->email->set_newline("\r\n");
         $this->email->from($from, '[Dlog] System');
