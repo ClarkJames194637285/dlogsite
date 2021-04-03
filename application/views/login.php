@@ -76,13 +76,7 @@ if (isset($_POST['login'])) {
             
             $password_registered = openssl_decrypt($password_registered,$this->config->item('cipher') ,$this->config->item('key'));
         }
-    
-        // データベースの切断
-        $result->close();
-        if ($password == $password_registered && $password != '') {
-            // ログイン認証成功の処理
-            //session_start();
-            session_regenerate_id(true); // セッションIDをふりなおす
+        session_regenerate_id(true); // セッションIDをふりなおす
             $_SESSION['user_id'] = $user_id;
             $_SESSION['user_name'] = $user_name; // ユーザー名をセッション変数にセット
             $_SESSION['TimeZone'] = $time_zone;
@@ -103,6 +97,12 @@ if (isset($_POST['login'])) {
                 $resaved = "checked";
             }
             setcookie('register', 'false');
+        // データベースの切断
+        $result->close();
+        if ($password == $password_registered && $password != '') {
+            // ログイン認証成功の処理
+            //session_start();
+            
             redirect(base_url().'home');
             exit;
         } else {
