@@ -81,8 +81,8 @@ class MappingMonitoring extends MY_Controller
 				$sensorInfo=$this->sensor_Model->SensorInfo($sensorval['ID']);
 				$temp=$sensorInfo[0]['Temperature'];
 				if(empty($sensorInfo)){
-					$mapSensor.='<div class="sensorGroup senseor-icon icon-06" id="sensor-0'.$n++.'">
-					<div class="all-circle none"><p><span>オフライン</span></p></div>
+					$mapSensor.='<div class="sensorGroup senseor-icon icon-06" onclick="registerSensor('.$sensorval['ID'].')">
+					<div class="all-circle none"><p><span>'.$sensorval['ProductName'].'</span></p></div>
 				</div>';continue;
 				}
 				if($sensorInfo[0]['Humidity']>0&&($sensorInfo[0]['Humidity']<100)){
@@ -154,8 +154,8 @@ class MappingMonitoring extends MY_Controller
 				$sensorInfo=$this->sensor_Model->SensorInfo($sensor->ID);
 				$temp=$sensorInfo[0]['Temperature'];
 				if(empty($sensorInfo)){
-					$mapSensor.='<div class="sensorGroup senseor-icon icon-06" id="sensor-0'.$n++.'">
-					<div class="all-circle none"><p><span>オフライン</span></p></div>
+					$mapSensor.='<div class="sensorGroup senseor-icon icon-06"  id="sensor-0'.$n++.'">
+					<div class="all-circle mapnone"><p><span>'.$sensor->ProductName.'</span></p></div>
 				</div>';continue;
 				}
 				

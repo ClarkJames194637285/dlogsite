@@ -776,7 +776,7 @@
 .mapping .infor-block {
     position: relative;
     display: inline-block;
-    z-index: 10000;
+    z-index: 1;
 }
 .mapping .block-title {
     position: relative;
@@ -832,7 +832,6 @@
     background: #0000FF;
 }
 .mapping .manual {
-    padding: 3rem 1rem;
     font-size: 1.4rem;
     line-height: 1.5;
 }

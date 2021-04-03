@@ -73,7 +73,6 @@ class Register extends CI_Controller
 
             return false;
         }
-
         return true;
     }
 

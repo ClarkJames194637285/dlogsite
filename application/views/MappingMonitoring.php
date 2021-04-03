@@ -62,12 +62,24 @@
         color: white;
         font-size: 15px;
     }
+    .mapnone{
+        background: #3f3f3f;
+        color: white;
+        font-size: 15px;
+    }
+    #unregistered-layer{
+        margin-top:120px;
+        display: flex;
+        justify-content: start;
+        flex-wrap: wrap;
+    }
 </style>
 <script>
     objectFitImages();
     $( function() {
-        $( "#map-layer" ).draggable();
+        $( "#map-layer" ).draggable({ containment: "window" });
         $( ".sensorGroup" ).draggable().css("position", "absolute");
+        $('.none').parent().css('position','static');
     } );
 </script>
 
@@ -125,17 +137,17 @@
                         
                     </div>
                     <!-- Main Map Block -->
-                    <div class="map-box">
+                    <div class="map-box" style="display:inline-flex;">
                         <p class="zoom-btn plus" id="plus">➕</p>
                         <p class="zoom-btn minus" id="minus">➖</p>
-                        <div class="map-layer zoom3" id="map-layer" style="margin:auto;margin-top:100px;top:0px;left:0px;">
+                        <div class="map-layer zoom3 " id="map-layer" style="margin:auto;margin-top:100px;top:0px;left:10px;">
                             <!-- bg -->
                             <?php echo $mapUrl;?>
 
                             <?php echo $mapSensors;?>
 
                         </div>
-                        <div class="map-layer zoom3" id="unregistered-layer">
+                        <div class="map-layer zoom1" id="unregistered-layer" style="width:20%">
                             <?php echo $unregSensor;?>
                             
                         </div>
@@ -345,7 +357,8 @@
             success:function(responce){
                 data=JSON.parse(responce);
                 if(data['unregSensor']){
-                    $('#unregistered-layer').replaceWith('<div class="map-layer zoom3 col-md-3" id="unregistered-layer">'+data['unregSensor']+'</div>');
+                    $('#unregistered-layer').replaceWith('<div class="map-layer zoom1" id="unregistered-layer">'+data['unregSensor']+'</div>');
+                    $('.none').parent().css('position','static');
                 }
                 $('#sensorName').replaceWith(data['sensorName']);
                 $('#mapSensor').replaceWith(data['mapSensors']);
@@ -424,7 +437,8 @@
                             success:function(responce){
                                 data=JSON.parse(responce);
                                 if(data['unregSensor']){
-                                    $('#unregistered-layer').replaceWith('<div class="map-layer zoom3 col-md-3" id="unregistered-layer">'+data['unregSensor']+'</div>');
+                                    $('#unregistered-layer').replaceWith('<div class="map-layer zoom1 " id="unregistered-layer">'+data['unregSensor']+'</div>');
+                                    $('.none').parent().css('position','static');
                                 }
                                 $('#mapSensor').replaceWith(data['mapSensors']);
                                 $( "#map-layer" ).draggable();
