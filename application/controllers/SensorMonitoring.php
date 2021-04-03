@@ -32,11 +32,7 @@ class SensorMonitoring extends MY_Controller
 			$sensorinfo['Group']=$this->sensor_Model->GetGroupId($id[0]['ID']);
 			$this->load->helper('language');
 			$site_lang=$this->session->userdata('lang');
-			if ($site_lang) {
-				$this->lang->load(array('menu','monitoring'),$site_lang);
-					} else {
-				$this->lang->load(array('menu','monitoring'),'japanese');
-					}
+			
 			$this->load->view('header',$data);
 			$this->load->view('sensorMonitoring',$sensorinfo);
 	}
@@ -386,5 +382,194 @@ class SensorMonitoring extends MY_Controller
 		
 		// print_r($count);
 		echo json_encode($count);
+	}
+
+	public function listSensor(){
+		/**
+		 * constant array for calculating the WBGT
+		 */
+		$a = array(1.672,0.7401,1.798,10.19,5.071,364.1);
+		$b = array(-0.000666,7.196,-3.892,-1.297);
+		$data['unread']=$this->unread_message;
+		$data['user_name']=$_SESSION['user_name'];
+
+		/**
+		 * the function which get the groupId from product table
+		 */
+		$id=$this->sensor_Model->getUserId($_SESSION['user_name']);
+		$groupId=$this->sensor_Model->GetGroupId($id[0]['ID']);
+		
+		/**
+		 * the function for getting the ID,GroupID,ProductName  from product table
+		 */
+		$data=$this->sensor_Model->allSensorPid($id[0]['ID']);
+		$Sensors='<div id="content">
+					<div class="alarm-header flexlyr">
+						<p>グループ名<br>センサー名</p>
+						<p>測定値 / アラート</p>
+						<p>電池/電波</p>
+						<p>更新日時</p>
+					</div>';
+		foreach($groupId as $groupval){
+			foreach($data as $key=>$val){
+				if($groupval['ID']==$val['GroupID']){
+					$listSensor=$this->sensor_Model->listSensor($val['ID']);
+				$groupName=$this->sensor_Model->getGroupName($val['GroupID']);
+				$temp=$listSensor[0]['Temperature'];
+				$hum=$listSensor[0]['Humidity'];
+				if(empty($listSensor)){
+					$Sensors.='<div style="background-color:lightgrey !important;" class="alarm-block flexlyr offline group'.$val['GroupID'].'">
+					<div class="label">
+									<label class="container1">
+										<input type="checkbox">
+										<span class="checkmark"></span>
+									</label>
+					<p>'.$groupName[0]['GroupName'].'<br>'.$val['ProductName'].'</p></div></div>';
+					continue;
+				}
+				
+				else{
+					if(($hum<0)||($hum>100)){
+						if($temp>25)
+							$Sensors.='<div class="alarm-block flexlyr warning group'.$val['GroupID'].' temperature">
+										<div class="label">
+											<label class="container1">
+												<input type="checkbox">
+												<span class="checkmark"></span>
+											</label>
+							<p>'.$groupName[0]['GroupName'].'<br>'.$val['ProductName'].'</p></div>';
+						else
+							$Sensors.='<div class="alarm-block flexlyr group'.$val['GroupID'].' temperature">
+										<div class="label">
+											<label class="container1">
+												<input type="checkbox">
+												<span class="checkmark"></span>
+											</label>
+							<p>'.$groupName[0]['GroupName'].'<br>'.$val['ProductName'].'</p></div>';
+						$Sensors.='
+							<div class="sensor-cell flexlyr">';
+							if($temp>40)
+								$Sensors.='<p class="sensor-item temp temperature-red">'.round($temp,1).'<span>℃</span></p>';
+							else if($temp>25)
+								$Sensors.='<p class="sensor-item temp temperature-amb">'.round($temp,1).'<span>℃</span></p>';
+							else
+								$Sensors.='<p class="sensor-item temp temperature-green">'.round($temp,1).'<span>℃</span></p>';
+
+								$Sensors.='<p class="sensor-item"></p>';
+
+								$Sensors.='<p class="sensor-item"></p>';
+							
+								$Sensors.='<p class="sensor-item"></p>';
+							
+								$Sensors.='</div>';
+
+						$bool=$this->sensor_Model->requireBattery($val['ID']);
+						if(!$bool){
+						$Sensors.='
+							<div class="battery-cell">
+								<p class="battery-box battery-full"></p>';
+								}
+								else
+						$Sensors.='<div class="battery-cell reqbattery">
+								<p class="battery-box battery-low"></p>
+								<!-- <p class="battery-box battery-empty"></p> -->
+							';	
+							$date=explode(" ",$listSensor[0]['RTC']);
+							$time=explode(".",$date[1]);
+							$time1=explode(":",$time[0]);
+						$Sensors.='</div>
+							<div class="update-time">
+								<p>'.$date[0].'</p>
+								<p>';
+								if($time1[0]<12)$Sensors.='AM';
+								else $Sensors.='PM';
+								$Sensors.='&nbsp;'.$time[0].'</p>
+							</div>';
+					
+						$Sensors.='<img src="'.base_url().'/assets/img/asset_24.png" alt="" class="more-infor">
+						</div>';continue;
+					}
+					$ET=6.1078*pow(10,(7.5*$temp/($temp+273.15)));
+					$VH=217*$ET/($temp+273.15);
+					$HD=(100-$hum)*$VH/100;
+
+					$wbgt=$a[0]+$a[1]*$temp+$a[2]*($hum*$a[3]*exp(($a[4]*$temp)/($a[5]+$temp)))+$b[0]*pow(($temp-$b[1]),2)+$b[2]*pow(($hum-$b[3]),2);
+					if($wbgt>25)
+						$Sensors.='<div class="alarm-block flexlyr warning group'.$val['GroupID'].' humidity">
+									<div class="label">
+										<label class="container1">
+											<input type="checkbox">
+											<span class="checkmark"></span>
+										</label>
+						<p>'.$groupName[0]['GroupName'].'<br>'.$val['ProductName'].'</p></div>';
+					else
+						$Sensors.='<div class="alarm-block flexlyr group'.$val['GroupID'].' humidity">
+									<div class="label">
+										<label class="container1">
+											<input type="checkbox">
+											<span class="checkmark"></span>
+										</label>
+						<p>'.$groupName[0]['GroupName'].'<br>'.$val['ProductName'].'</p></div>';
+					$Sensors.='
+						<div class="sensor-cell flexlyr">';
+						if($temp>40)
+							$Sensors.='<p class="sensor-item temp temperature-red">'.round($temp,1).'<span>℃</span></p>';
+						else if($temp>25)
+							$Sensors.='<p class="sensor-item temp temperature-amb">'.round($temp,1).'<span>℃</span></p>';
+						else
+							$Sensors.='<p class="sensor-item temp temperature-green">'.round($temp,1).'<span>℃</span></p>';
+
+						if($HD>28)	
+							$Sensors.='<p class="sensor-item heat-index heat-red">'.round($HD,1).'<span>℃</span></p>';
+						else if($HD>25)
+							$Sensors.='<p class="sensor-item heat-index heat-amb">'.round($HD,1).'<span>℃</span></p>';
+						else
+							$Sensors.='<p class="sensor-item heat-index heat-green">'.round($HD,1).'<span>℃</span></p>';
+
+						if($hum>50)
+							$Sensors.='<p class="sensor-item humidity humidity-green">'.round($hum*100).'<span>%</span></p>';
+						else
+							$Sensors.='<p class="sensor-item humidity humidity-amb">'.round($hum*100).'<span>%</span></p>';
+
+						if($VH>5.9)
+							$Sensors.='<p class="sensor-item saturation saturation-amb">'.round($VH,1).'<span>g/m3</span></p>';
+						else
+							$Sensors.='<p class="sensor-item saturation saturation-green">'.round($VH,1).'<span>g/m3</span></p>';
+							$Sensors.='</div>';
+
+					$bool=$this->sensor_Model->requireBattery($val['ID']);
+					if(!$bool){
+					$Sensors.='
+						<div class="battery-cell">
+							<p class="battery-box battery-full"></p>';
+							}
+							else
+					$Sensors.='<div class="battery-cell reqbattery">
+							<p class="battery-box battery-low"></p>
+							<!-- <p class="battery-box battery-empty"></p> -->
+						';	
+						$date=explode(" ",$listSensor[0]['RTC']);
+						$time=explode(".",$date[1]);
+						$time1=explode(":",$time[0]);
+					$Sensors.='</div>
+						<div class="update-time">
+							<p>'.$date[0].'</p>
+							<p>';
+							if($time1[0]<12)$Sensors.='AM';
+							else $Sensors.='PM';
+							$Sensors.='&nbsp;'.$time[0].'</p>
+						</div>';
+				}	
+				$Sensors.='<img src="'.base_url().'/assets/img/asset_24.png" alt="" class="more-infor">
+				</div>';
+				}
+			}
+		}
+		$id=$this->sensor_Model->getUserId($_SESSION['user_name']);
+		$sensorinfo['Group']=$this->sensor_Model->GetGroupId($id[0]['ID']);
+		$Sensors.='<a href="" class="compare-link">比較する</a></div>';
+		$sensorinfo['Sensors'] = $Sensors;
+		$this->load->view('header',$data);
+		$this->load->view('listSensor',$sensorinfo);
 	}
 }

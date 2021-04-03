@@ -69,6 +69,7 @@
     }
     #unregistered-layer{
         margin-top:120px;
+        padding-left:35px;
         display: flex;
         justify-content: start;
         flex-wrap: wrap;
