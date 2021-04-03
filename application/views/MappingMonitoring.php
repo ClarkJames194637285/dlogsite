@@ -60,12 +60,16 @@
     .none{
         background: #3f3f3f;
         color: white;
-        font-size: 15px;
+        font-size: 12px;
+        text-align:center;
+        padding:1px;
     }
     .mapnone{
         background: #3f3f3f;
         color: white;
-        font-size: 15px;
+        font-size: 12px;
+        text-align:center;
+        padding:1px;
     }
     #unregistered-layer{
         margin-top:120px;
