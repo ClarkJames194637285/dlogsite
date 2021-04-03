@@ -80,11 +80,10 @@ class Register extends CI_Controller
     public function captcha_check($captcha)
     {
         if (!Captcha::is_valid($captcha)) {
-            $this->form_validation->set_message(__FUNCTION__, '承認コードが正しくないです。');
+            $this->form_validation->set_message(__FUNCTION__, '認証コード入力が正しくありません。');
 
             return false;
         }
-
         return true;
     }
 }
