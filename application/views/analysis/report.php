@@ -517,7 +517,7 @@ $dlogdb = null;
                                     ?>
                             </ul>
                             <p class="set-view"><a onclick="allsyow();">全て表示する</a></p>
-                            <p class="set-view"><a href="page1_8.php">並び替える</a></p>
+                            <p class="set-view"><a href="<?php echo base_url()?>setting/listmanagement">並び替える</a></p>
                         </div>
 
                         <div class="srh-block">

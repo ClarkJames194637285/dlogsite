@@ -148,7 +148,7 @@ class Sensor_Model extends CI_Model {
         return $query->result_array();
     }
     public function getSensorData($id){
-        $sql="select ProductName as name from product where UserID=? ORDER BY ReceiverID";
+        $sql="select p.ProductName as name from product as p join producttype as t on p.TypeID=t.ID JOIN productgroup AS g ON p.GroupID=g.ID AND p.UserID=g.UserID and g.isdelete=0 where p.UserID=? and p.isdelete=0 ORDER BY ReceiverID";
         $query = $this->db->query($sql,$id);
         return $query->result_array();
     }
