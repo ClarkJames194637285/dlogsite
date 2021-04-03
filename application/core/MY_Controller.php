@@ -6,6 +6,7 @@ class MY_Controller  extends CI_Controller{
     // imap server connection
     public $conn;
     public $role;
+    public $roleid;
     // inbox storage and inbox message count
     private $inbox;
     public $msg_cnt;
@@ -31,6 +32,15 @@ class MY_Controller  extends CI_Controller{
             redirect('/');
         }
         $this->role = $this->user_model->get_role($_SESSION['user_id']);
+        for ($i = 5; $i > 0; $i --) {
+            $strval = '00000' . (string)decbin($this->role);
+            $toi = $i * -1;
+            if ((int)substr($strval, $toi, 1) == 1) {
+                $this->roleid[$i] = "checked";
+            } else {
+                $this->roleid[$i] = "";
+            }
+        }
         if($this->role=="99999"){
             $data=$this->mailserver->getdata($_SESSION['user_name']);
             $this->user=$data['loginID'];

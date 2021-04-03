@@ -210,7 +210,8 @@ if (isset($_POST['login'])) {
                         <input type="text" class="input-form langCng" 
                         placeholder="<?=$this->lang->line('username');?>" name="user_name"
                         <?php
-                        if (isset($get_data)&&$get_data['resaved']&&$register=="false") {
+                        if (isset($get_data)) {
+                            if($get_data['resaved']&&$register=="false")
                             echo 'value="' . $get_data['user_name'] . '"';
                         }
                         ?> required>
@@ -272,7 +273,8 @@ if (isset($_POST['login'])) {
                             <?php
                             echo '<input id="resaved" name="resaved" onChange="check_valset(this);"';
                             echo 'type="checkbox" ';
-                            if (isset($get_data['resaved'])&&$get_data['resaved']==1) {
+                            if (isset($get_data['resaved'])) {
+                                if($get_data['resaved']==1)
                                 echo "checked='checked'";
                             }
                             echo '" value=';

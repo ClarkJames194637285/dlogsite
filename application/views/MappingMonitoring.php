@@ -344,7 +344,9 @@
             },
             success:function(responce){
                 data=JSON.parse(responce);
-                $('#unregistered-layer').replaceWith('<div class="map-layer zoom3 col-md-3" id="unregistered-layer">'+data['unregSensor']+'</div>');
+                if(data['unregSensor']){
+                    $('#unregistered-layer').replaceWith('<div class="map-layer zoom3 col-md-3" id="unregistered-layer">'+data['unregSensor']+'</div>');
+                }
                 $('#sensorName').replaceWith(data['sensorName']);
                 $('#mapSensor').replaceWith(data['mapSensors']);
                 $('#mapUrl').replaceWith(data['mapUrl']);
@@ -421,7 +423,9 @@
                             },
                             success:function(responce){
                                 data=JSON.parse(responce);
-                                $('#unregistered-layer').replaceWith('<div class="map-layer zoom3 col-md-3" id="unregistered-layer">'+data['unregSensor']+'</div>');
+                                if(data['unregSensor']){
+                                    $('#unregistered-layer').replaceWith('<div class="map-layer zoom3 col-md-3" id="unregistered-layer">'+data['unregSensor']+'</div>');
+                                }
                                 $('#mapSensor').replaceWith(data['mapSensors']);
                                 $( "#map-layer" ).draggable();
                                 $( ".sensorGroup" ).draggable().css("position", "absolute");

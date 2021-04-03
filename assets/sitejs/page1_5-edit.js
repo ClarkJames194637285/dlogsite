@@ -8,18 +8,20 @@ function imeiChenge() {
     var typename = document.getElementById('TypeName');
     var imei = document.getElementById('IMEI');
     var type_id = document.getElementById('TypeID');
-    var dobj = JSON.stringify(jdata);
-    dobj = JSON.parse(dobj);
-    var typenameback = typename.textContent;
-    for (var i = 0; i < dobj.length; i++) {
-        var jd = JSON.stringify(dobj[i]);
-        jd = JSON.parse(jd);
-        if (jd.IMEI.trim() == imei.value.trim()) {
-            typename.textContent = jd.TypeName;
-            type_id.value = jd.TypeID;
-            break;
-        } else {
-            typename.textContent = "";
+    if(jdata){
+        var dobj = JSON.stringify(jdata);
+        dobj = JSON.parse(dobj);
+        var typenameback = typename.textContent;
+        for (var i = 0; i < dobj.length; i++) {
+            var jd = JSON.stringify(dobj[i]);
+            jd = JSON.parse(jd);
+            if (jd.IMEI.trim() == imei.value.trim()) {
+                typename.textContent = jd.TypeName;
+                type_id.value = jd.TypeID;
+                break;
+            } else {
+                typename.textContent = "";
+            }
         }
     }
     if (typename.textContent == "") {
