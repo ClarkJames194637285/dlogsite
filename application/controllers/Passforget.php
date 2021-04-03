@@ -24,7 +24,7 @@ class Passforget extends CI_Controller
         $this->load->helper('cookie');
         $this->load->library(array('session'));
         $this->load->model('user_model');
-
+        $this->load->config('email');
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<li class="alert alert-danger">', '</li>');
         $this->load->helper('language');
@@ -62,7 +62,7 @@ class Passforget extends CI_Controller
         $this->load->model('user_model');
 
         if (!$this->sendMail($email, $username)) {
-            $this->session->set_flashdata('error', 'メール転送に失敗しました。');
+            $this->session->set_flashdata('error', 'メール送信に失敗しました。');
 
             if (ENVIRONMENT !== 'production') {
                 var_dump($this->email->print_debugger());
@@ -79,7 +79,17 @@ class Passforget extends CI_Controller
     {
         $this->load->library('email');
         ['payload' => $payload, 'token' => $token] = $this->generateToken(['username' => $username, 'email' => $email]);
-
+        $config = array(
+			'protocol' => $this->config->item('protocol'),
+			'smtp_host' => $this->config->item('smtp_host'),
+			'smtp_port' => $this->config->item('smtp_port'),
+			'smtp_user' => $this->config->item('smtp_user'),
+			'smtp_pass' => $this->config->item('smtp_pass'),
+			'charset' => $this->config->item('charset'),
+			'wordwrap'=> TRUE,
+			'mailtype' => 'html'
+		);
+        $this->email->initialize($config);
         $link = base_url() . "Passforget/reset?payload={$payload}&token={$token}";
         $from = $this->config->item('smtp_user');
         $message = "<a href='{$link}'>Click here to reset your password</a>";
@@ -90,7 +100,11 @@ class Passforget extends CI_Controller
         $this->email->subject('[Dlog] PWリセット');
         $this->email->message($message);
 
-        return $this->email->send();
+        if($this->email->send()){
+			return true;
+		}else{
+			return false;
+		}
     }
 
 	public function reset()
@@ -164,12 +178,12 @@ class Passforget extends CI_Controller
 	private function verifyToken(string $payload_string, string $received_token)
     {
         $token = crypt($payload_string, self::SALT);
-        $this->throw_if($token != $received_token, new TokenException('Token is invalid'));
+        $this->throw_if($token != $received_token, new TokenException('トークンが無効です。'));
 
         $json = base64_decode($payload_string);
         $payload = json_decode($json, true);
-        $this->throw_if($payload == null, new TokenException('Payload is invalid'));
-        $this->throw_if($payload['exp'] < time(), new TokenException('Token is expired'));
+        $this->throw_if($payload == null, new TokenException('ペイロードが無効です。'));
+        $this->throw_if($payload['exp'] < time(), new TokenException('トークンの有効期限が切れています。'));
 
         return $payload['data'];
     }
@@ -190,7 +204,7 @@ class Passforget extends CI_Controller
     public function username_check($username)
     {
         if (!$this->user_model->getUserByEmailAndUsername($this->input->post('email'), $username)) {
-            $this->form_validation->set_message(__FUNCTION__, 'The Email and Username is not existed!');
+            $this->form_validation->set_message(__FUNCTION__, 'メールアドレスまたはパスワードが登録と一致しません。');
 
             return false;
         }
@@ -201,15 +215,10 @@ class Passforget extends CI_Controller
     public function captcha_check($captcha)
     {
         if (!Captcha::is_valid($captcha)) {
-            $this->form_validation->set_message(__FUNCTION__, '承認コードが正しくないです。');
+            $this->form_validation->set_message(__FUNCTION__, '認証コード入力が正しくありません。');
 
             return false;
         }
-
         return true;
     }
-}
-
-class TokenException extends Exception
-{
 }
