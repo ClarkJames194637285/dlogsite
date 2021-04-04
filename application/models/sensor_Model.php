@@ -11,7 +11,7 @@ class Sensor_Model extends CI_Model {
 		
        if ($this->db->table_exists("terminalhistory".$pid) )
         {
-            $sql="select PID,Temperature,Humidity,Pressure,RTC from terminalhistory".$pid."  where RTC=(select MAX(RTC) from terminalhistory".$pid.")";    
+            $sql="select PID,Temperature,Humidity,Pressure,RTC from terminalhistory".$pid."  where ID=(select MAX(ID) from terminalhistory".$pid.")";    
             $query = $this->db->query($sql);
             return $query->result_array();
         }
@@ -28,9 +28,15 @@ class Sensor_Model extends CI_Model {
         return  $this->db->update('product',$updated_data); 
     }
     public function getHistoryData($id) {
-        $sql="SELECT * FROM (SELECT th.ID AS ID, th.UUID AS UUID, th.PID AS PID, th.Temperature AS Temperature, th.Humidity AS Humidity, th.Pressure AS Pressure, th.Voltage AS Voltage, th.Battery AS Battery, th.RSSI AS RSSI, th.RTC AS RTC, pd.IMEI AS IMEI, pd.ProductName AS ProductName, pd.TerminalDataInterval AS TerminalDataInterval, pg.GroupName AS GroupName, pg.SortID AS SortID, pt.TypeName AS TypeName, pt.Model AS Model, pd.isdelete AS Pddel FROM `product` AS pd INNER JOIN `productgroup` AS pg ON pd.GroupID=pg.ID AND pg.isdelete=0 INNER JOIN `producttype` AS pt ON pd.TypeID=pt.ID AND pt.isdelete=0 INNER JOIN terminalhistory AS th ON pd.ID=th.PID WHERE pd.UserID=".$id." AND th.ID in (SELECT max(ID) FROM terminalhistory GROUP BY PID )) AS thd WHERE Pddel=0 ORDER BY SortID";    
-        $query = $this->db->query($sql);
-        return $query->result_array();
+        if ($this->db->table_exists("terminalhistory".$id) ) {
+            $sql="SELECT th.ID AS ID, th.UUID AS UUID, th.PID AS PID, th.Temperature AS Temperature, th.Humidity AS Humidity, th.Pressure AS Pressure, th.Voltage AS Voltage, th.Battery AS Battery, th.RSSI AS RSSI, th.RTC AS RTC, pd.IMEI AS IMEI, pd.ProductName AS ProductName, pd.TerminalDataInterval AS TerminalDataInterval, pg.GroupName AS GroupName, pg.SortID AS SortID, pt.TypeName AS TypeName, pt.Model AS Model, pd.isdelete AS Pddel FROM `product` AS pd INNER JOIN `productgroup` AS pg ON pd.GroupID=pg.ID AND pg.isdelete=0 INNER JOIN `producttype` AS pt ON pd.TypeID=pt.ID AND pt.isdelete=0 INNER JOIN `terminalhistory".$id."` AS th ON pd.ID=th.PID WHERE th.ID in (SELECT max(ID) FROM `terminalhistory".$id."` )";    
+            $query = $this->db->query($sql);
+            return $query->result_array();
+        }
+        else
+        {
+            return false;
+        }
      }
 
     public function dateTimeMap($pid,$datetime) {
@@ -57,7 +63,7 @@ class Sensor_Model extends CI_Model {
         if ($this->db->table_exists("terminalhistory".$pid) )
         {
         // table exists some code run query
-            $sql="select count(*) as count from terminalhistory".$pid." where RTC=(select MAX(RTC) from terminalhistory".$pid.") and Voltage<3.64";    
+            $sql="select count(*) as count from terminalhistory".$pid." where ID=(select MAX(ID) from terminalhistory".$pid.") and Voltage<3.64";    
             $query = $this->db->query($sql);
             $result=$query->result_array();
             if($result[0]['count'])return true;
@@ -240,7 +246,7 @@ class Sensor_Model extends CI_Model {
         if ($this->db->table_exists("terminalhistory".$pid) )
         {
         // table exists some code run query
-            $sql="select  PID,Temperature,Humidity,Voltage,RTC from terminalhistory".$pid." where RTC=(select MAX(RTC) from terminalhistory".$pid.")";
+            $sql="select  PID,Temperature,Humidity,Voltage,RTC from terminalhistory".$pid." where ID=(select MAX(ID) from terminalhistory".$pid.")";
             $query = $this->db->query($sql);
             return $query->result_array();
         }

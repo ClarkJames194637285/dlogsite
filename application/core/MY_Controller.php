@@ -41,22 +41,21 @@ class MY_Controller  extends CI_Controller{
                 $this->roleid[$i] = "";
             }
         }
-        if($this->role=="99999"){
-            $data=$this->mailserver->getdata($_SESSION['user_name']);
-            $this->user=$data['loginID'];
-            $this->pass=$data['loginPW'];
-            // $this->user = $this->config->item('smtp_user');
-            // $this->pass = $this->config->item('smtp_pass');
-            $this->connect();
-            if(!empty($this->conn)){
-                $this->inbox();
-                $this->differMessage();
-                $this->unread_message=$this->unread_message;
-            }else{
-                $this->load->view('mailserver_error');
-            }
-            $errors = imap_errors();
+        $data=$this->mailserver->getdata($_SESSION['user_name']);
+        $this->user=$data['loginID'];
+        $this->pass=$data['loginPW'];
+        // $this->user = $this->config->item('smtp_user');
+        // $this->pass = $this->config->item('smtp_pass');
+        $this->connect();
+        if(!empty($this->conn)){
+            $this->inbox();
+            $this->differMessage();
+            $this->unread_message=$this->unread_message;
         }
+        // else{
+        //     $this->load->view('mailserver_error');
+        // }
+        $errors = imap_errors();
     }
     public function index()
 	{

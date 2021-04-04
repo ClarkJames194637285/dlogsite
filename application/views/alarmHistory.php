@@ -14,15 +14,6 @@
      * @since      1.0.0
      */
 
-
-
-    $wbgtcheck = array(25, 31);
-    $voltcheck = array(3.61, 3.64);
-
-    session_start();
-    if (!isset($_SESSION['user_name'])) {
-        header("Location: index.php");
-    }
     $wbgtcheck = array(25, 31);
     $voltcheck = array(3.61, 3.64);
     
@@ -48,8 +39,11 @@
     $fieldname = "ID";
     $dlogdb = new Dbclass();
     $dbpdo = $dlogdb->dbCi($this->config->item('host'),$this->config->item('username'),$this->config->item('password'), $this->config->item('dbname'));
-    
-    $his_list = $dlogdb->getHistoryData($dbpdo, $user_id);
+
+    // foreach($pid as $id){
+    //     $list = $dlogdb->getHistoryData($dbpdo, $user_id,$id);
+    // }
+    // $his_list = $dlogdb->getHistoryData($dbpdo, $user_id);
     //var_dump($his_list);
     $aconf_tn = 'alarmconfig';
     $like = '=';
