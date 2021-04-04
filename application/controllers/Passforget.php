@@ -31,10 +31,8 @@ class Passforget extends CI_Controller
         $site_lang=$this->session->userdata('lang');
 		if ($site_lang) {
             $this->lang->load('auth',$site_lang);
-            $this->lang->load('form_validation',$site_lang);
         } else {
             $this->lang->load('auth','japanese');
-            $this->lang->load('form_validation',$site_lang);
         }
         setcookie('register', 'true');
     }
@@ -147,12 +145,12 @@ class Passforget extends CI_Controller
 
             return $this->load->view('pass_forget_reset', compact('payload', 'token'));
         } catch (\Throwable $exception) {
-            $this->session->set_flashdata('error', 'Oops!');
+            $this->session->set_flashdata('error', 'おっとっと！');
 
             return $this->load->view('pass_forget_reset', compact('payload', 'token'));
         }
 
-        $this->session->set_flashdata('error', 'Oops!');
+        $this->session->set_flashdata('error', 'おっとっと！');
 
         return $this->load->view('pass_forget_reset', compact('payload', 'token'));
     }
