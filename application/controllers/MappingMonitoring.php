@@ -99,25 +99,14 @@ class MappingMonitoring extends MY_Controller
 				// echo $HD.'<br>';
 				$wbgt=$a[0]+$a[1]*$temp+$a[2]*($hum*$a[3]*exp(($a[4]*$temp)/($a[5]+$temp)))+$b[0]*pow(($temp-$b[1]),2)+$b[2]*pow(($hum-$b[3]),2);
 				$mapSensor.='<div class="sensorGroup " id="sensor-0'.$n++.'" onclick="registerSensor('.$sensorval['ID'].')">';
-					$mapSensor.='<div class="senseor-icon icon-01 layer1">
-						<div class="top-circle '.$this->tempComptop($temp).'"><p>'.round($temp,1).'<span>℃</span></p></div>
-						<div class="bottom-circle '.$this->humidityComp($hum).'"><p>'.round($hum*100,1).'<span>%</span></p></div>
-						<div class="heat_level '.$this->tempComp($HD).'"><img src="'.base_url().'assets/img/asset_35.png" alt=""></div>
-					</div>';
-					$mapSensor.='<div class="senseor-icon icon-01 layer2" style="display:none;">
-						<div class="top-circle '.$this->tempComptop($temp).'"></div>
-						<div class="bottom-circle '.$this->humidityComp($hum).'"></div>
-						<div class="heat_level '.$this->tempComp($HD).'"><img src="'.base_url().'assets/img/asset_35.png" alt=""></div>
-					</div>';
+				
 					$mapSensor.='<div class="senseor-icon icon-03 layer3" style="display:none;">
 						<div class="all-circle '.$this->tempComp($temp).'"><p>'.round($temp,1).'<span>℃</span></p></div>
 					</div>';
 					$mapSensor.='<div class="senseor-icon icon-06 layer4" style="display:none;">
 						<div class="all-circle '.$this->tempComp($HD).'"><img src="'.base_url().'assets/img/asset_35.png" alt=""></div>
 					</div>';
-					$mapSensor.='<div class="senseor-icon icon-05 layer5" style="display:none;">
-							<div class="all-circle '.$this->VhComp($VH).'"><p>'.round($VH,1).'<br><span>mg/m3</span></p></div>
-						</div>';
+					
 					$mapSensor.='</div>';
 			}
 		}

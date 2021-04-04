@@ -77,6 +77,7 @@
         display: flex;
         justify-content: start;
         flex-wrap: wrap;
+        width:20%;
     }
 </style>
 <script>
@@ -363,6 +364,9 @@
                 data=JSON.parse(responce);
                 if(data['unregSensor']){
                     $('#unregistered-layer').replaceWith('<div class="map-layer zoom1" id="unregistered-layer">'+data['unregSensor']+'</div>');
+                    objectFitImages();
+                    $( "#map-layer" ).draggable({ containment: "window" });
+                    $( ".sensorGroup" ).draggable().css("position", "absolute");
                     $('.none').parent().css('position','static');
                 }
                 $('#sensorName').replaceWith(data['sensorName']);
@@ -443,6 +447,9 @@
                                 data=JSON.parse(responce);
                                 if(data['unregSensor']){
                                     $('#unregistered-layer').replaceWith('<div class="map-layer zoom1 " id="unregistered-layer">'+data['unregSensor']+'</div>');
+                                    objectFitImages();
+                                    $( "#map-layer" ).draggable({ containment: "window" });
+                                    $( ".sensorGroup" ).draggable().css("position", "absolute");
                                     $('.none').parent().css('position','static');
                                 }
                                 $('#mapSensor').replaceWith(data['mapSensors']);
