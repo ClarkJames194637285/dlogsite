@@ -222,3 +222,6 @@ class Passforget extends CI_Controller
         return true;
     }
 }
+class TokenException extends Exception
+{
+}
