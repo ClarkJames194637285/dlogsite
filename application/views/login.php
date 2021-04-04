@@ -106,6 +106,23 @@ if (isset($_POST['login'])) {
             $cookiestr .= ',resaved:' . $_POST['resaved'];
             $expiration_time = time() + 60 * 60 * 24;
             setcookie('BSCM', $cookiestr, $expiration_time);
+            //login time insert
+
+            $dlogdb = new Dbclass();
+            $dbpdo = $dlogdb->dbCi($this->config->item('host'),$this->config->item('username'),$this->config->item('password'), $this->config->item('dbname'));
+            $tzstr = date_default_timezone_get();
+            $defoulttz = "Asia/Tokyo";
+            date_default_timezone_set($defoulttz);
+            $new_time = new \DateTime();
+    
+            $logouttime = new \DateTime($new_time->format('Y-m-d H:i:s'), new \DateTimeZone($defoulttz));
+            $up_darry = array(
+                'LoginTime' => $logouttime->format('Y-m-d H:i:s')
+            );
+            $userlist = $dlogdb->dbUpdate($dbpdo, 'users', $up_darry, 'ID', $this->session->userdata('user_id'));
+            $dlogdb = null;
+            date_default_timezone_set($tzstr);
+
             redirect(base_url().'home');
             exit;
         } else {

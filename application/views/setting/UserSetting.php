@@ -27,8 +27,12 @@
     $mcls = null;
     $temp=explode('.',$row["LastLoginTime"]);
     $row["LastLoginTime"]=$temp[0];
-    $_SESSION['LastLoginTime'] = $row["LastLoginTime"];
-    $dteStart = new \DateTime($_SESSION['LastLoginTime'], new \DateTimeZone($defoulttz));
+
+    $temp=explode('.',$row["LoginTime"]);
+    $row["LoginTime"]=$temp[0];
+    $_SESSION['LoginTime'] = $row["LoginTime"];
+
+    $dteStart = new \DateTime($_SESSION['LoginTime'], new \DateTimeZone($defoulttz));
     $newTime = new \DateTime();
     $dteEnd = new \DateTime($newTime->format('Y-m-d H:i:s'), new \DateTimeZone($defoulttz));
     $dteDiff = $dteStart->diff($dteEnd);
@@ -127,6 +131,12 @@
                             ?>
                         </p>
                         <p class=" confirm-msg">最新ログイン時刻</p>
+                        <p class=" confirm-input">
+                            <?php
+                            echo $row["LoginTime"];
+                            ?>
+                        </p>
+                        <p class=" confirm-msg">前回のログイン時間</p>
                         <p class=" confirm-input">
                             <?php
                             echo $row["LastLoginTime"];
