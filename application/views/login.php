@@ -75,18 +75,22 @@ if (isset($_POST['login'])) {
             //$password_registered = $mcls->deCrypt($password_registered, $cipher, $key, $sslkey); //yamaguchi
             
             $password_registered = openssl_decrypt($password_registered,$this->config->item('cipher') ,$this->config->item('key'));
+            if(isset($row)){
+                $_SESSION['user_id'] = $user_id;
+                $_SESSION['user_name'] = $user_name; // ユーザー名をセッション変数にセット
+                $_SESSION['TimeZone'] = $time_zone;
+                $cookiestr = 'user_id:' . $user_id;
+                $cookiestr .= ',user_name:' . $user_name;
+                $cookiestr .= ',password:' . $password;
+                $cookiestr .= ',TimeZone:' . $time_zone;
+                $cookiestr .= ',resaved:' . $_POST['resaved'];
+                $expiration_time = time() + 60 * 60 * 24;
+                setcookie('BSCM', $cookiestr, $expiration_time);
+            }
         }
         session_regenerate_id(true); // セッションIDをふりなおす
-            $_SESSION['user_id'] = $user_id;
-            $_SESSION['user_name'] = $user_name; // ユーザー名をセッション変数にセット
-            $_SESSION['TimeZone'] = $time_zone;
-            $cookiestr = 'user_id:' . $user_id;
-            $cookiestr .= ',user_name:' . $user_name;
-            $cookiestr .= ',password:' . $password;
-            $cookiestr .= ',TimeZone:' . $time_zone;
-            $cookiestr .= ',resaved:' . $_POST['resaved'];
-            $expiration_time = time() + 60 * 60 * 24;
-            setcookie('BSCM', $cookiestr, $expiration_time);
+           
+            
             if (isset($_COOKIE['BSCM'])) {
                 $get_cookie = $_COOKIE['BSCM'];
                 $cookie_arry = explode(',', $get_cookie);
