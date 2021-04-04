@@ -140,17 +140,18 @@
             <div class="modal-body" style="padding:40px 50px;">
             <form>
                 <div class="form-group">
-                    <label for="IMEI"></span> IMEI</label>
+                    <label for="name"></span> センサー名</label>
+                    <input type="text" class="form-control" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="IMEI"></span> シリアル番号</label>
                     <input type="text" class="form-control" id="IMEI" required>
                 </div>
                 <div class="form-group">
                     <label for="typeId"></span> タイプーID</label>
                     <input type="text" class="form-control" id="typeId" required>
                 </div>
-                <div class="form-group">
-                    <label for="name"></span> センサー名</label>
-                    <input type="text" class="form-control" id="name" required>
-                </div>
+                
                 
                 <button class="btn btn-warning btn-size" data-dismiss="modal">キャンセル</button>
                 <button id="register" class="btn btn-success btn-size">センサーを追加</button>

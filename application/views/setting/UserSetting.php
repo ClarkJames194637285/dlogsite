@@ -25,6 +25,8 @@
 
 
     $mcls = null;
+    $temp=explode('.',$row["LastLoginTime"]);
+    $row["LastLoginTime"]=$temp[0];
     $_SESSION['LastLoginTime'] = $row["LastLoginTime"];
     $dteStart = new \DateTime($_SESSION['LastLoginTime'], new \DateTimeZone($defoulttz));
     $newTime = new \DateTime();
