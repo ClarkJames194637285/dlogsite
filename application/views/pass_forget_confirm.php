@@ -58,7 +58,7 @@
     
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">パスワードの再送信</h1>
+            <h1 class="page-title">パスワードの再設定</h1>
             <section class="main-content flexlyr">
                 <div class="content-grid">
                     <p class="confirm-msg" style="font-size: 28px;">送信が完了しました。</p>

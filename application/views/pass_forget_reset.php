@@ -58,7 +58,7 @@
             <?= validation_errors(); ?>
         </ul>
 
-        <h1 class="page-title">パスワードの再送信</h1>
+        <h1 class="page-title">パスワードの再設定</h1>
         <?= form_open('Passforget/resetConfirm'); ?>
         <section class="main-content flexlyr">
             <div class="content-grid">
