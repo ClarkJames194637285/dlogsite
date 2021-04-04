@@ -40,6 +40,7 @@ if (isset($_POST['login'])) {
     }
     if ($_POST['user_name'] != "") {
         $mcls = new Methodclass;
+        if(isset($_POST['resaved']))$resaved=$_POST['resaved'];
         $user_name = $mysqli->real_escape_string($_POST['user_name']);
         $password = $mysqli->real_escape_string($_POST['password']);
         $timezone = $_POST['Timezone'];
@@ -75,18 +76,6 @@ if (isset($_POST['login'])) {
             //$password_registered = $mcls->deCrypt($password_registered, $cipher, $key, $sslkey); //yamaguchi
             
             $password_registered = openssl_decrypt($password_registered,$this->config->item('cipher') ,$this->config->item('key'));
-            if(isset($row)){
-                $_SESSION['user_id'] = $user_id;
-                $_SESSION['user_name'] = $user_name; // ユーザー名をセッション変数にセット
-                $_SESSION['TimeZone'] = $time_zone;
-                $cookiestr = 'user_id:' . $user_id;
-                $cookiestr .= ',user_name:' . $user_name;
-                $cookiestr .= ',password:' . $password;
-                $cookiestr .= ',TimeZone:' . $time_zone;
-                $cookiestr .= ',resaved:' . $_POST['resaved'];
-                $expiration_time = time() + 60 * 60 * 24;
-                setcookie('BSCM', $cookiestr, $expiration_time);
-            }
         }
         session_regenerate_id(true); // セッションIDをふりなおす
            
@@ -98,7 +87,7 @@ if (isset($_POST['login'])) {
                     $keyval = explode(':', $cookie_arry[$i]);
                     $get_data[$keyval[0]] = $keyval[1];
                 }
-                $resaved = "checked";
+                // $resaved = "checked";
             }
             setcookie('register', 'false');
         // データベースの切断
@@ -106,7 +95,17 @@ if (isset($_POST['login'])) {
         if ($password == $password_registered && $password != '') {
             // ログイン認証成功の処理
             //session_start();
-            
+            $_SESSION['user_id'] = $user_id;
+            $_SESSION['user_name'] = $user_name; // ユーザー名をセッション変数にセット
+            $_SESSION['TimeZone'] = $time_zone;
+            $cookiestr = 'user_id:' . $user_id;
+            $cookiestr .= ',user_name:' . $user_name;
+            $cookiestr .= ',password:' . $password;
+            $cookiestr .= ',TimeZone:' . $time_zone;
+            if(isset($_POST['resaved']))
+            $cookiestr .= ',resaved:' . $_POST['resaved'];
+            $expiration_time = time() + 60 * 60 * 24;
+            setcookie('BSCM', $cookiestr, $expiration_time);
             redirect(base_url().'home');
             exit;
         } else {
@@ -228,10 +227,15 @@ if (isset($_POST['login'])) {
                         <input type="text" class="input-form langCng" 
                         placeholder="<?=$this->lang->line('username');?>" name="user_name"
                         <?php
-                        if (isset($get_data)) {
-                            if($get_data['resaved']&&$register=="false")
-                            echo 'value="' . $get_data['user_name'] . '"';
+                        if(isset($user_name)){
+                            echo 'value="' . $user_name . '"';
+                        }else{
+                            if (isset($get_data)&&isset($get_data['resaved'])) {
+                                if($get_data['resaved']&&$register=="false")
+                                echo 'value="' . $get_data['user_name'] . '"';
+                            }
                         }
+                        
                         ?> required>
                         <!-- <input type="text" class="input-form langCng" 
                         lang="en" placeholder="User Name" name="user_name_en" required> -->
@@ -291,20 +295,23 @@ if (isset($_POST['login'])) {
                             <?php
                             echo '<input id="resaved" name="resaved" onChange="check_valset(this);"';
                             echo 'type="checkbox" ';
+                            if(isset($resaved)){
+                                if(($resaved=='checked')&&($resaved==1))
+                                    echo "checked='checked' value=".$resaved;
+                                else{
+                                    echo "checked='unchecked' value=".$resaved;
+                                }
+                            }
                             if (isset($get_data['resaved'])) {
                                 if($get_data['resaved']==1)
-                                echo "checked='checked'";
+                                echo "checked='checked' value=".$get_data['resaved'];
                             }
-                            echo '" value=';
-                            if (isset($get_data)) {
-                                echo $get_data['resaved'];
-                            }
-                            echo '>';
+                           echo '>';
                             ?>
                             <span class="checkmark"></span>
                         </label>
                         <button id = "login" name="login" class="login-btn langCng" type="submit"
-                         onclick="login_submit();"><?=$this->lang->line('login');?></button>
+                         ><?=$this->lang->line('login');?></button>
                         <!-- <button class="login-btn langCng" lang="en" type="submit" name="login">login</button> -->
                     </form>
                 </div>
