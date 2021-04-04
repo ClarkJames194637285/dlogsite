@@ -31,8 +31,10 @@ class Passforget extends CI_Controller
         $site_lang=$this->session->userdata('lang');
 		if ($site_lang) {
             $this->lang->load('auth',$site_lang);
+            $this->lang->load('form_validation',$site_lang);
         } else {
             $this->lang->load('auth','japanese');
+            $this->lang->load('form_validation',$site_lang);
         }
         setcookie('register', 'true');
     }
