@@ -127,11 +127,11 @@ class User_model extends CI_Model {
 	 */
 	public function get_role($ID) {
 
-		$this->db->select('RoleID');
+		$this->db->select('UserName');
 		$this->db->from('users');
 		$this->db->where('id', $ID);
-		return $this->db->get()->row('RoleID');
-		
+		$result=$this->db->get()->row('UserName');
+		return $result;
 	}
 	
 	/**

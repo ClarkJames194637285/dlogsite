@@ -183,6 +183,7 @@ class Passforget extends CI_Controller
         $json = base64_decode($payload_string);
         $payload = json_decode($json, true);
         $this->throw_if($payload == null, new TokenException('ペイロードが無効です。'));
+        $time=time();
         $this->throw_if($payload['exp'] < time(), new TokenException('トークンの有効期限が切れています。'));
 
         return $payload['data'];
