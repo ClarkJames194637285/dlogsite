@@ -1,46 +1,18 @@
 <?php
 
-if (isset($_POST['name'])) {
-  $user_name = filter_input(INPUT_POST, 'user_name');
-  $password = filter_input(INPUT_POST, 'password');
-  //入力されたusernameのデータをuserテーブルから所得
-  $dlogdb = new User_logic();
-  
-  $data = array(
-    'host'=>$this->config->item('host'),
-    'dbname'=>$this->config->item('dbname'),
-    'username'=>$this->config->item('username'),
-    'password'=>$this->config->item('password')
-    
-  );
-  $dbpdo = $dlogdb->connect($data);
-  $user = $dlogdb->getUser( $dbpdo,$user_name);
-  if ($user) {
-    //ここに権限を確認する処理が必要
-    $oldPassword = openssl_decrypt($user["Password"], $this->config->item('cipher') ,$this->config->item('key'));
-    //パスワードの照合
-    if (strcmp($password, trim($oldPassword)) == 0) {
-      if (isset($_FILES['userfile'])) {
-        $tempfile = $_FILES['userfile']['tmp_name'];
-        //info.htmlに上書き
-        $filename = './info.html';
-        if (is_uploaded_file($tempfile)) {
-          if (move_uploaded_file($tempfile, $filename)) {
-            redirect(base_url().'setting/useroperation/publish_conf');
-          } else {
-            $text = "ファイルをアップロードできません。";
-          }
-        } else {
-          $text = "ファイルが選択されていません。";
-        };
-      }
+if (isset($_FILES['userfile'])) {
+  $tempfile = $_FILES['userfile']['tmp_name'];
+  //info.htmlに上書き
+  $filename = './info.html';
+  if (is_uploaded_file($tempfile)) {
+    if (move_uploaded_file($tempfile, $filename)) {
+      redirect(base_url().'setting/useroperation/publish_conf');
     } else {
-      $text = 'パスワードが一致しません';
+      $text = "ファイルをアップロードできません。";
     }
   } else {
-    $text = 'ユーザが登録されていません';
-  }
-  $dlogdb = null;
+    $text = "ファイルが選択されていません。";
+  };
 }
 if (isset($text)) {
   $alert = "<script type='text/javascript'>alert('" . $text . "');</script>";
@@ -104,12 +76,7 @@ if (isset($text)) {
                     <div class="content-grid">
                         <div class="register-block flexlyr">
                             <input type="hidden" name="name" value="value">
-                            
-                            <p class=" confirm-msg">アカウント名：</p>
-                            <p class=" confirm-input"><input type="text" placeholder="アカウント名を入力してください" name="user_name" required></p>
-                            
-                            <p class=" confirm-msg">パスワード：</p>
-                            <p class=" confirm-input"><input type="password" placeholder="パスワードを入力してください"  name="password" required></p>
+                            <!-- <textarea name="message" id="message" cols="30" rows="5"></textarea> -->
                             <div class="upload">
                               <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
                               <input name="userfile" type="file" class="input-form ">

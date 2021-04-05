@@ -21,9 +21,15 @@
                 <img src="<?php echo base_url()?>assets/img/asset_04.png" alt=""><p><?=$this->lang->line('setting');?></p>
             </a>
             <ul class="collapse list-unstyled" id="pageSubmenu">
+                <?php if($this->role=="admin"){?>
+                    <li class="menu1_9">
+                        <a href="<?php echo base_url()?>setting/useroperation"><?=$this->lang->line('useroperation');?></a>
+                    </li>
+                <?php } else{?>
                 <li class="menu1_1">
                     <a href="<?php echo base_url()?>setting/userSetting"><?=$this->lang->line('userSetting');?></a>
                 </li>
+               
                 <li class="menu1_2">
                     <a href="<?php echo base_url()?>setting/systemSetting"><?=$this->lang->line('systemSetting');?></a>
                 </li>
@@ -45,9 +51,8 @@
                 <li class="menu1_8">
                     <a href="<?php echo base_url()?>setting/listManagement"><?=$this->lang->line('listManagement');?></a>
                 </li>
-                <li class="menu1_9">
-                    <a href="<?php echo base_url()?>setting/useroperation"><?=$this->lang->line('useroperation');?></a>
-                </li>
+              
+                <?php }?>
             </ul>
         </li>
         <li class="f-layer menu6 collapseItem">
