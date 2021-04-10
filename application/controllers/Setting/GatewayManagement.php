@@ -14,6 +14,9 @@ class GatewayManagement extends MY_Controller
 				if (!isset($_SESSION['user_id'])) {
 					redirect('/');
 				}
+				if ($_SESSION['user_name']!=='admin') {
+					$this->load->view('nonaccess');
+				}
 				$this->load->helper('language');
 				$site_lang=$this->session->userdata('lang');
 				if ($site_lang) {

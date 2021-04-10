@@ -1,25 +1,19 @@
-<?php
 
-if (isset($_FILES['userfile'])) {
-  $tempfile = $_FILES['userfile']['tmp_name'];
-  //info.htmlに上書き
-  $filename = './info.html';
-  if (is_uploaded_file($tempfile)) {
-    if (move_uploaded_file($tempfile, $filename)) {
-      redirect(base_url().'setting/useroperation/publish_conf');
-    } else {
-      $text = "ファイルをアップロードできません。";
-    }
-  } else {
-    $text = "ファイルが選択されていません。";
-  };
+<style>
+  .choosefile{
+    margin-bottom:10px;
+    /* margin-left:-120px; */
+    overflow:auto;
+  }
+  textarea{
+    width:90vw;
+  }
+  @media screen and (min-width: 600px) {
+    textarea{
+    width:50vw;
+  }
 }
-if (isset($text)) {
-  $alert = "<script type='text/javascript'>alert('" . $text . "');</script>";
-  echo $alert;
-}
-?>
-
+  </style>
   <link rel="stylesheet" href="<?php echo base_url()?>assets/css/animate.css" type="text/css">
   <link rel="stylesheet" href="<?php echo base_url()?>assets/css/loaders.css" type="text/css">
 
@@ -34,6 +28,17 @@ if (isset($text)) {
    <!-- custom jscript -->
   <script type="text/javascript" src="<?php echo base_url()?>assets/js/custom.js"></script>
   <script type="text/javascript" src="<?php echo base_url()?>assets/js/wow.min.js"></script>
+  <script type="text/javascript">
+
+    $(function()
+    {
+        $('#userfile').on('change',function ()
+        {
+          loadFileAsText();
+        });
+    });
+
+</script>
   <style>
       .confirm-btn{
         text-align: center;
@@ -71,21 +76,16 @@ if (isset($text)) {
             <h1 class="page-title">システム情報アップロード</h1>
             <div class="publish-form">
               <div class="form-input">
-                <form enctype="multipart/form-data" action="useroperation" method="POST">
                   <section class="main-content flexlyr">
                     <div class="content-grid">
                         <div class="register-block flexlyr">
                             <input type="hidden" name="name" value="value">
-                            <!-- <textarea name="message" id="message" cols="30" rows="5"></textarea> -->
-                            <div class="upload">
-                              <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
-                              <input name="userfile" type="file" class="input-form ">
-                            </div>
-                          </div>
-                        <button class="confirm-btn" type="submit">ファイル送信</button>
+                            <div class="choosefile"><input type="file" id="userfile"></div>
+                            <div class="textarea"><textarea id="inputTextToSave" style="height:256px"></textarea></div>       
+                            <button class="confirm-btn" type="button" onclick="filesave();">ファイル送信</button>
+                        </div>
                       </div>
                     </section>
-                </form>
               </div>
             </div>
         </div>
@@ -94,6 +94,48 @@ if (isset($text)) {
             <p class="footer-label">©︎2020 - CUSTOM corporation</p>
         </div>
     <div>
+    <script type="text/javascript">
+
+    function loadFileAsText() {
+      var fileToLoad = document.getElementById("userfile").files[0];
+
+      var fileReader = new FileReader();
+      fileReader.onload = function (fileLoadedEvent) {
+        var textFromFileLoaded = fileLoadedEvent.target.result;
+        document.getElementById("inputTextToSave").value = textFromFileLoaded;
+      };
+      fileReader.readAsText(fileToLoad, "UTF-8");
+    }
+    function filesave(){
+      var fullPath = document.getElementById('userfile').value;
+      if (fullPath) {
+          var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+          var filename = fullPath.substring(startIndex);
+          if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+              filename = filename.substring(1);
+          }
+      }
+      var text=$('#inputTextToSave').val();
+      if(text=="")return;
+      $.ajax({
+                url:"<?php echo base_url()?>setting/useroperation/uploadtext",
+                type:'post',
+                data:{
+                    'filename':filename,
+                    'text':text
+                },
+                success:function(responce){
+                    if(responce==true){
+                        alert('正常にマップに登録されました。');
+                        document.getElementById("inputTextToSave").value = "";
+                        document.getElementById("userfile").value = "";
+                    }
+                    else {alert('マップに登録が失敗しました。');}
+                }
+            })
+    }
+
+  </script>
 </body>
 
 </html>

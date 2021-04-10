@@ -33,12 +33,26 @@ class UserOperation extends MY_Controller
 			$this->load->view('header',$data);
 			$this->load->view('useroperation/publish_info');
 	}
-	public function publish_news()
+	public function publish_upload()
 	{
-			$this->config->load('db_config');
-			$this->config->load('openSSL_config');
-			$this->load->library('User_logic');
-			$this->load->view('useroperation/publish_news');
+		if (isset($_FILES['userfile'])) {
+			$tempfile = $_FILES['userfile']['tmp_name'];
+			//info.htmlに上書き
+			$filename = './info.html';
+			if (is_uploaded_file($tempfile)) {
+				if (move_uploaded_file($tempfile, $filename)) {
+					redirect(base_url().'setting/useroperation/publish_conf');
+				} else {
+					$text = "ファイルをアップロードできません。";
+				}
+			} else {
+				$text = "ファイルが選択されていません。";
+			};
+		}
+		if (isset($text)) {
+			$alert = "<script type='text/javascript'>alert('" . $text . "');</script>";
+			echo $alert;
+		}
 	}
 	public function publish_conf()
 	{
@@ -46,6 +60,21 @@ class UserOperation extends MY_Controller
 		$data['user_name']=$_SESSION['user_name'];
 		$this->load->view('header',$data);
 		$this->load->view('useroperation/publish_conf');
+	}
+	public function uploadtext(){
+			$text = $this->input->post('text');
+			$filename = $this->input->post('filename');
+			$this->load->helper('file');
+			// $dir=APPPATH.'advertisement/'.$filename;
+			$dir=APPPATH.'advertisement/advertisement.txt';
+			if ( ! write_file($dir, $text))
+			{
+							echo false;
+			}
+			else
+			{
+						echo true;
+			}
 	}
 	
 }

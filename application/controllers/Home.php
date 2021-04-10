@@ -23,33 +23,41 @@ class Home extends MY_Controller
     }
 	public function index()
 	{
-			$id=$this->sensor_Model->getUserId($this->session->userdata('user_name'));
-			$sensorType=$this->sensor_Model->getSensorType($id[0]['ID']);
-			$colors = [ 
-				'#ff0000', "#33B800", '#0000ff', 
-				'#ff3333',  "#3F3F3F", '#ff6600' 
-			]; 
-			$str='<div class="param-block1">';
-			
-			foreach($sensorType as $key=>$val){
-				if($val['ProductName']){
-					$str.='<p class="normal-param" style="color:'.$colors[$key%6].';">'.$val['ProductName'].'</p>';
+			if(($this->role)=='admin'){
+					$data['unread']=$this->unread_message;
+					$data['user_name']=$this->session->userdata('user_name');
+					$this->load->view('header',$data);
+					$this->load->view('adminhome');
+
 				}else{
-					$str.='<p class="normal-param" style="color:'.$colors[$key%6].';">タイプなし</p>';
+					$id=$this->sensor_Model->getUserId($this->session->userdata('user_name'));
+					$sensorType=$this->sensor_Model->getSensorType($id[0]['ID']);
+					$colors = [ 
+						'#ff0000', "#33B800", '#0000ff', 
+						'#ff3333',  "#3F3F3F", '#ff6600' 
+					]; 
+					$str='<div class="param-block1">';
+					
+					foreach($sensorType as $key=>$val){
+						if($val['ProductName']){
+							$str.='<p class="normal-param" style="color:'.$colors[$key%6].';">'.$val['ProductName'].'</p>';
+						}else{
+							$str.='<p class="normal-param" style="color:'.$colors[$key%6].';">タイプなし</p>';
+						}
+					}
+					$str.='</div>';
+					$str.='<div class="param-block2">';
+					foreach($sensorType as $key=>$val){
+						$str.='<p class="normal-param" style="color:'.$colors[$key%6].';">'.$val['count'].'</p>';
+					}
+					$str.='</div>';
+					$alert['string']=$str;
+					$data['unread']=$this->unread_message;
+					$data['user_name']=$this->session->userdata('user_name');
+					$alert['count']=$this->getSensorInfo();
+					$this->load->view('header',$data);
+					$this->load->view('home',$alert);
 				}
-			}
-			$str.='</div>';
-			$str.='<div class="param-block2">';
-			foreach($sensorType as $key=>$val){
-				$str.='<p class="normal-param" style="color:'.$colors[$key%6].';">'.$val['count'].'</p>';
-			}
-			$str.='</div>';
-			$alert['string']=$str;
-			$data['unread']=$this->unread_message;
-			$data['user_name']=$this->session->userdata('user_name');
-			$alert['count']=$this->getSensorInfo();
-			$this->load->view('header',$data);
-			$this->load->view('home',$alert);
 		
 	}
 
