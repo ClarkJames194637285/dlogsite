@@ -1,6 +1,9 @@
 <?php 
     $advertisement = file_get_contents(APPPATH."advertisement/advertisement.txt");
-   
+    $base=1024;
+    $total=round(disk_total_space("C:")/(pow($base,3)),1);
+    $free = round(disk_free_space("C:")/(pow($base,3)),1);
+    $used=$total-$free;
 ?>
     <!-- slider, preloader style -->
     <link rel="stylesheet" href="<?php echo base_url()?>assets/css/animate.css" type="text/css">
@@ -25,9 +28,45 @@
     
     <!-- custom jscript -->
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/custom.js"></script>
-    <script type="text/javascript" src="<?php echo base_url()?>assets/js/home.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/adminhome.js"></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/wow.min.js"></script>
-
+<script>
+    window.onload = function () {
+   
+   var leftdata=[];
+   var color=[];
+   var working=<?php echo $used;?> ;
+   if(working!==0){
+       leftdata.push({ y: working, name:"総ディスク容量" });
+       color.push("#3F3F3F");
+   }
+   var notWorking=<?php echo $free;?> ;;
+   if(notWorking!==0){
+       leftdata.push({ y: notWorking, name:"残りのディスク容量" });
+       color.push("#33B800");
+   }
+   
+   CanvasJS.addColorSet("greenShades",color);
+   var leftoptions = {
+       showInLegend: true,
+       legendText: "{indexLabel}",
+       colorSet: "greenShades",
+       animationEnabled: true,
+       legend: false,
+       data: [{
+           type: "pie",
+           showInLegend: false,
+           percentFormatString: "#0.##",
+           indexLabel: "#percent%",
+           toolTipContent: "<b>{name}</b>: {y} (#percent%)",
+           legendText: "{name} (#percent%)",
+           indexLabelPlacement: "inside",
+           dataPoints: leftdata
+       }]
+   };
+   $("#left-chartContainer").CanvasJSChart(leftoptions);
+}
+</script>
 </head>
 
 <body id="pg_index" class="pg_index home">
@@ -47,62 +86,55 @@
                     <div>
                         <div class="shortcut-grid flexlyr">
                             <!-- <a href="page2.php" class="shortcut-btn monitor nonV"></a> -->
-                            <!-- センサー監視 - sensor monitor -->
-                            <a href="<?php echo base_url()?>SensorMonitoring" class="shortcut-btn monitor"></a>
-                            <!-- メッセージ - message -->
-                            <a href="<?php echo base_url()?>Message/inbox" class="shortcut-btn message">888</a>
                             <!-- サポート情報 - support information -->
                             <a href="https://www.dlog.jp/" class="shortcut-btn support"></a>
                             <!-- アップデート情報 - update information -->
-                            <a href="<?php echo base_url()?>Setting/GroupManagement" class="shortcut-btn group"></a>
-                            <!-- センサー管理 - sensor manage -->
-                            <a href="<?php echo base_url()?>Setting/SensorManagement" class="shortcut-btn sensor"></a>
                             <!-- ログアウト - logout -->
                             <a href="<?php echo base_url()?>User/logout" class="shortcut-btn logout"></a>
-                            
                         </div>
                     </div>
                     <div class="news-grid flexlyr">
                         <div class="news-block">
-                            <?php echo $advertisement;?>
+                            システムメンテナンスのお知らせ６７８
+                            １２３４５６７８９０１２３４５６７８
+                            １２３４５６７８９０１２３４５６７８
+                            １２３４５６７８９０１２３４５６７８
+                            １２３４５６７８９０１２３４５６７８
+                            １２３４５６７８９０１２３４５６７８
+                            １２３４５６７８９０１２３４５６７８
                         </div>
                         <div class="news1-block"><?=$this->lang->line('advertising');?> <img src="<?php echo base_url()?>assets/img/asset_21.png" alt=""></div>
                     </div>
-
                 </div>
                 <div class="PieChart-grid flexlyr">
                     <div class="PieCharts left-block flexlyr">
-                        <p class="charts-label"><?=$this->lang->line('operatingStatus');?></p>
+                        <p class="charts-label">ディスク使用量</p>
                         <!-- google charts -->
                         <!-- <div id="chart_div" class="PieChart-graph"></div> -->
                         <!-- CanvasJS Charts Object -->
                         <div id="left-chartContainer" class="PieChart-graph"></div>
                         <div class="param-block1">
-                            <p class="normal-param"><?=$this->lang->line('normal');?></p>
-                            <p class="warning-first"><?=$this->lang->line('Warning1');?></p>
-                            <p class="warning-second"><?=$this->lang->line('Warning2');?></p>
-                            <p class="nouse-param"><?=$this->lang->line('offline');?></p>
+                            <p class="normal-param">総ディスク容量</p>
+                            <p class="normal-param">使用した容量</p>
+                            <p class="nouse-param">残りのディスク容量</p>
                         </div>
                         <div class="param-block2">
-                            <p class="normal-param" id="working"><?php echo $count['working'];?></p>
-                            <p class="warning-first" id="warning1"><?php echo $count['warning1'];?></p>
-                            <p class="warning-second" id="warning2"><?php echo $count['warning2'];?></p>
-                            <p class="nouse-param" id="notWorking"><?php echo $count['notWorking'];?></p>
+                            <p class="normal-param" id="working"><?php echo $total;?>GB</p>
+                            <p class="normal-param" id="working"><?php echo $used;?>GB</p>
+                            <p class="nouse-param" id="notworking"><?php echo $free;?>GB</p>
                         </div>
+                       
                     </div>
                     <div class="PieCharts right-block flexlyr">
-                        <p class="charts-label"><?=$this->lang->line('registeredSensor');?></p>
+                        <p class="charts-label">ユーザー接続時間</p>
                         <!-- google charts -->
                         <!-- <div id="chart_div1" class="PieChart-graph"></div> -->
                         <!-- CanvasJS Charts Object -->
                         <div id="right-chartContainer" class="PieChart-graph"></div>
-                        <?php echo $string;?>
+                        
                     </div>
                 </div>
-                
-
             </section>
-
             <div class="pg-footer">
                 <p class="footer-label">©︎2020 -  CUSTOM corporation</p>
             </div>

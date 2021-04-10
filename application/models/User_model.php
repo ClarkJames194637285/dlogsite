@@ -133,6 +133,15 @@ class User_model extends CI_Model {
 		$result=$this->db->get()->row('UserName');
 		return $result;
 	}
+
+	public function get_user_role($ID) {
+
+		$this->db->select('ROLEID');
+		$this->db->from('users');
+		$this->db->where('id', $ID);
+		$result=$this->db->get()->row('ROLEID');
+		return $result;
+	}
 	
 	/**
 	 * hash_password function.

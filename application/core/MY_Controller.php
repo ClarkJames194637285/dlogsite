@@ -32,8 +32,9 @@ class MY_Controller  extends CI_Controller{
             redirect('/');
         }
         $this->role = $this->user_model->get_role($_SESSION['user_id']);
+        $this->roleval = $this->user_model->get_user_role($_SESSION['user_id']);
         for ($i = 5; $i > 0; $i --) {
-            $strval = '00000' . (string)decbin($this->role);
+            $strval = '00000' . (string)decbin($this->roleval);
             $toi = $i * -1;
             if ((int)substr($strval, $toi, 1) == 1) {
                 $this->roleid[$i] = "checked";
