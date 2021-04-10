@@ -5,6 +5,18 @@
     $free = round(disk_free_space("C:")/(pow($base,3)),1);
     $used=$total-$free;
 ?>
+<style>
+    .PieCharts.left-block {
+    width: 45%;
+    border: solid #707070 1px;
+    justify-content: center;
+}
+.PieCharts.right-block {
+    width: 55%;
+    border: solid #707070 1px;
+    justify-content: center;
+}
+</style>
     <!-- slider, preloader style -->
     <link rel="stylesheet" href="<?php echo base_url()?>assets/css/animate.css" type="text/css">
     <link rel="stylesheet" href="<?php echo base_url()?>assets/css/loaders.css" type="text/css">
@@ -115,13 +127,13 @@
                         <div id="left-chartContainer" class="PieChart-graph"></div>
                         <div class="param-block1">
                             <p class="normal-param">総ディスク容量</p>
-                            <p class="normal-param">使用した容量</p>
-                            <p class="nouse-param">残りのディスク容量</p>
+                            <p class="nouse-param">使用した容量</p>
+                            <p class="normal-param">残りのディスク容量</p>
                         </div>
                         <div class="param-block2">
                             <p class="normal-param" id="working"><?php echo $total;?>GB</p>
-                            <p class="normal-param" id="working"><?php echo $used;?>GB</p>
-                            <p class="nouse-param" id="notworking"><?php echo $free;?>GB</p>
+                            <p class="nouse-param" id="working"><?php echo $used;?>GB</p>
+                            <p class="normal-param" id="notworking"><?php echo $free;?>GB</p>
                         </div>
                        
                     </div>
