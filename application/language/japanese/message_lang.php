@@ -3,7 +3,7 @@
 // outgoing
 $lang['outgoing_title']                               = '管理者に送信';
 $lang['message_type']                    = 'メッセージの種類';
-$lang['sender']                    = '受信者';
+$lang['sender']                    = '送信者';
 $lang['message']                    = 'メッセージ';
 $lang['send']                    = '送信';
 

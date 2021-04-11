@@ -16,9 +16,12 @@ class Inbox extends MY_Controller
         if (!isset($_SESSION['user_id'])) {
 			redirect('/');
 		}
-        if($this->conn){
-            $this->insertMessage($this->differMessage());
-            $this->deleteMail();
+        // if($this->conn){
+        //     $this->insertMessage($this->differMessage());
+        //     $this->deleteMail();
+        // }
+        if ($_SESSION['user_name']!=='admin') {
+            $this->load->view('nonaccess');
         }
         $this->load->helper('language');
         $site_lang=$this->session->userdata('lang');
@@ -30,6 +33,10 @@ class Inbox extends MY_Controller
     }
 
     public function index() {
+        $data=$this->differmessage();
+        $this->insertMessage($data);
+        $this->inbox_model->updateMessage();
+        $hdata['unread']=$this->unread_message;
         $config = array();
 		$config["base_url"] = base_url() . "Inbox";
         $config["total_rows"] = $this->inbox_model->get_count();
@@ -45,7 +52,7 @@ class Inbox extends MY_Controller
         if($page=="inbox")$page=0;
         $data['page']=$page;
         $data["links"] = $this->pagination->create_links();
-        $data['InboxMessage'] = $this->inbox_model->getMessage($config["per_page"], $page,$_SESSION['user_name']);
+        $data['InboxMessage'] = $this->inbox_model->getMessage($config["per_page"], $page);
         $delete = $this->input->post('delete');
         if($delete){
             foreach($data['InboxMessage'] as $message){
@@ -54,7 +61,7 @@ class Inbox extends MY_Controller
             echo $result;
             exit();
         }
-        $hdata['unread']=0;
+        
         $hdata['user_name']=$_SESSION['user_name'];
         $this->load->view('header',$hdata);
         $this->load->view('message/Inbox', $data);
@@ -70,4 +77,26 @@ class Inbox extends MY_Controller
             echo false;
         }
     }
+
+    public function differmessage(){
+        $this->load->model('inbox_model');
+       $data= $this->inbox_model->differ_message();
+       
+       if(empty($data)) return false;
+       else return $data;
+    }
+
+    function insertMessage($data){
+        foreach($data as $value){
+            $data=array(
+                'MessageTypeID'=> 2,
+                'MessageTitle'=> $value['MessageTitle'],
+                'MessageContent'=>imap_utf8( $value['MessageContent']),
+                'FromAccount'=> $value['FromAccount'],
+                'ToAccount'=> $value['ToAccount'],
+                'CreateTime'=> $value['CreateTime'],
+            );
+        $this->message->insertMessage($data);
+        }
+   }
 }

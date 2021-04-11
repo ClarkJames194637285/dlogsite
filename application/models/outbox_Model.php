@@ -30,10 +30,10 @@ class Outbox_Model extends CI_Model {
     
 	public function getMessage($limit, $start,$username) {
 
-		$this->db->select('m.ID,m.MessageContent,t.TypeName,m.ToAccount,m.CreateTime');
+		$this->db->select('m.ID,m.MessageContent,m.ToAccount,m.CreateTime');
 		$this->db->from('message_temp m'); 
 		$this->db->join('users u', 'm.ToAccount=u.Email', 'left');
-		$this->db->join('messagetype t', 't.ID=m.MessageTypeID', 'left');
+		// $this->db->join('messagetype t', 't.ID=m.MessageTypeID', 'left');
 		$this->db->limit($limit, $start);
 		$this->db->where('FromAccount',$username);
 		$this->db->order_by('m.ID','desc');

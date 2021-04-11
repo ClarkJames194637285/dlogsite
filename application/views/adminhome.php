@@ -105,18 +105,6 @@
                             <a href="<?php echo base_url()?>User/logout" class="shortcut-btn logout"></a>
                         </div>
                     </div>
-                    <div class="news-grid flexlyr">
-                        <div class="news-block">
-                            システムメンテナンスのお知らせ６７８
-                            １２３４５６７８９０１２３４５６７８
-                            １２３４５６７８９０１２３４５６７８
-                            １２３４５６７８９０１２３４５６７８
-                            １２３４５６７８９０１２３４５６７８
-                            １２３４５６７８９０１２３４５６７８
-                            １２３４５６７８９０１２３４５６７８
-                        </div>
-                        <div class="news1-block"><?=$this->lang->line('advertising');?> <img src="<?php echo base_url()?>assets/img/asset_21.png" alt=""></div>
-                    </div>
                 </div>
                 <div class="PieChart-grid flexlyr">
                     <div class="PieCharts left-block flexlyr">
@@ -143,7 +131,7 @@
                         <div class="param-block1" style="width:40%;">
                            
                             <?php foreach($loggedin_user as $val){ ?>
-                                <p ><?php print_r($val['UserName']);?></p>
+                                <p class="normal-param"><?php print_r($val['UserName']);?></p>
                             <?php }?>
                         </div>
                         <div class="param-block2" style="width:60%;">
@@ -153,7 +141,7 @@
                             <?php foreach($loggedin_user as $val) {
                                 $logintime=explode('.',$val['LoginTime'])
                             ?>
-                                <p ><?php print_r($logintime[0]);?></p>
+                                <p class="normal-param"><?php print_r($logintime[0]);?></p>
                             <?php }?>
                         </div>
                         

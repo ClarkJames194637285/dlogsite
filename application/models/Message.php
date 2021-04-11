@@ -23,16 +23,12 @@ class Message extends CI_Model {
 	 * @return object the user object
 	 */
 	public function insertMessage($data) {
-		
-
 		$data=array(
 			'MessageTypeID'=> $data['MessageTypeID'],
 			'MessageTitle'=> $data['MessageTitle'],
 			'MessageContent'=> $data['MessageContent'],
 			'FromAccount'=> $data['FromAccount'],
 			'ToAccount'=> $data['ToAccount'],
-			'FromUserID'=> 0,
-			'ToUserID'=> 0,
 			'CreateTime'=> $data['CreateTime'],
 			'IsOK'=> 1,
 			'IsRead'=> 1,
@@ -67,13 +63,12 @@ class Message extends CI_Model {
 	 */
 	public function recordMessage($data) {
 		$data = array(
-			'MessageTitle'      => 'test',
+			'MessageTitle'      => 'System Message',
 			'MessageContent'   => $data['message'],
 			'FromAccount'=>  $data['FromAccount'],
 			'ToAccount'=>   $data['ToAccount'],
-			'FromUserID'      => '1',
-			'ToUserID'   => '2',
 			'CreateTime' => date('Y-m-j H:i:s'),
+			'readstatus'=>0,
 		);
 		
 		return $this->db->insert('message_temp', $data);

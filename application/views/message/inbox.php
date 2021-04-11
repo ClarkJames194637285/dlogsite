@@ -103,36 +103,30 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
-                            <div class="hd-cell cell2"><?=$this->lang->line('message');?></div>
-                            <div class="hd-cell cell3"><?=$this->lang->line('message_type');?></div>
-                            <div class="hd-cell cell4"><?=$this->lang->line('receiver');?></div>
+                            <div class="hd-cell cell4"><?=$this->lang->line('sender');?></div>
                             <div class="hd-cell cell5"><?=$this->lang->line('time');?></div>
+                            <div class="hd-cell cell2"><?=$this->lang->line('content');?></div>
                             <div class="hd-cell cell6"><?=$this->lang->line('operation');?></div>
                         </div>
-                       <?php $n=0;
+                        <?php $n=0;
                        foreach($InboxMessage as $message){?>
                             <div class="grid-content flexlyr">
-                                <div class="ct-cell cell1">
+                                <div class="ct-cell cell1 none">
                                     <label class="container1">
                                         <input type="checkbox">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
+                                <div class="ct-cell cell4"><?php  echo $message->FromAccount;?></div>
+                                <div class="ct-cell cell5"><?php $time=explode(' ',$message->CreateTime); echo $time[0].'  '.$time[1];?></div>
                                 <div class="ct-cell cell2">
                                     <?php  
-                                        if(strlen($message->MessageContent)>300){
-                                        echo substr($message->MessageContent,0,300)."...";
-                                        }else{
-                                            echo $message->MessageContent;
-                                        }
+                                        echo $message->MessageContent;
                                     ?>
                                 </div>
-                                <div class="ct-cell cell3"><?php echo $message->TypeName;?></div>
-                                <div class="ct-cell cell4"><?php echo $message->FromAccount;?></div>
-                                <div class="ct-cell cell5"><?php $time=explode(' ',$message->CreateTime); echo $time[3].' '.$time[2].' '.$time[1];?></div>
+                                
                                 <div class="ct-cell cell6">
                                     <button class="background" onclick="deleteMessage(<?php echo $message->ID;?>)"><img src="<?php echo base_url()?>assets/img/asset_38.png" alt="" title="削除"></button>
-                                    <button class="background" onclick="showMessage(<?php echo $message->ID;?>)"><img src="<?php echo base_url()?>assets/img/asset_24.png" alt="" title="レポートを表示する"></button>
                                 </div>
                             </div>
                         <?php $n++;}?>

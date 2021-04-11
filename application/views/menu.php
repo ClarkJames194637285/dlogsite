@@ -57,6 +57,19 @@
                 <?php }?>
             </ul>
         </li>
+        <?php if($this->role=="admin"){?>
+        <li class="f-layer menu5 collapseItem">
+            <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
+                <img src="<?php echo base_url()?>assets/img/asset_08.png" alt=""><p><?=$this->lang->line('message');?></p>
+            </a>
+            <ul class="collapse list-unstyled" id="pageSubmenu2">
+               
+                <li class="menu5_2">
+                    <a href="<?php echo base_url()?>message/inbox"><?=$this->lang->line('inboxMessage');?></a>
+                </li>
+                
+        </li>
+        <?php }?>
         <?php if($this->role!=="admin"){?>
         <li class="f-layer menu6 collapseItem">
             <!-- <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a> -->
