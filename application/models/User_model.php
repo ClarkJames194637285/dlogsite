@@ -118,6 +118,14 @@ class User_model extends CI_Model {
 		return $this->db->get()->row();
 		
 	}
+
+	public function getLoggedinUser() {
+		$this->db->select('UserName,LoginTime');
+		$this->db->from('users');
+		$this->db->where('UserStateID', 0);
+		return $this->db->get()->result_array();
+		
+	}
 		/**
 	 * get_Role function.
 	 * 
