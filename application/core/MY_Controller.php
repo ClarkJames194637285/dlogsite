@@ -58,7 +58,7 @@ class MY_Controller  extends CI_Controller{
             // }
         }else{
             $this->load->model('inbox_model');
-            $this->unread_message=$this->inbox_model->get_count();
+            $this->unread_message=$this->inbox_model->count_unread_message();
         }
         $errors = imap_errors();
     }

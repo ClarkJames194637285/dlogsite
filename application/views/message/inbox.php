@@ -108,7 +108,7 @@
                             <div class="hd-cell cell2"><?=$this->lang->line('content');?></div>
                             <div class="hd-cell cell6"><?=$this->lang->line('operation');?></div>
                         </div>
-                        <?php $n=0;
+                        <?php 
                        foreach($InboxMessage as $message){?>
                             <div class="grid-content flexlyr">
                                 <div class="ct-cell cell1 none">
@@ -129,7 +129,7 @@
                                     <button class="background" onclick="deleteMessage(<?php echo $message->ID;?>)"><img src="<?php echo base_url()?>assets/img/asset_38.png" alt="" title="削除"></button>
                                 </div>
                             </div>
-                        <?php $n++;}?>
+                        <?php }?>
                         <div class="operation-block">
                             <button  class="del-btn background" onclick="deleteall()"></button>
                             <!-- <button  class="all-view-btn background" id="allShow"></button> -->

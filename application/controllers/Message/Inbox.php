@@ -33,10 +33,11 @@ class Inbox extends MY_Controller
     }
 
     public function index() {
-        $data=$this->differmessage();
-        $this->insertMessage($data);
+        $differmessage=$this->differmessage();
+        $this->insertMessage($differmessage);
         $this->inbox_model->updateMessage();
         $hdata['unread']=$this->unread_message;
+        
         $config = array();
 		$config["base_url"] = base_url() . "Inbox";
         $config["total_rows"] = $this->inbox_model->get_count();
