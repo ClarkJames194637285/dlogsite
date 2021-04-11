@@ -117,6 +117,7 @@ if (isset($_POST['login'])) {
     
             $logouttime = new \DateTime($new_time->format('Y-m-d H:i:s'), new \DateTimeZone($defoulttz));
             $up_darry = array(
+                'UserStateID' => 0,
                 'LoginTime' => $logouttime->format('Y-m-d H:i:s')
             );
             $userlist = $dlogdb->dbUpdate($dbpdo, 'users', $up_darry, 'ID', $this->session->userdata('user_id'));

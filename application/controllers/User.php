@@ -51,6 +51,7 @@ class User extends CI_Controller
 
 		$logouttime = new \DateTime($new_time->format('Y-m-d H:i:s'), new \DateTimeZone($defoulttz));
 		$up_darry = array(
+			'UserStateID' => 1,
 			'LastLoginTime' => $logouttime->format('Y-m-d H:i:s')
 		);
 		$userlist = $dlogdb->dbUpdate($dbpdo, 'users', $up_darry, 'ID', $this->session->userdata('user_id'));

@@ -13,6 +13,7 @@ class Home extends MY_Controller
 				redirect(base_url());
 			}
 			$this->load->model('sensor_Model');
+			$this->load->model('user_Model');
 			$this->load->helper('language');
 			$site_lang=$this->session->userdata('lang');
 			if ($site_lang) {
@@ -26,6 +27,7 @@ class Home extends MY_Controller
 			if(($this->role)=='admin'){
 					$data['unread']=$this->unread_message;
 					$data['user_name']=$this->session->userdata('user_name');
+					$data['loggedin_user']=$this->user_Model->getLoggedinUser();
 					$this->load->view('header',$data);
 					$this->load->view('adminhome');
 

@@ -54,7 +54,7 @@
    }
    var notWorking=<?php echo $free;?> ;;
    if(notWorking!==0){
-       leftdata.push({ y: notWorking, name:"残りのディスク容量" });
+       leftdata.push({ y: notWorking, name:"使用した容量" });
        color.push("#33B800");
    }
    
@@ -138,11 +138,24 @@
                        
                     </div>
                     <div class="PieCharts right-block flexlyr">
-                        <p class="charts-label">ユーザー接続時間</p>
+                        <p class="charts-label">現在ログインしているユーザー</p>
                         <!-- google charts -->
                         <!-- <div id="chart_div1" class="PieChart-graph"></div> -->
                         <!-- CanvasJS Charts Object -->
-                        <div id="right-chartContainer" class="PieChart-graph"></div>
+                        
+                        <div class="param-block1" style="width:40%;">
+                            <?php if(empty($loggedin_user)) {?>
+                                <p class="nouse-param">ログインユーザーなし</p>
+                            <?php }?>
+                            <?php foreach($loggedin_user as $val){ ?>
+                                <p ><?php print_r($val['UserName']);?></p>
+                            <?php }?>
+                        </div>
+                        <div class="param-block2" style="width:60%;">
+                            <?php foreach($loggedin_user as $val) {?>
+                                <p ><?php print_r($val['LoginTime']);?></p>
+                            <?php }?>
+                        </div>
                         
                     </div>
                 </div>
