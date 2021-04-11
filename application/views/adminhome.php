@@ -150,8 +150,10 @@
                             <?php if(empty($loggedin_user)) {?>
                                 <p class="nouse-param">ログインユーザーなし</p>
                             <?php }?>
-                            <?php foreach($loggedin_user as $val) {?>
-                                <p ><?php print_r($val['LoginTime']);?></p>
+                            <?php foreach($loggedin_user as $val) {
+                                $logintime=explode('.',$val['LoginTime'])
+                            ?>
+                                <p ><?php print_r($logintime[0]);?></p>
                             <?php }?>
                         </div>
                         
