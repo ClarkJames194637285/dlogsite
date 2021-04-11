@@ -54,6 +54,7 @@ $route['404_override'] = 'page/not_found';
 $route['Inbox'] = 'Message/Inbox';
 $route['emailreader'] = 'EmailReader';
 
+$route['Inbox'] = 'Message/Inbox';
 $route['Inbox/(:num)'] = 'Message/Inbox';
 $route['Outbox'] = 'Message/Outbox';
 $route['Outbox/(:num)'] = 'Message/Outbox';
