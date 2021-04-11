@@ -139,19 +139,17 @@
                     </div>
                     <div class="PieCharts right-block flexlyr">
                         <p class="charts-label">現在ログインしているユーザー</p>
-                        <!-- google charts -->
-                        <!-- <div id="chart_div1" class="PieChart-graph"></div> -->
-                        <!-- CanvasJS Charts Object -->
-                        
+                       
                         <div class="param-block1" style="width:40%;">
-                            <?php if(empty($loggedin_user)) {?>
-                                <p class="nouse-param">ログインユーザーなし</p>
-                            <?php }?>
+                           
                             <?php foreach($loggedin_user as $val){ ?>
                                 <p ><?php print_r($val['UserName']);?></p>
                             <?php }?>
                         </div>
                         <div class="param-block2" style="width:60%;">
+                            <?php if(empty($loggedin_user)) {?>
+                                <p class="nouse-param">ログインユーザーなし</p>
+                            <?php }?>
                             <?php foreach($loggedin_user as $val) {?>
                                 <p ><?php print_r($val['LoginTime']);?></p>
                             <?php }?>

@@ -123,6 +123,7 @@ class User_model extends CI_Model {
 		$this->db->select('UserName,LoginTime');
 		$this->db->from('users');
 		$this->db->where('UserStateID', 0);
+		$this->db->where('UserName!=', 'admin');
 		return $this->db->get()->result_array();
 		
 	}
