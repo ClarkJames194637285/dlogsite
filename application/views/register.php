@@ -101,9 +101,9 @@
                         <p class=" confirm-input"><input type="text" required name="captcha"></p>
                     </div>
                     <?php if($this->session->userdata('lang')=='english'){?>
-                        <p class="nrl">「<a class="policy-link" data-toggle="modal" data-target="#terms">dlog-cloud Terms of service</a>」read and 「Please agree and register as a user。</p>
+                        <p class="nrl"><input type="checkbox" id="terms_of_service" name="terms_of_service">「<a class="policy-link" data-toggle="modal" data-target="#terms">dlog-cloud Terms of service</a>」read and 「Please agree and register as a user。</p>
                     <?php }else{?>
-                        <p class="nrl"><input type="checkbox">「<a class="policy-link" data-toggle="modal" data-target="#terms">dlog-cloud 利用規約</a>」を読み、「同意してユーザー登録する」を押してください。</p>
+                        <p class="nrl"><input type="checkbox" id="terms_of_service" name="terms_of_service">「<a class="policy-link" data-toggle="modal" data-target="#terms">dlog-cloud 利用規約</a>」を読み、「同意してユーザー登録する」を押してください。</p>
                     <?php }?>
                     
                     <button id="update" class="confirm-btn"><?=$this->lang->line('agree_button');?></button>
