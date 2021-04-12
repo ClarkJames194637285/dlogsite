@@ -74,10 +74,15 @@ class User_model extends CI_Model {
 		return $result;
 	}
 
-	public function getUserByEmailAndUsername($email, $username){
+	public function getUserByEmail($email){
 	    $this->db->from('users');
 	    $this->db->where('Email', $email);
-        $this->db->where('UserName', $username);
+	    return $this->db->get()->row();
+    }
+
+		public function getUserByUsername($username){
+	    $this->db->from('users');
+			$this->db->where('UserName', $username);
 
 	    return $this->db->get()->row();
     }
