@@ -40,7 +40,11 @@ class Register extends CI_Controller
         $this->config->load('db_config');
         $this->config->load('openSSL_config');
         $this->load->model('user_model');
-
+        $terms_of_service = $this->input->post('terms_of_service');
+        if(!$terms_of_service){
+            $this->session->set_flashdata('error', '利用規約に同意してください。');
+            return $this->load->view('register');
+        }
         $this->form_validation->set_rules('captcha', '認証コード', 'required|callback_captcha_check');
         $this->form_validation->set_rules('username', 'ユーザー名', 'trim|required|min_length[4]|callback_username_check');
         $this->form_validation->set_rules('email', 'メールアドレス', 'required|valid_email');
@@ -50,7 +54,7 @@ class Register extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             return $this->load->view('register');
         }
-
+       
         $username = $this->input->post('username');
         $email = $this->input->post('email');
         $raw_password = $this->input->post('password');
@@ -59,7 +63,7 @@ class Register extends CI_Controller
         $created_row = $this->user_model->create_user($username, $email, $password);
 
         if (!$created_row) {
-            $this->session->set_flashdata('error', 'Something went wrong! Please retry again or contact to admin!');
+            $this->session->set_flashdata('error', '問題が発生しました！ もう一度やり直すか、管理者に連絡してください。');
             $this->load->view('register');
         }
 
