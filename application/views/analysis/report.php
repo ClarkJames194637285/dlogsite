@@ -30,8 +30,8 @@ $fieldname = "ID";
 $dlogdb = new Dbclass();
 $dbpdo = $dlogdb->dbCi($this->config->item('host'),$this->config->item('username'),$this->config->item('password'), $this->config->item('dbname'));
 $t_n = 'report';
-$path = base_url().'assets/res_data/report/';
-$gpath = base_url().'assets/res_data/images/';
+$path = FCPATH.'assets/res_data/report/';
+$gpath = FCPATH.'assets/res_data/images/';
 $file_name = "";
 $pdf_file = "";
 $csv_file = "";
@@ -64,7 +64,7 @@ if (!empty($_POST) && isset($_GET['M'])) {
         }
         fclose($file_handle);
     } else {
-        echo 'not path writable <br>';
+        alert("ファイルを作成することができません。");
     }
     $rpcls->makeJsonDataFile($csvdata_list);
     $report_insert_data = $rpcls->reportMakeData($csvhed_list, $csvdata_list, $ids, $file_name);
@@ -382,7 +382,7 @@ $dlogdb = null;
                         <div class="grid-header flexlyr">
                             <div class="hd-cell cell1">センサー名</div>
                             <div class="hd-cell cell2">シリアル番号</div>
-                            <div class="hd-cell cell3">センサーの種類</div>
+                            <div class="hd-cell cell3">センサーの種類</div>F
                             <div class="hd-cell cell4">温度</div>
                             <div class="hd-cell cell5">湿度</div>
                             <div class="hd-cell cell6">状態</div>
@@ -560,7 +560,7 @@ $dlogdb = null;
                     <div class="sys-info-block flexlyr">
                         <div class="span6">
                             <div class="row-fluid">
-                                <div class="controls">From</div>
+                                <div class="controls">から</div>
                                 <div class="controls">
                                     <div class="confirm-input">
                                         <input id="txtBeginTime" name="txtBeginTime" class="form_datetime"
@@ -571,7 +571,7 @@ $dlogdb = null;
                         </div>
                         <div class="span6">
                             <div class="row-fluid">
-                                <div class="controls">To</div>
+                                <div class="controls">まで</div>
                                 <div class="controls">
                                     <div class="confirm-input">
                                         <input id="txtEndTime" name="txtEndTime" class="form_datetime"

@@ -474,8 +474,8 @@ class Dbclass
         $query .= "SELECT ";
         $query .= "pd.ID AS ID ";
         $query .= "FROM " . $product_tn . " AS pd ";
-        $query .= " INNER JOIN " . $productg_tn . " AS pg ";
-        $query .= "ON pd.GroupID=pg.ID ";
+        $query .= " JOIN " . $productg_tn . " AS pg ";
+        $query .= "ON pd.GroupID=pg.ID join producttype as t on pd.TypeID=t.ID";
         $query .= " WHERE pd.UserID=:userid ";
         $query .= "AND pg.isdelete=0 ";
         $query .= "AND pd.isdelete=0 ";

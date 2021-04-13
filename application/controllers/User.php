@@ -48,7 +48,6 @@ class User extends CI_Controller
 		$defoulttz = "Asia/Tokyo";
 		date_default_timezone_set($defoulttz);
 		$new_time = new \DateTime();
-
 		$logouttime = new \DateTime($new_time->format('Y-m-d H:i:s'), new \DateTimeZone($defoulttz));
 		$up_darry = array(
 			'UserStateID' => 1,
@@ -75,7 +74,7 @@ class User extends CI_Controller
 				$resaved = "checked";
 			}
 		}
-		
+		$this->session->sess_destroy();
 		redirect(base_url());
 		
 	}
