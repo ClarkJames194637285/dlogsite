@@ -59,7 +59,7 @@ class Passforget extends CI_Controller
         $username = $this->input->post('username');
         $email = $this->input->post('email');
 
-        $this->load->model('user_model');
+        // $this->load->model('user_model');
 
         if (!$this->sendMail($email, $username)) {
             $this->session->set_flashdata('error', 'メール送信に失敗しました。');
