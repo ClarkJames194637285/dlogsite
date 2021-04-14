@@ -50,6 +50,7 @@ if (!empty($_POST) && isset($_GET['M'])) {
     $pid = $_GET['ids'];
     $csvhed_list = $dlogdb->reportCsvHedData($dbpdo, $b_time, $e_time, $pid);
     $csvdata_list = $dlogdb->reportCsvData($dbpdo, $b_time, $e_time, $pid);
+    
     $insert_row = $dlogdb->nextRowNo($dbpdo, $t_n);
     $file_name = $csvhed_list[0]['IMEI'] . '-';
     $file_name .= $tf1[0] . $tf1[1] . $tf1[2] . $tf2[0] . $tf2[1] . '00-';
@@ -64,7 +65,7 @@ if (!empty($_POST) && isset($_GET['M'])) {
         }
         fclose($file_handle);
     } else {
-        alert("ファイルを作成することができません。");
+        echo "ファイルを作成することができません。";
     }
     $rpcls->makeJsonDataFile($csvdata_list);
     $report_insert_data = $rpcls->reportMakeData($csvhed_list, $csvdata_list, $ids, $file_name);
@@ -92,13 +93,13 @@ if (!empty($_POST) && isset($_GET['M'])) {
     $gurl = $gpath . $img_name;
     $rpcls->makePdfFile($tcpdf, $gurl, $file_name);
     if (DIRECTORY_SEPARATOR == '\\') {
-        $tcpdf->Output(dirname(__FILE__) . '\\res_data\\report\\' . $file_name . '.pdf', 'F'); // pdf表示設定
+        $tcpdf->Output(FCPATH . 'assets\\res_data\\report\\' . $file_name . '.pdf', 'F'); // pdf表示設定
     } else {
-        $tcpdf->Output(dirname(__FILE__) . '/res_data/report/' . $file_name . '.pdf', 'F'); // pdf表示設定
+        $tcpdf->Output(FCPATH . 'assets/res_data/report/' . $file_name . '.pdf', 'F'); // pdf表示設定
     }
     
-    $pdf_file = $path . $file_name . '.pdf';
-    $csv_file = $path . $file_name . '.csv';
+    $pdf_file = $file_dir . $file_name . '.pdf';
+    $csv_file = $file_dir . $file_name . '.csv';
 }
 $file_name = json_encode($file_name, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 $reportlist = $dlogdb->getReport($dbpdo, $user_id);
@@ -266,33 +267,42 @@ $dlogdb = null;
     function tsyow() {
         if ($('.t-btn').hasClass('view-on')) {
             $('.btn-gtype-1').removeClass('view-on');
-            $('.gtype-1').css('display', "none");
+            // $('.gtype-1').css('display', "none");
         } else {
             $('.btn-gtype-1').addClass('view-on');
-            $('.gtype-1').css('display', "");
+            // $('.gtype-1').css('display', "");
         }
     }
     function thsyow() {
         if ($('.th-btn').hasClass('view-on')) {
             $('.btn-gtype-2').removeClass('view-on');
-            $('.gtype-2').css('display', "none");
+            // $('.gtype-2').css('display', "none");
         } else {
             $('.btn-gtype-2').addClass('view-on');
-            $('.gtype-2').css('display', "");
+            // $('.gtype-2').css('display', "");
         }
     }
     function allsyow() {
-        var i = 0
-        while (document.getElementById('group-' + i)) {
-            var target_id = document.getElementById('group-' + i);
-            $('.t-btn').addClass('view-on');
-            $('.th-btn').addClass('view-on');
-            $('.btn-gtype-1').addClass('view-on');
-            $('.btn-gtype-2').addClass('view-on');
-            $(target_id).addClass('view-on');
-            target_id.style = '';
-            i++;
-        }
+        $('.t-btn').addClass('view-on');
+        $('.th-btn').addClass('view-on');
+        $('.btn-gtype-1').addClass('view-on');
+        $('.btn-gtype-2').addClass('view-on');
+        $(".filter-type").children().each(function( index ) {
+            $(this).addClass('view-on');
+        })
+        $(".report_grid").children().each(function( index ) {
+            var check=$(this).hasClass('grid-content');
+            if(check){
+                $(this).addClass('view-on');
+                $(this).css('display', "");
+            }
+        })
+        $(".content-grid").children().each(function( index ) {
+            var check=$(this).hasClass('table');
+            if(!check){
+                $(this).addClass('view-on');
+            }
+        });
     }
     function groupsyow(no) {
         var id = document.getElementById('group-' + no);
@@ -303,26 +313,26 @@ $dlogdb = null;
             id.style = 'display: none';
             $(id).removeClass('view-on');
         }
-        var i = 0;
-        $('.t-btn').removeClass('view-on');
-        while (document.getElementById('group-' + i)) {
-            var target_id = document.getElementById('group-' + i);
-            if ($(target_id).hasClass('gtype-1') && $(target_id).hasClass('view-on')) {
-                $('.t-btn').addClass('view-on');
-                break;
-            }
-            i++;
-        }
-        var i = 0;
-        $('.th-btn').removeClass('view-on');
-        while (document.getElementById('group-' + i)) {
-            var target_id = document.getElementById('group-' + i);
-            if ($(target_id).hasClass('gtype-2') && $(target_id).hasClass('view-on')) {
-                $('.th-btn').addClass('view-on');
-                break;
-            }
-            i++;
-        }
+        // var i = 0;
+        // $('.t-btn').removeClass('view-on');
+        // while (document.getElementById('group-' + i)) {
+        //     var target_id = document.getElementById('group-' + i);
+        //     if ($(target_id).hasClass('gtype-1') && $(target_id).hasClass('view-on')) {
+        //         $('.t-btn').addClass('view-on');
+        //         break;
+        //     }
+        //     i++;
+        // }
+        // var i = 0;
+        // $('.th-btn').removeClass('view-on');
+        // while (document.getElementById('group-' + i)) {
+        //     var target_id = document.getElementById('group-' + i);
+        //     if ($(target_id).hasClass('gtype-2') && $(target_id).hasClass('view-on')) {
+        //         $('.th-btn').addClass('view-on');
+        //         break;
+        //     }
+        //     i++;
+        // }
     }
     // insert js
     $(document).on('click', '.post_window', function () {
@@ -382,7 +392,7 @@ $dlogdb = null;
                         <div class="grid-header flexlyr">
                             <div class="hd-cell cell1">センサー名</div>
                             <div class="hd-cell cell2">シリアル番号</div>
-                            <div class="hd-cell cell3">センサーの種類</div>F
+                            <div class="hd-cell cell3">センサーの種類</div>
                             <div class="hd-cell cell4">温度</div>
                             <div class="hd-cell cell5">湿度</div>
                             <div class="hd-cell cell6">状態</div>

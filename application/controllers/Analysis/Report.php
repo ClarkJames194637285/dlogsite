@@ -35,5 +35,4 @@ class Report extends MY_Controller
 			$this->load->view('header',$data);
 			$this->load->view('analysis/report');
 	}
-	
 }

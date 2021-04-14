@@ -70,7 +70,7 @@ class User_model extends CI_Model {
 		$this->db->where('Email', $email);
 		$this->db->where('UserName', $username);
 
-		$result=$this->db->get()->row('Email');
+		$result=$this->db->get()->row();
 		return $result;
 	}
 
@@ -78,7 +78,7 @@ class User_model extends CI_Model {
 		$this->db->from('users');
 		$this->db->where('UserName', $username);
 
-		$result=$this->db->get()->row('Email');
+		$result=$this->db->get()->row();
 		return $result;
 	}
 
