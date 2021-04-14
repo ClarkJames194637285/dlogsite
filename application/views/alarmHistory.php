@@ -56,6 +56,17 @@
 ?>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        .show{
+            display:flex !important;
+        }
+        .showway{
+           display: none;
+        }
+        .alarm-block .label{
+            text-align:left;
+        }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -80,64 +91,42 @@
     }
     function tsyow() {
         if ($('.t-btn').hasClass('view-on')) {
-            $('.btn-gtype-1').removeClass('view-on');
+            // $('.btn-gtype-1').removeClass('view-on');
             $('.gtype-1').css('display', "none");
         } else {
-            $('.btn-gtype-1').addClass('view-on');
+            // $('.btn-gtype-1').addClass('view-on');
             $('.gtype-1').css('display', "");
         }
     }
     function thsyow() {
         if ($('.th-btn').hasClass('view-on')) {
-            $('.btn-gtype-2').removeClass('view-on');
+            // $('.btn-gtype-2').removeClass('view-on');
             $('.gtype-2').css('display', "none");
         } else {
-            $('.btn-gtype-2').addClass('view-on');
+            // $('.btn-gtype-2').addClass('view-on');
             $('.gtype-2').css('display', "");
         }
     }
     function allsyow() {
-        var i = 0
-        while (document.getElementById('group-' + i)) {
-            var target_id = document.getElementById('group-' + i);
-            $('.t-btn').addClass('view-on');
-            $('.th-btn').addClass('view-on');
-            $('.btn-gtype-1').addClass('view-on');
-            $('.btn-gtype-2').addClass('view-on');
-            $(target_id). addClass('view-on');
-            target_id.style = '';
-            i ++;
-        }
+        $('.gtype-1').removeClass('showway');
+        $('.gtype-2').removeClass('showway');
+        $('.gtype-1').css('display', "");
+        $('.gtype-2').css('display', "");
+        $('.t-btn').addClass('view-on');
+        $('.th-btn').addClass('view-on');
+        $(".filter-type").children().each(function( index ) {
+            $(this).addClass('view-on');
+        });
+        $(".content-grid").children().each(function( index ) {
+            var check=$(this).hasClass('table');
+            if(!check){
+                $(this).css('display', "");
+            }
+        });
     }
     function groupsyow(no) {
-        var id = document.getElementById('group-' + no);
-        if (id.style.display == 'none') {
-            id.style = '';
-            $(id).addClass('view-on');
-        } else {
-            id.style = 'display: none';
-            $(id).removeClass('view-on');
-        }
-        var i = 0;
-        $('.t-btn').removeClass('view-on');
-        while (document.getElementById('group-' + i)) {
-            var target_id = document.getElementById('group-' + i);
-            if ($(target_id).hasClass('gtype-1') && $(target_id).hasClass('view-on')) {
-                $('.t-btn').addClass('view-on');
-                break;
-            }
-            i ++;
-        }
-        var i = 0;
-        $('.th-btn').removeClass('view-on');
-        while (document.getElementById('group-' + i)) {
-            var target_id = document.getElementById('group-' + i);
-            if ($(target_id).hasClass('gtype-2') && $(target_id).hasClass('view-on')) {
-                $('.th-btn').addClass('view-on');
-                break;
-            }
-            i ++;
-        }
+        var id = document.getElementsByClassName('group-' + no);
+        $('.group-' + no).toggleClass('showway');
     }
     var count = 0;
     var countup = setInterval(function (){
@@ -177,7 +166,7 @@
                     if (!empty($his_list)) {
                         foreach ($his_list as $key => $val) {
                             if (empty($gloup_lis)) {
-                                $temp_arr = array('GroupName' => $val['GroupName']);
+                                $temp_arr = array('GroupName' => $val['GroupName'],'GroupID' => $val['GroupID']);
                                 $gloup_lis = array($temp_arr);
                                 if (intval($val['Humidity']) == -1000) {
                                     $type = 1;
@@ -187,32 +176,33 @@
                                 $temp_arr = array('Type' => $type);
                                 $type_lis = array($temp_arr);
                             } else {
-                                for ($i = 0; $i < count($gloup_lis); $i++) {
-                                    if (!array_search($val['GroupName'], array_column($gloup_lis, 'GroupName'))) {
-                                        $temp_arr = array('GroupName' => $val['GroupName']);
-                                        array_push($gloup_lis, $temp_arr);
-                                        if (intval($val['Humidity']) == -1000) {
-                                            $type = 1;
-                                        } else {
-                                            $type = 2;
-                                        }
-                                        $temp_arr = array('Type' => $type);
-                                        array_push($type_lis, $temp_arr);
-                                        break;
+                                $bool=true;
+                                foreach($gloup_lis as $cval){
+                                    if($val['GroupName']!==$cval['GroupName'])continue;
+                                    else{
+                                        $bool=false;break;
                                     }
                                 }
+                               if($bool){
+                                    $temp_arr = array('GroupName' => $val['GroupName'],'GroupID' => $val['GroupID']);
+                                    array_push($gloup_lis, $temp_arr);
+                                    
+                               }
                             }
                         }
-                        foreach ($his_list as $key => $val) {
-                            foreach ($his_list as $ckey => $cval) {
-                                if ($val['GroupName'] == $cval['GroupName']) {
-                                    if (intval($cval['Humidity']) == -1000) {
+                            foreach ($his_list as $key => $val) {
+                                    if (intval($val['Humidity']) == -1000) {
                                         $humi = 0;
                                     } else {
-                                        $humi = floatval($cval['Humidity']);
+                                        $humi = floatval($val['Humidity']);
                                     }
-                                    $hd = $method->getHD(floatval($cval['Temperature']), $humi);
-                                    $wbgt = $method->getHeatIndex(floatval($cval['Temperature']), $humi);
+                                    if (intval($val['Humidity']) == -1000) {
+                                        $type = 1;
+                                    } else {
+                                        $type = 2;
+                                    }
+                                    $hd = $method->getHD(floatval($val['Temperature']), $humi);
+                                    $wbgt = $method->getHeatIndex(floatval($val['Temperature']), $humi);
                                     $time_str = explode(' ', $val['RTC']);
                                     //$wbgt = 32;
                                     switch ($wbgt) {
@@ -221,7 +211,7 @@
                                             $iconcol = "";
                                             break;
                                         case ($wbgt >= $wbgtcheck[0] && $wbgt <= $wbgtcheck[1]):
-                                            $bgcol = 'amber';
+                                            $bgcol = 'amb';
                                             $iconcol = 'amb';
                                             break;
                                         case ($wbgt > $wbgtcheck[1]):
@@ -238,7 +228,7 @@
                                             $icon = "full";
                                             break;
                                         case ($bt >= $voltcheck[0] && $bt <= $voltcheck[1]):
-                                            //$bgcol = 'amber';
+                                            //$bgcol = 'amb';
                                             $icon = 'low';
                                             break;
                                         case ($bt < $voltcheck[0]):
@@ -248,8 +238,8 @@
                                         default:
                                             break;
                                     }
-                                    echo '<div class="alarm-block flexlyr view-on gtype-' . $type_lis[$key]['Type'];
-                                    echo '" id="group-' . $key . '">';
+                                    echo '<div class="alarm-block flexlyr view-on gtype-' . $type;
+                                    echo ' group-' . $val['GroupID'] . '">';
                                     echo '<div class="label">';
                                     echo '<label class="container1">';
                                     echo '<input type="checkbox">';
@@ -280,7 +270,7 @@
                                     echo '<img src="'.base_url().'assets/img/asset_24.png" onclick="cgroup_syow(' . $key . ');"';
                                     echo ' class="more-infor">';
                                     echo '</div>';
-                                    echo '<div class="alarm-block flexlyr cgroup-' . $key . '" style="display: none">';
+                                    echo '<div class="alarm-block flexlyr table cgroup-' . $key . '" style="display: none">';
                                     if (isset($alarmconfig_list)) {
                                         echo '<table border=1><tbody>';
                                             echo '<tr><td>センサー名:</td><td>' . $val['ProductName'] . '</td></tr>';
@@ -304,18 +294,16 @@
                                         echo '</tbody></table>';
                                     }
                                     echo '</div>';
-                                }
                             }
                         }
-                    }
                     ?>
                     <!-- <a href="" class="compare-link">比較する</a> -->
                 </div>
 
                 <div class="side-bar flexlyr">
                     <ul class="view-type-btn-grid">
-                        <li class="view-type-btn"><a href="page2.php" class="type1 "></a></li>
-                        <li class="view-type-btn"><a href="page4.php" class="type2 active"></a></li>
+                        <li class="view-type-btn"><a href="<?php echo base_url()?>sensorMonitoring" class="type1 active"></a></li>
+                        <li class="view-type-btn"><a href="<?php echo base_url()?>alarmHistory" class="type2 "></a></li>
                     </ul>
                     
                     <!-- search filter type - フィルター -->
@@ -330,7 +318,7 @@
                                 <?php
                                 foreach ($gloup_lis as $key => $val) {
                                     echo '<li class="view-on btn-gtype-' . $type_lis[$key]['Type'];
-                                    echo '"><a onclick="groupsyow(' . $key . ');">';
+                                    echo '"><a onclick="groupsyow(' . $val['GroupID'] . ');">';
                                     echo  $val['GroupName'] . '</a></li>';
                                 }
                                 ?>
