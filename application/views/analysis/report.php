@@ -438,8 +438,8 @@ $dlogdb = null;
                                             $status = 'danger';
                                             $s_text = 'オフライン';
                                         }
-                                        echo '<div class="grid-content flexlyr view-on gtype-' . $type_lis[$key]['Type'];
-                                        echo '" id="group-' . $key . '">';
+                                        echo '<div class="grid-content flexlyr view-on gtype-' . $dval['GroupID'];
+                                        echo '" id="group-' . $dval['GroupID'] . '">';
                                         echo '<div class="ct-cell cell1">' . $dval['ProductName'] . '</div>';
                                         echo '<div class="ct-cell cell2">' . $dval['IMEI'] . '</div>';
                                         echo '<div class="ct-cell cell3">' . $dval['TypeName'] . '</div>';
@@ -514,15 +514,36 @@ $dlogdb = null;
                             </select>
                             <ul class="filter-type">
                                 <?php
+                                $checklist=[];
                                     foreach ($reportlist as $key => $val) {
                                         $list = $val;
                                         foreach ($list as $dkey => $dval) {
-                                            if ($dkey == 0) {
-                                                echo '<li class="view-on btn-gtype-' . $type_lis[$key]['Type'] . '">';
-                                                echo '<a onclick="groupsyow(`' . $key . '`);">';
-                                                echo $dval['GroupName'] . '</a></li>';
+                                            $check=true;
+                                            if(empty($checklist)){
+                                                $check=false;
+                                                $data=array(
+                                                    'GroupName'=>$dval['GroupName'],
+                                                    'GroupID'=>$dval['GroupID']
+                                                );
+                                                array_push($checklist,$data);
                                             }
+                                            foreach($checklist as $checkkey => $checkval){
+                                                if($dval['GroupName']==$checkval['GroupName'])$check=false;
+                                            }
+                                            if ($check) {
+                                                $data=array(
+                                                    'GroupName'=>$dval['GroupName'],
+                                                    'GroupID'=>$dval['GroupID']
+                                                );
+                                                array_push($checklist,$data);
+                                            }
+                                           
                                         }
+                                    }
+                                    foreach($checklist as $val){
+                                        echo '<li class="view-on btn-gtype-' . $val['GroupID'] . '">';
+                                        echo '<a onclick="groupsyow(`' . $val['GroupID'] . '`);">';
+                                        echo $val['GroupName'] . '</a></li>';
                                     }
                                     ?>
                             </ul>
