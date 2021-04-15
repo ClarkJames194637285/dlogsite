@@ -266,20 +266,20 @@ $dlogdb = null;
     };
     function tsyow() {
         if ($('.t-btn').hasClass('view-on')) {
-            $('.btn-gtype-1').removeClass('view-on');
-            // $('.gtype-1').css('display', "none");
+            // $('.btn-gtype-1').removeClass('view-on');
+            $('.gtype-1').css('display', "none");
         } else {
-            $('.btn-gtype-1').addClass('view-on');
-            // $('.gtype-1').css('display', "");
+            // $('.btn-gtype-1').addClass('view-on');
+            $('.gtype-1').css('display', "");
         }
     }
     function thsyow() {
         if ($('.th-btn').hasClass('view-on')) {
-            $('.btn-gtype-2').removeClass('view-on');
-            // $('.gtype-2').css('display', "none");
+            // $('.btn-gtype-2').removeClass('view-on');
+            $('.gtype-2').css('display', "none");
         } else {
-            $('.btn-gtype-2').addClass('view-on');
-            // $('.gtype-2').css('display', "");
+            // $('.btn-gtype-2').addClass('view-on');
+            $('.gtype-2').css('display', "");
         }
     }
     function allsyow() {
@@ -305,34 +305,19 @@ $dlogdb = null;
         });
     }
     function groupsyow(no) {
-        var id = document.getElementById('group-' + no);
-        if (id.style.display == 'none') {
-            id.style = '';
-            $(id).addClass('view-on');
-        } else {
-            id.style = 'display: none';
-            $(id).removeClass('view-on');
-        }
-        // var i = 0;
-        // $('.t-btn').removeClass('view-on');
-        // while (document.getElementById('group-' + i)) {
-        //     var target_id = document.getElementById('group-' + i);
-        //     if ($(target_id).hasClass('gtype-1') && $(target_id).hasClass('view-on')) {
-        //         $('.t-btn').addClass('view-on');
-        //         break;
-        //     }
-        //     i++;
-        // }
-        // var i = 0;
-        // $('.th-btn').removeClass('view-on');
-        // while (document.getElementById('group-' + i)) {
-        //     var target_id = document.getElementById('group-' + i);
-        //     if ($(target_id).hasClass('gtype-2') && $(target_id).hasClass('view-on')) {
-        //         $('.th-btn').addClass('view-on');
-        //         break;
-        //     }
-        //     i++;
-        // }
+        $(".report_grid").children().each(function( index ) {
+            var check=$(this).hasClass('group-' + no);
+            if(check){
+                var checkbtn=$(this).css('display');
+                if(checkbtn=='flex'){
+                    $(this).css('display','none');
+                }
+                else{
+                    $(this).css('display','flex');
+                }
+            }
+        });
+  
     }
     // insert js
     $(document).on('click', '.post_window', function () {
@@ -439,7 +424,7 @@ $dlogdb = null;
                                             $s_text = 'オフライン';
                                         }
                                         echo '<div class="grid-content flexlyr view-on gtype-' . $dval['GroupID'];
-                                        echo '" id="group-' . $dval['GroupID'] . '">';
+                                        echo ' group-' . $dval['GroupID'] . '">';
                                         echo '<div class="ct-cell cell1">' . $dval['ProductName'] . '</div>';
                                         echo '<div class="ct-cell cell2">' . $dval['IMEI'] . '</div>';
                                         echo '<div class="ct-cell cell3">' . $dval['TypeName'] . '</div>';
