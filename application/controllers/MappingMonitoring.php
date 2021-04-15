@@ -81,14 +81,14 @@ class MappingMonitoring extends MY_Controller
 				$sensorInfo=$this->sensor_Model->SensorInfo($sensorval['ID']);
 				$temp=$sensorInfo[0]['Temperature'];
 				if(empty($sensorInfo)){
-					$mapSensor.='<div class=" senseor-icon icon-06" onclick="registerSensor('.$sensorval['ID'].')">
+					$mapSensor.='<div class="ungroup senseor-icon icon-06" onclick="registerSensor('.$sensorval['ID'].')">
 					<div class="all-circle none"><p><span>'.$sensorval['ProductName'].'</span></p></div>
 				</div>';continue;
 				}
 				if($sensorInfo[0]['Humidity']>0&&($sensorInfo[0]['Humidity']<100)){
 					$hum=$sensorInfo[0]['Humidity'];
 				}else{
-					$mapSensor.='<div class=" senseor-icon icon-03" onclick="registerSensor('.$sensorval['ID'].')">
+					$mapSensor.='<div class="ungroup senseor-icon icon-03" onclick="registerSensor('.$sensorval['ID'].')">
 					<div class="all-circle '.$this->tempComp($temp).'"><p>'.round($temp,1).'<span>℃</span></p></div>
 				</div>';continue;
 				}
@@ -99,7 +99,7 @@ class MappingMonitoring extends MY_Controller
 				// echo $HD.'<br>';
 				$wbgt=$a[0]+$a[1]*$temp+$a[2]*($hum*$a[3]*exp(($a[4]*$temp)/($a[5]+$temp)))+$b[0]*pow(($temp-$b[1]),2)+$b[2]*pow(($hum-$b[3]),2);
 				
-					$mapSensor.='<div class="senseor-icon icon-06" onclick="registerSensor('.$sensorval['ID'].')">
+					$mapSensor.='<div class="ungroup senseor-icon icon-06" onclick="registerSensor('.$sensorval['ID'].')">
 						<div class="all-circle '.$this->tempComp($HD).'"><img src="'.base_url().'assets/img/asset_35.png" alt=""></div>
 					</div>';
 					
