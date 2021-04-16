@@ -368,7 +368,7 @@
                     $('#unregistered-layer').replaceWith('<div class="map-layer zoom1" id="unregistered-layer">'+data['unregSensor']+'</div>');
                     objectFitImages();
                     $( "#map-layer" ).draggable({ containment: "window" });
-                    $( ".sensorGroup" ).draggable().css("position", "absolute");
+                    $( ".ungroup" ).draggable({ containment: "window" });
                     $('.none').parent().css('position','static');
                 }
                 $('#sensorName').replaceWith(data['sensorName']);
@@ -447,12 +447,16 @@
                             },
                             success:function(responce){
                                 data=JSON.parse(responce);
-                                if(data){
-                                    location.reload();
+                                if(data['unregSensor']){
+                                    $('#unregistered-layer').replaceWith('<div class="map-layer zoom1 " id="unregistered-layer">'+data['unregSensor']+'</div>');
+                                    objectFitImages();
+                                    $( "#map-layer" ).draggable({ containment: "window" });
+                                    $( ".ungroup" ).draggable({ containment: "window" });
+                                    $('.none').parent().css('position','static');
                                 }
-                                // $('#mapSensor').replaceWith(data['mapSensors']);
-                                // $( "#map-layer" ).draggable();
-                                // $( ".sensorGroup" ).draggable().css("position", "absolute");
+                                $('#mapSensor').replaceWith(data['mapSensors']);
+                                $( "#map-layer" ).draggable();
+                                $( ".sensorGroup" ).draggable().css("position", "absolute");
                             }
                         })
                     }
