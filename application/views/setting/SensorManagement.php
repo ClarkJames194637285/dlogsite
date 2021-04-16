@@ -57,7 +57,7 @@ if (isset($_GET['M'])) {
             $delete_id = explode(',', $_GET['ids']);
             $up_data = array('isdelete' => 1);
             foreach ($delete_id as $key => $val) {
-                $update_stmt = $dlogdb->dbUpdate($dbpdo, $tname, $up_data, $fieldname, $val);
+                $update_stmt = $dlogdb->dbUpdate($dbpdo, $ptname, $up_data, $fieldname, $val);
             }
             break;
     }
