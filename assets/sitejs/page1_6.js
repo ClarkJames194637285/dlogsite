@@ -70,7 +70,7 @@
 
 function Delete(id)
 {
-    if (!confirm("You sure you want to delete?")) {
+    if (!confirm("削除してもよろしいですか？")) {
         return;
     }
     location.href = "GatewayManagement?M=Delete&ids=" + id;

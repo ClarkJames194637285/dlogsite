@@ -43,7 +43,8 @@ if (isset($_GET['M'])) {
             $insert_data = array(
                 'IMEI' => $_POST['IMEI'],
                 'ProductName' => $_POST['ProductName'],
-                'TypeID' => "",
+                'TypeID' => $_POST['TypeID'],
+                'UserID' => $userid,
                 'GroupID' => $_POST['GroupID'],
                 'RegionID' => $_POST['RegionID'],
                 'TerminalDataInterval' => $_POST['TerminalDataInterval'],
