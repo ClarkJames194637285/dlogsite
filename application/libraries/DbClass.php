@@ -330,7 +330,7 @@ class Dbclass
         }
         return $stmt;
     }
-    public function getProductSensor($dbpdo, $user_id, $getid = null)
+    public function getProductSensor($dbpdo, $user_id, $pid = null)
     {
         /**
          * dbpdo = PDインスタンス
@@ -338,56 +338,13 @@ class Dbclass
          * Product,Producttype,ProductGroup,join抽出
          * テーブルの情報を連想配列で返す
          */
-        $query = "";
-        $product_tn = "product";
-        $productg_tn = "productgroup";
-        $producttype_tn = "producttype";
-        $query .= "SELECT ";
-        $query .= "pd.ID AS ID, ";
-        $query .= "pd.IMEI AS IMEI, ";
-        $query .= "pd.ProductName AS ProductName, ";
-        $query .= "pd.TypeID AS TypeID, ";
-        $query .= "pd.UserID AS UserID, ";
-        $query .= "pd.GroupID AS GroupID, ";
-        $query .= "pd.RegionID AS RegionID, ";
-        $query .= "pd.CreateTime AS CreateTime, ";
-        $query .= "pd.ExpireTime AS ExpireTime, ";
-        $query .= "pd.isdelete AS IsExpire, ";
-        $query .= "pd.TerminalPassword AS TerminalPassword, ";
-        $query .= "pd.TerminalDataInterval AS TerminalDataInterval, ";
-        $query .= "pd.Description AS Description, ";
-        $query .= "pd.IsAutoPay AS IsAutoPay, ";
-        $query .= "pty.ID AS ProducttypeID, ";
-        $query .= "pty.TypeName AS TypeName, ";
-        $query .= "pdg.ID AS ProductGroupID, ";
-        $query .= "pdg.SortID AS SortID, ";
-        $query .= "pdg.GroupName AS GroupName ";
-        $query .= "FROM " . $product_tn . " AS pd ";
-        $query .= "INNER JOIN " . $productg_tn . " AS pdg ";
-        $query .= "ON pd.GroupID = pdg.ID ";
-        $query .= "AND pdg.isdelete = 0  AND pdg.UserID=";
-        if ($getid != null) {
-            $query .= ":id ";
+        if ($pid != null) {
+            $query = "SELECT pd.ID AS ID, pd.IMEI AS IMEI, pd.ProductName AS ProductName, pd.TypeID AS TypeID, pd.UserID AS UserID, pd.GroupID AS GroupID, pd.RegionID AS RegionID, pd.CreateTime AS CreateTime, pd.ExpireTime AS ExpireTime, pd.isdelete AS IsExpire, pd.TerminalPassword AS TerminalPassword, pd.TerminalDataInterval AS TerminalDataInterval, pd.Description AS Description, pd.IsAutoPay AS IsAutoPay, pty.ID AS ProducttypeID, pty.TypeName AS TypeName, pdg.ID AS ProductGroupID, pdg.SortID AS SortID, pdg.GroupName AS GroupName FROM product AS pd INNER JOIN productgroup AS pdg ON pd.GroupID = pdg.ID AND pdg.isdelete = 0  AND pdg.UserID=".$user_id." INNER JOIN producttype AS pty ON pty.ID = pd.TypeID WHERE pd.ID=".$pid." AND pd.isdelete=0 ORDER BY pdg.SortID ASC";
         } else {
-            $query .= ":userid ";
+            $query = "SELECT pd.ID AS ID, pd.IMEI AS IMEI, pd.ProductName AS ProductName, pd.TypeID AS TypeID, pd.UserID AS UserID, pd.GroupID AS GroupID, pd.RegionID AS RegionID, pd.CreateTime AS CreateTime, pd.ExpireTime AS ExpireTime, pd.isdelete AS IsExpire, pd.TerminalPassword AS TerminalPassword, pd.TerminalDataInterval AS TerminalDataInterval, pd.Description AS Description, pd.IsAutoPay AS IsAutoPay, pty.ID AS ProducttypeID, pty.TypeName AS TypeName, pdg.ID AS ProductGroupID, pdg.SortID AS SortID, pdg.GroupName AS GroupName FROM product AS pd INNER JOIN productgroup AS pdg ON pd.GroupID = pdg.ID AND pdg.isdelete = 0  AND pdg.UserID=".$user_id." INNER JOIN producttype AS pty ON pty.ID = pd.TypeID WHERE  pd.isdelete=0 ORDER BY pdg.SortID ASC";
         }
-        $query .= "INNER JOIN " . $producttype_tn . " AS pty ";
-        $query .= "ON pty.ID = pd.TypeID ";
-        if ($getid != null) {
-            $query .= "WHERE pd.ID=:id ";
-        } else {
-            $query .= "WHERE pd.UserID=:userid ";
-        }
-        
-        $query .= "AND pd.isdelete=0 ";
-        $query .= "ORDER BY pdg.SortID ASC;";
         try {
             $stmt = $dbpdo->prepare($query);
-            if ($getid != null) {
-                $stmt->bindValue(":id", $getid, \PDO::PARAM_INT);
-            } else {
-                $stmt->bindValue(":userid", $user_id, \PDO::PARAM_INT);
-            }
             $stmt->execute();
         } catch (\PDOException $e) {
             $elogstr ="Error:".$e->getMessage();
