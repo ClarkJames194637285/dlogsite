@@ -1,50 +1,148 @@
+<?php
+    /**
+     * アラーム履歴
+     *
+     * page4
+     * PHP Version >= 7.3.12
+     *
+     * @category   Components
+     * @package    Dlog Cloud
+     * @subpackage Dlog Cloud
+     * @author     masa <masa@masa777.mydns.jp>
+     * @license    MIT License
+     * @link       https://masa777.mydns.jp
+     * @since      1.0.0
+     */
 
-    <!-- slider, preloader style -->
-    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/animate.css" type="text/css">
-    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/loaders.css" type="text/css">
-
-
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
+    $wbgtcheck = array(25, 31);
+    $voltcheck = array(3.61, 3.64);
     
-    <!-- BootStrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    $method = new Methodclass();
+    switch ($method->chDevice()) {
+        case "mobile":
+            /* スマホ用の処理 */
+            $device = "mobile";
+            break;
+        case "tablet":
+            /* タブレット用の処理 */
+            $device = "tablet";
+            break;
+        case "pc":
+            /* パソコン用の処理 */
+            $device = "pc";
+            break;
+    }
+    
+    $user_id = $_SESSION['user_id'];
+    $user_name = $_SESSION['user_name'];
+    $tname = "product";
+    $fieldname = "ID";
+    $dlogdb = new Dbclass();
+    $dbpdo = $dlogdb->dbCi($this->config->item('host'),$this->config->item('username'),$this->config->item('password'), $this->config->item('dbname'));
+
+    // foreach($pid as $id){
+    //     $list = $dlogdb->getHistoryData($dbpdo, $user_id,$id);
+    // }
+    // $his_list = $dlogdb->getHistoryData($dbpdo, $user_id);
+    //var_dump($his_list);
+    $aconf_tn = 'alarmconfig';
+    $like = '=';
+    $wfname = 'UserID';
+    $alarmconfig_res = $dlogdb->dbSelect($dbpdo, $aconf_tn, $like, $wfname, $user_id);
+    $alarmconfig_list = $alarmconfig_res->fetchAll(\PDO::FETCH_ASSOC);
+    //var_dump($alarmconfig_list);
+    $dlogdb = null;
+
+?>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        .show{
+            display:flex !important;
+        }
+        .showway{
+           display: none;
+        }
+        .alarm-block .label{
+            text-align:left;
+        }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-    <!-- toast window -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    
-
-    <!-- custom style -->
-    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/base.css" type="text/css">
-    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/layout_mobile.css" media="screen and (max-width: 768px)" type="text/css">
-    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/layout_tablet.css" media="screen and (min-width: 769px)" type="text/css">
-
-    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/menu_mobile.css" media="screen and (max-width: 768px)" type="text/css">
-    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/menu_tablet.css" media="screen and (min-width: 769px)" type="text/css">
-    
-    <!-- jquery dragable -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
-    <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <!-- img object fit -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/object-fit-images/3.2.3/ofi.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <!-- custom jscript -->
-    <!-- <script type="text/javascript" src="<?php echo base_url()?>assets/js/custom.js"></script> -->
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/custom.js"></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/wow.min.js"></script>
+    <!-- insert yamaguchi -->
+    <script type="text/javascript">
+
+    $(document).on('click','.srh-block li a',function () {
+        // $(".trans-btn").removeClass('select-on');
+        $(this).parent('li').toggleClass('view-on');
+    });
+    function cgroup_syow(no) {
+        if ($('.cgroup-' + no).hasClass('view-on')) {
+            $('.cgroup-' + no).removeClass('view-on');
+            $('.cgroup-' + no).css('display', "none");
+        } else {
+            $('.cgroup-' + no).addClass('view-on');
+            $('.cgroup-' + no).css('display', "");
+        } 
+    }
+    function tsyow() {
+        if ($('.t-btn').hasClass('view-on')) {
+            // $('.btn-gtype-1').removeClass('view-on');
+            $('.gtype-1').css('display', "none");
+        } else {
+            // $('.btn-gtype-1').addClass('view-on');
+            $('.gtype-1').css('display', "");
+        }
+    }
+    function thsyow() {
+        if ($('.th-btn').hasClass('view-on')) {
+            // $('.btn-gtype-2').removeClass('view-on');
+            $('.gtype-2').css('display', "none");
+        } else {
+            // $('.btn-gtype-2').addClass('view-on');
+            $('.gtype-2').css('display', "");
+        }
+    }
+    function allsyow() {
+        $('.gtype-1').removeClass('showway');
+        $('.gtype-2').removeClass('showway');
+        $('.gtype-1').css('display', "");
+        $('.gtype-2').css('display', "");
+        $('.t-btn').addClass('view-on');
+        $('.th-btn').addClass('view-on');
+        $(".filter-type").children().each(function( index ) {
+            $(this).addClass('view-on');
+        });
+        $(".content-grid").children().each(function( index ) {
+            var check=$(this).hasClass('table');
+            if(!check){
+                $(this).css('display', "");
+            }
+        });
+    }
+    function groupsyow(no) {
+        var id = document.getElementsByClassName('group-' + no);
+        $('.group-' + no).toggleClass('showway');
+    }
+    var count = 0;
+    var countup = setInterval(function (){
+        count++;
+        document.location.reload();
+    },60000);
+    </script>
+    <style>
+        p{
+            color:black;
+        }
+    </style>
 </head>
 
-<script>
-    objectFitImages();
-    $( function() {
-        $( "#map-layer" ).draggable();
-        $( ".senseor-icon" ).draggable().css("position", "absolute");
-    } );
-</script>
-
-<body id="pg_index" class="pg_index alarm-history">
+<body id="pg_index" class="pg_index sensor-monitor">
+    
     
     <div class="wrapper">
         
@@ -54,54 +152,188 @@
     
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">アラーム履歴</h1>
+            <h1 class="page-title">センサー監視</h1>
             <section class="main-content ">
 
                 <div class="content-grid">
-                    <?php echo $Sensors;?>
-
-
-
-
-                    
-
+                    <div class="alarm-header flexlyr">
+                        <p>グループ名<br>センサー名</p>
+                        <p>測定値 / アラート</p>
+                        <p>電池/電波</p>
+                        <p>更新日時</p>
+                    </div>
+                    <?php
+                    if (!empty($his_list)) {
+                        foreach ($his_list as $key => $val) {
+                            if (empty($gloup_lis)) {
+                                $temp_arr = array('GroupName' => $val['GroupName'],'GroupID' => $val['GroupID']);
+                                $gloup_lis = array($temp_arr);
+                                if (intval($val['Humidity']) == -1000) {
+                                    $type = 1;
+                                } else {
+                                    $type = 2;
+                                }
+                                $temp_arr = array('Type' => $type);
+                                $type_lis = array($temp_arr);
+                            } else {
+                                $bool=true;
+                                foreach($gloup_lis as $cval){
+                                    if($val['GroupName']!==$cval['GroupName'])continue;
+                                    else{
+                                        $bool=false;break;
+                                    }
+                                }
+                               if($bool){
+                                    $temp_arr = array('GroupName' => $val['GroupName'],'GroupID' => $val['GroupID']);
+                                    array_push($gloup_lis, $temp_arr);
+                                    
+                               }
+                            }
+                        }
+                            foreach ($his_list as $key => $val) {
+                                    if (intval($val['Humidity']) == -1000) {
+                                        $humi = 0;
+                                    } else {
+                                        $humi = floatval($val['Humidity']);
+                                    }
+                                    if (intval($val['Humidity']) == -1000) {
+                                        $type = 1;
+                                    } else {
+                                        $type = 2;
+                                    }
+                                    $hd = $method->getHD(floatval($val['Temperature']), $humi);
+                                    $wbgt = $method->getHeatIndex(floatval($val['Temperature']), $humi);
+                                    $time_str = explode(' ', $val['RTC']);
+                                    //$wbgt = 32;
+                                    switch ($wbgt) {
+                                        case ($wbgt < $wbgtcheck[0]):
+                                            $bgcol = 'green';
+                                            $iconcol = "";
+                                            break;
+                                        case ($wbgt >= $wbgtcheck[0] && $wbgt <= $wbgtcheck[1]):
+                                            $bgcol = 'amb';
+                                            $iconcol = 'amb';
+                                            break;
+                                        case ($wbgt > $wbgtcheck[1]):
+                                            $bgcol = 'red';
+                                            $iconcol = 'red';
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    $bt = floatval($val['Voltage']);
+                                    switch ($bt) {
+                                        case ($bt > $voltcheck[1]):
+                                            //$bgcol = 'green';
+                                            $icon = "full";
+                                            break;
+                                        case ($bt >= $voltcheck[0] && $bt <= $voltcheck[1]):
+                                            //$bgcol = 'amb';
+                                            $icon = 'low';
+                                            break;
+                                        case ($bt < $voltcheck[0]):
+                                            //$bgcol = 'red';
+                                            $icon = 'empty';
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    echo '<div class="alarm-block flexlyr view-on gtype-' . $type;
+                                    echo ' group-' . $val['GroupID'] . '">';
+                                    echo '<div class="label">';
+                                    echo '<label class="container1">';
+                                    echo '<input type="checkbox">';
+                                    echo '<span class="checkmark"></span>';
+                                    echo '</label>';
+                                    echo '<p>' . $val['GroupName'] . '<br>';
+                                    echo $val['TypeName'] . '</p>';
+                                    echo '</div>';
+                                    echo '<div class="sensor-cell flexlyr">';
+                                    echo '<p class="sensor-item temperature-' . $bgcol . '">';
+                                    echo $val['Temperature'] . '<span>℃</span></p>';
+                                    echo '<p class="sensor-item heat-' . $bgcol . '">';
+                                    echo $wbgt . '<span>℃</span></p>';
+                                    echo '<p class="sensor-item humidity-' . $bgcol . '">';
+                                    echo ($humi * 100) . '<span>%</span></p>';
+                                    echo '<p class="sensor-item saturation-' . $bgcol . '">';
+                                    echo $hd . '<span>g/m3</span></p>';
+                                    echo '</div>';
+                                    echo '<div class="battery-cell">';
+                                    echo '<p class="battery-box battery-' . $icon . '"></p>';
+                                    //echo '<p class="battery-box battery-low"></p>';
+                                    //echo '<p class="battery-box battery-empty"></p>';
+                                    echo '</div>';
+                                    echo '<div class="update-time">';
+                                    echo '<p>' . date('Y/m/d', strtotime($val['RTC'])) . '</p>';
+                                    echo '<p>' . date('A g:i s', strtotime($val['RTC'])) . '</p>';
+                                    echo '</div>';
+                                    echo '<img src="'.base_url().'assets/img/asset_24.png" onclick="cgroup_syow(' . $key . ');"';
+                                    echo ' class="more-infor">';
+                                    echo '</div>';
+                                    echo '<div class="alarm-block flexlyr table cgroup-' . $key . '" style="display: none">';
+                                    if (isset($alarmconfig_list)) {
+                                        echo '<table border=1><tbody>';
+                                            echo '<tr><td>センサー名:</td><td>' . $val['ProductName'] . '</td></tr>';
+                                            echo '<tr><td>センサーID:</td><td>' . $val['IMEI'] . '</td></tr>';
+                                            echo '<tr><td>製品名:</td><td>' . $val['Model'] . '</td></tr>';
+                                            echo '<tr><td>グループ名:</td><td>' . $val['GroupName'] . '</td></tr>';
+                                            echo '<tr><td>メモ:</td><td>' . $val['Description'] . '</td></tr>';
+                                        foreach ($alarmconfig_list as $akey => $aval) {
+                                            $aobject = explode('|', $aval['AObject']);
+                                            $av_tmp = explode('|', $aval['AEvent']);
+                                            $aevent1 = explode(',', $av_tmp[0]);
+                                            $aevent2 = explode(',', $av_tmp[1]);
+                                            if ($aval['AlarmType'] == '1' && $aobject[1] == $val['GroupID']) {
+                                                echo '<tr><td>アラーム１（低温）:</td><td>' . $aevent1[0] . '</td></tr>';
+                                                echo '<tr><td>アラーム１（高温）:</td><td>' . $aevent1[1] . '</td></tr>';
+                                                echo '<tr><td>アラーム２（低温）:</td><td>' . $aevent2[0] . '</td></tr>';
+                                                echo '<tr><td>アラーム２（高温）:</td><td>' . $aevent2[1] . '</td></tr>';
+                                                break;
+                                            }
+                                        }
+                                        echo '</tbody></table>';
+                                    }
+                                    echo '</div>';
+                            }
+                        }
+                    ?>
+                    <!-- <a href="" class="compare-link">比較する</a> -->
                 </div>
 
                 <div class="side-bar flexlyr">
                     <ul class="view-type-btn-grid">
-                        <li class="view-type-btn"><a href="<?php echo base_url()?>sensorMonitoring" class="type1"></a></li>
+                    <ul class="view-type-btn-grid">
+                        <li class="view-type-btn"><a href="<?php echo base_url()?>sensorMonitoring" class="type1 "></a></li>
                         <li class="view-type-btn"><a href="<?php echo base_url()?>sensorMonitoring/listSensor" class="type2 active"></a></li>
+                    </ul>
                     </ul>
                     
                     <!-- search filter type - フィルター -->
-                    
                     <div class="side-bar-block srh-filter-block flexlyr">
                         <p class="side-block-header srh-filter">フィルター</p>
 
                         <div class="srh-block">
-                            <select name="option" id="option">
-                                <option value="0" selected>グループ</option>
-                                <!-- <option value="" >センサー</option> -->
-                                <option value="1" >バッテリー要交換</option>
-                                <option value="2" >アラーム発生中</option>
-                                <option value="3" >オフライン</option>
-                                
+                            <select name="" id="">
+                                <option value="" disabled selected>グループ</option>
                             </select>
                             <ul class="filter-type">
-                            <?php foreach($Group as $val){ ?> 
-                                    <li class="view-on" id="group<?php echo $val['ID'];?>"><a ><?php print_r($val['GroupName']);?></a></li>
-                                <?php } ?>
-                                
+                                <?php
+                                foreach ($gloup_lis as $key => $val) {
+                                    echo '<li class="view-on btn-gtype-' . $type_lis[$key]['Type'];
+                                    echo '"><a onclick="groupsyow(' . $val['GroupID'] . ');">';
+                                    echo  $val['GroupName'] . '</a></li>';
+                                }
+                                ?>
                             </ul>
-                            <p class="set-view"><a  onclick="showAll()">全て表示する</a></p>
+                            <p class="set-view"><a onclick="allsyow();">全て表示する</a></p>
                             <p class="set-view"><a href="<?php echo base_url()?>setting/listmanagement">並び替える</a></p>
                         </div>
 
-                        <div class="srh-block temp-hum">
+                        <div class="srh-block">
                             <p class="srh-title">センサータイプ</p>
                             <ul>
-                                <li class="view-on" id="temp_view"><a >温度計</a></li>
-                                <li class="view-on" id="humidity_view"><a >温湿度計</a></li>
+                                <li class="t-btn view-on"><a onclick="tsyow();">温度計</a></li>
+                                <li class="th-btn view-on"><a onclick="thsyow();">温湿度計</a></li>
                             </ul>
                         </div>
 
@@ -114,77 +346,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-    
-    function showAll(){
-        $(".temperature").css("display","");
-        $(".humidity").css("display","");
-        $(".offline").css('display','');
-        $("#temp_view").addClass('view-on');
-        $("#humidity_view").addClass('view-on');
-        $(".filter-type").children().each(function( index ) {
-            $(this).addClass('view-on');
-        })
-    }
-   
-   
-    $('.srh-block li a').click(function () {
-        // $(".trans-btn").removeClass('select-on');
-        $(this).parent('li').toggleClass('view-on');
-        var check=$(this).parent('li').hasClass('view-on');
-        var str=$(this).parent('li')[0].id;
-        if(check){
-            if(str=='temp_view'){
-                $(".temperature").css("display","");
-            }
-            if(str=='humidity_view'){
-                $(".humidity").css("display","");
-            }
-            else
-                $("."+str).css('display','');
-        }
-        else{
-            if(str=='temp_view'){
-                $(".temperature").css("display","none");
-            }
-            if(str=='humidity_view'){
-                $(".humidity").css("display","none");
-            }
-            else
-                $("."+str).css('display','none');
-        }
-    });
-    $('select').on('change', function () {
-    //ways to retrieve selected option and text outside handler
-        var check=$('#option option:selected').val();
-        showWay(check);
-    });
-    function showWay(check){
-        
-        if(check==0){
-            allshow();
-        }else if(check==1){
-            allhidden();
-            $(".reqbattery").parent().css('display','');
-        }else if(check==2){
-            allhidden();
-            $(".warning").css('display','');
-        }else if(check==3){
-            allhidden();
-            $(".offline").css("display",'');
-        }
-    }
-    function allhidden(){
-        $(".alarm-block").css('display','none');
-       
-    }
-    function allshow(){
-        $(".alarm-block").css('display','');
-       
-    }
-
- </script>  
 </body>
 
 </html>
