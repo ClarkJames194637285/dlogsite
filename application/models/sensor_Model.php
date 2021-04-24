@@ -309,14 +309,14 @@ class Sensor_Model extends CI_Model {
         $this->db->where('ID', $mapID);
         return $query = $this->db->get()->row(); 
     }
+    
     public function deleteMap($mapID){
         $this -> db -> where('ID', $mapID);
         return $this -> db -> delete('map');
     }
-    function set_map_Info($map_url,$mapname,$mapID,$user) {
+    function setMap($mapname,$mapID,$user) {
         if($mapID==""){
             $data = array(
-                'imageurl' =>$map_url,
                 'name' =>$mapname,
                 'userID' =>$user,
                 'CreateTime' => date('Y-m-j H:i:s')
@@ -324,7 +324,6 @@ class Sensor_Model extends CI_Model {
             return $this->db->insert('map', $data);
         }else{
             $data = array(
-                'imageurl' =>$map_url,
                 'name' =>$mapname,
                 'userID' =>$user,
                 'CreateTime' => date('Y-m-j H:i:s')
@@ -332,6 +331,16 @@ class Sensor_Model extends CI_Model {
             $this->db->where('ID', $mapID);
             return $this->db->update('map', $data);
         }
+    }
+    function set_map_Info($map_url,$mapname,$user) {
+        $data = array(
+            'imageurl' =>$map_url,
+            'name' =>$mapname,
+            'userID' =>$user,
+            'CreateTime' => date('Y-m-j H:i:s')
+        );
+        $this->db->where('name', $mapname);
+        return $this->db->update('map', $data);
     }
 	
 }
