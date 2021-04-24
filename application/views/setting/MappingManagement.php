@@ -328,7 +328,7 @@ $(document).ready(function(){
                 success:function(res){
                     // res=JSON.parse(responce);
                     if(res==false) alert("アップロードに失敗しました");
-                    else alert("アップロードの成功しました");
+                    else alert("アップロードに成功しました");
                     $('#uploadimageModal').modal('hide');
                     $('#editImage').replaceWith(res);
                     $.ajax({
