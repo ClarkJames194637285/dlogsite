@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -7,32 +8,43 @@
     <!-- viewport setting -->
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=0">
     <!-- slider, preloader style -->
-    <link rel="stylesheet" href="<?php echo base_url()?>/assets/css/animate.css" type="text/css">
-    <link rel="stylesheet" href="<?php echo base_url()?>/assets/css/loaders.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/animate.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/loaders.css" type="text/css">
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
     <!-- BootStrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
     
     <!-- custom style -->
-    <link rel="stylesheet" href="<?php echo base_url()?>/assets/css/base.css" type="text/css">
-    <link rel="stylesheet" href="<?php echo base_url()?>/assets/css/layout_mobile.css" media="screen and (max-width: 768px)" type="text/css">
-    <link rel="stylesheet" href="<?php echo base_url()?>/assets/css/layout_tablet.css" media="screen and (min-width: 769px)" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/fileinput/css/fileinputbase.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/layout_mobile.css" media="screen and (max-width: 768px)" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/layout_tablet.css" media="screen and (min-width: 769px)" type="text/css">
 
-    <link rel="stylesheet" href="<?php echo base_url()?>/assets/css/menu_mobile.css" media="screen and (max-width: 768px)" type="text/css">
-    <link rel="stylesheet" href="<?php echo base_url()?>/assets/css/menu_tablet.css" media="screen and (min-width: 769px)" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/menu_mobile.css" media="screen and (max-width: 768px)" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/css/menu_tablet.css" media="screen and (min-width: 769px)" type="text/css">
     
 
     <!-- custom jscript -->
-    <script type="text/javascript" src="<?php echo base_url()?>/assets/js/custom.js"></script>
-    <script type="text/javascript" src="<?php echo base_url()?>/assets/js/wow.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/custom.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/wow.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" />
+
+    <link href="<?php echo base_url()?>assets/fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+    <link href="<?php echo base_url()?>assets/fileinput/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css"/>
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script> -->
+    <script src="<?php echo base_url()?>assets/fileinput/js/plugins/piexif.js" type="text/javascript"></script>
+    <script src="<?php echo base_url()?>assets/fileinput/js/plugins/sortable.js" type="text/javascript"></script>
+    <script src="<?php echo base_url()?>assets/fileinput/js/fileinput.js" type="text/javascript"></script>
+    <script src="<?php echo base_url()?>assets/fileinput/js/locales/ja.js" type="text/javascript"></script>
+    <script src="<?php echo base_url()?>assets/fileinput/themes/fas/theme.js" type="text/javascript"></script>
+    <script src="<?php echo base_url()?>assets/fileinput/themes/explorer-fas/theme.js" type="text/javascript"></script>
     <style>
+        
         label.custom {
             background-color: #2A3A62;
             color: white;
@@ -49,67 +61,71 @@
             font-family: sans-serif;
             font-size:15px;
             }
-        .editimage{
+        .center{
             position: absolute;
             top: 50%;
-            -webkit-transform: translateY(-50%);
-            -moz-transform: translateY(-50%);
-            -ms-transform: translateY(-50%);
-            transform: translateY(-50%);
+            right: 50%;
+            transform: translate(50%,-50%);
+            color: white;
         } 
         </style>
     <script>
-       var mapID='';
-       var map_url='';
-       var map_name='';
-    function editMap(id){
-        mapID=id;
-        $.ajax({
-               url:"MappingManagement/getMap",
-                type:'post',
-                data:{
-                    'mapid': mapID
-                },
-                success:function(responce){
-                    res=JSON.parse(responce);
-                   if(res){
-                        map_url=res.imageurl;
-                        map_name=res.name;
-                        // $('#upload_image').val(map_url);
-                        $('#mapname').val(map_name);
-                        $("#currentMap").text(mapID);
-                        $('#uploadimageModal').modal('show');
-                        $image_crop.croppie('bind', {
-                            url: map_url
-                        }).then(function(){
-                            console.log('jQuery bind complete');
-                        });
-                   }else{
-                    alert('編集できません。');
-                   }
-                }
-                
-           })
-        
-    }
-    function addMap(){
-        map_name='';
-        $('#currentMap').text("");
-        $('#mapname').val(map_name);
-        map_url='<?php echo base_url();?>assets/upload/testRe/map_1614226602.png';
-        $('#uploadimageModal').modal('show');
-        $image_crop.croppie('bind', {
-            url: map_url
-        }).then(function(){
-            console.log('jQuery bind complete');
+       
+    $( function() {
+        $( "#sortableMap" ).sortable();
+        $( "#sortableMap" ).disableSelection();
+        var isDragging = false;
+        $(".mapping-block")
+        .mousedown(function() {
+            isDragging = false;
+        })
+        .mousemove(function() {
+            isDragging = true;
+        })
+        .mouseup(function() {
+            var wasDragging = isDragging;
+            if (wasDragging) {
+                mapDecide();
+            }
         });
+    } );
+ 
+    function eidtMap(){
+        var data=[];var count=0;var mapId='';var mapName='';
+        $('#sortableMap').children('div').each(function(index){
+            var check=$(this).find('input').prop('checked');
+            if(!check){
+                return;
+            }
+            count++;
+            if(count>1){
+                alert('一度二つ以上編集することができません。');
+                return;
+            }
+            mapId=$(this).attr('id');
+            mapName=$.trim($(this).text());
+        });
+        if(count==0){
+            alert('編集するマップを選択します。');
+            return;
+        }
+        
+        if(mapId){
+            mapId=mapId.substring(3);
+            location.href = "<?php echo base_url()?>setting/mappingmanagement/edit?mapId="+mapId+"&mapName="+mapName;
+        }else{
+            location.href = "<?php echo base_url()?>setting/mappingmanagement/add";
+        }
+        
     }
     function mapDecide(){
         var data=[];
-            $('#sortableMap').find('div').each(function(index){
+            $('#sortableMap').children('div').each(function(index){
                 var id = $(this).attr('id');
-                mapId=id.substring(3);
-                data.push([mapId,index]);
+                if(id){
+                    mapId=id.substring(3);
+                    data.push([mapId,index]);
+                }
             });
            $.ajax({
                 url:"<?php echo base_url()?>setting/mappingManagement/mapDecide",
@@ -124,68 +140,51 @@
                 
            })
     }
-
     function deleteMap(){
-            var data=[];
-            $('#sortableMap').find('div').each(function(index){
-                var check=$(this).find('input').prop('checked');
-                if(!check)return;
-                var mapName=$(this).attr('id');
+        var data=[];
+        $('#sortableMap').children('div').each(function(index){
+            var check=$(this).find('input').prop('checked');
+            if(!check)return;
+            var mapName=$(this).attr('id');
+            if(mapName){
                 mapName=mapName.substring(3);
                 data.push(mapName);
-            });
-           $.ajax({
-                url:"<?php echo base_url()?>setting/mappingManagement/deleteMap",
-                type:'post',
-                data:{'data':data},
-                success:function(responce){
-                    if(responce){
-                        alert("成功裏に変更されました。");
-                        $.ajax({
-                            url:"<?php echo base_url()?>Setting/MappingManagement/mapList",
-                            type:'get',
-                            success:function(responce){
-                                res=JSON.parse(responce);
-                                if(res){
-                                    $('#sortableMap').replaceWith(res);
-                                    $( "#sortableMap" ).sortable();
-                                    $( "#sortableMap" ).disableSelection();
-                                }
-                                else alert("失敗しました。");
-                            }
-                            
-                        })
-                    }
-                    else alert("失敗しました。");
-                }
-                
-           })
-    }
-    
-    function currentEditMap(){
-        map_name=$('#map_name').text();
-        $('#mapname').val(map_name);
-        map_url=$('#map_url').attr('src');
-        $('#uploadimageModal').modal('show');
-        mapID=$('#currentMap').text();
-        $image_crop.croppie('bind', {
-            url: map_url
-        }).then(function(){
-            console.log('jQuery bind complete');
+            }
+            
         });
+        $.ajax({
+            url:"<?php echo base_url()?>setting/mappingManagement/deleteMap",
+            type:'post',
+            data:{'data':data},
+            success:function(responce){
+                if(responce){
+                    alert("成功裏に変更されました。");
+                    location.href = "<?php echo base_url()?>setting/mappingmanagement";
+                }
+                else alert("失敗しました。");
+            }
+        })
     }
-    $( function() {
-        $( "#sortableMap" ).sortable();
-        $( "#sortableMap" ).disableSelection();
-    } );
   </script>
 </head>
 
 <body id="pg_index" class="pg_index mapping-setting">
-    
+    <div class="pg-header flexlyr">
+        <a href="<?php echo base_url()?>home" class="logo-icon"><img src="<?php echo base_url()?>assets/img/asset_01.png" alt=""></a>
+        <div class="user-infor flexlyr">
+            <?php if($this->role!=="admin"){?>
+            <a href="<?php echo base_url()?>alarmhistory" class="user-comment"><img src="<?php echo base_url()?>assets/img/asset_08.png" alt="">
+                <?php if($unread<1){?><p style="display:none;"><?php echo $unread;?></p><?php }else{?><p><?php echo $unread;?></p><?php }?>
+            </a>
+            <?php }else{?>
+            <a href="<?php echo base_url()?>message/inbox" class="user-comment"><img src="<?php echo base_url()?>assets/img/asset_08.png" alt="">
+                <?php if($unread<1){?><p style="display:none;"><?php echo $unread;?></p><?php }else{?><p><?php echo $unread;?></p><?php }?>
+            </a>
+            <?php }?>
+            <a href="<?php echo base_url()?>User/logout" class="user-name"><img src="<?php echo base_url()?>assets/img/asset_02.png" alt=""><span><?php echo $user_name;?></span></a>
+        </div>
+    </div>
     <div class="wrapper">
-        
-        
         <!-- Sidebar  -->
         <?php $this->load->view('menu'); ?>
     
@@ -198,40 +197,30 @@
                     <p class="grid-label mapping-label">マップ</p>
                     <div id="sortableMap">
                         <?php 
-                            if(empty($mapName)){?>
-                                <div class="mapping-block flexlyr">
-                                <label class="container1">
-                                </label>
-                                <p class="mapping-name">地図なし</p>
-                            </div>
-                           <?php }else{
-                                echo $mapName;
-                            }
+                            echo $mapName;
                         ?>
-                        
+                       
                     </div>
                     <div class="operation-block flexlyr">
-                        <a  onclick="addMap()" class="add-btn"></a>
-                        <a  onclick="mapDecide()" class="text-btn" style="font-size:15px;">決定</a>
+                        <a href="mappingManagement/add"  class="add-btn"></a>
+                        <a  onclick="eidtMap()" class="edit-btn"></a>
                         <a  onclick="deleteMap()" class="del-btn"></a>
                     </div>
                 </div>
                 <div class="mapping-map setting-grid">
-                    <div id="editImage">
-                        <p class="map-name" id="map_name"><?php echo $firstMap;?></p>
-                        <div class="editimage">
-                        <img src="<?php echo $map_url;?>" alt="" id="map_url"> </div>
+                    <p class="map-name" id="map_name">名称未設定</p>
+                    <div class="center">
+                        <div> <img src="<?php echo base_url();?>assets/img/asset_32.png"id="map_url"  onclick="upload()"> </div><br>
+                        <div style="color:black;">地図の画像をアップロードする</div>
                     </div>
-                    <div style="display:none;" id="currentMap"><?php echo $ID;?></div>
-                    <a  onclick="currentEditMap()" class="edit-btn"></a>
                 </div>
             </div>
             <a href="<?php echo base_url();?>home" class="confirm-btn">ホームに戻る</a>
         </div>
         
     </div>
-    
-    <div id="uploadimageModal" class="modal" role="dialog">
+</div>
+<div id="uploadimageModal" class="modal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -239,124 +228,42 @@
                     <h1 class="modal-title" style="font-size: 25px;">地図編集</h1>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12" style="display:flex;font-size:18px;margin-bottom:10px">
-                            <div class="col-md-3" style="padding-top:10px;">地図名</div>
-                            <div class="col-md-8"><input type="text" class="form-control" id="mapname"></div>
-                        </div>
-                        <div class="text-center">
-                            <div id="image_demo"></div>
-                        </div>
-                        <div >
-                        <div id="errormsg" style="font-size:16px;display:none;">ファイルがない</div><br>                              
-                            <br />
-                            <div id="uploaded_image" ></div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input type="file" id="upload_image" style="display:none;" />
-                                    <label class="custom" for="upload_image">マップ選択</label>
-                                    <span id="file-chosen">ファイルがない</span>
-                                </div>
-                                <div>
-                                    <button class="btn btn-success crop_image col-md-6" style="width:200px;margin-left: 65px;background-color: #2A3A62;">地図をアップロード</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <input id="mapImage" name="mapImage" type="file">
+                    
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
-    <script>  
-   
-$(document).ready(function(){
-    
-	$image_crop = $('#image_demo').croppie({
-    url: '<?php echo base_url();?>assets/img/temp_map.png',
-    showZoomer: false,
-    enableResize: true,  
-    viewport: {
-      width:470,
-      height:230,
-      type:'square' //circle
-    },
-    boundary:{
-      width:470,
-      height:230
-    },
-    enableResize: true,
-    mouseWheelZoom: 'ctrl'
-  });
-  
-  const actualBtn = document.getElementById('upload_image');
-
-        const fileChosen = document.getElementById('file-chosen');
-    if(actualBtn){
-        actualBtn.addEventListener('change', function(){
-            fileChosen.textContent = this.files[0].name
-        })
-    }
-  $('#upload_image').on('change', function(){
-    var reader = new FileReader();
-    reader.onload = function (event) {
-      $image_crop.croppie('bind', {
-        url: event.target.result
-      }).then(function(){
-        console.log('jQuery bind complete');
-      });
-    }
-    reader.readAsDataURL(this.files[0]);
-  });
-
-  $('.crop_image').click(function(event){
-    var mapname=$("#mapname").val();
-    if(mapname==''){alert('マップ名を入力してください。');return;}
-    if ($("#upload_image")[0].files[0] && $("#upload_image")[0].files[0]) {
-     
-      var mapID=$("#currentMap").text();
-        $image_crop.croppie('result', {
-            type: 'canvas',
-            size: 'original',
-            }).then(function(response){
-            $.ajax({
-                url:"MappingManagement/uploadImage",
-                type: "post",
-                dataType: "text",
-                data:{"map": response,"mapname":mapname,'mapid':mapID},
-                success:function(res){
-                    // res=JSON.parse(responce);
-                    if(res==false) alert("アップロードに失敗しました");
-                    else alert("アップロードの成功しました");
-                    $('#uploadimageModal').modal('hide');
-                    $('#editImage').replaceWith(res);
-                    $.ajax({
-                        url:"<?php echo base_url()?>Setting/MappingManagement/mapList",
-                        type:'get',
-                        success:function(responce){
-                            res=JSON.parse(responce);
-                            if(res){
-                                $('#sortableMap').replaceWith(res);
-                                $( "#sortableMap" ).sortable();
-                                $( "#sortableMap" ).disableSelection();
-                            }
-                            else alert("失敗しました。");
-                        }
-                        
-                    })
-                }
-            });
-        })
-    } else {
-        alert('ファイルを追加してください。');
-  }
-  });
-
-});  
-</script>
 </body>
 
+<script>
+     var mapname="";
+      $('.mapping-block').click(function () {
+            $('.mapping-block').css('background-color','white');
+            $(this).css('background-color','darkseagreen');
+            var name=$.trim($(this).text());
+            mapname=$('#map_name').text(name);
+      })
+      function upload(){
+            mapname=$('#map_name').text();
+            if(mapname=="名称未設定"){
+                alert("編集するマップを選択します。");
+                return;
+            }
+            $("#uploadimageModal").modal('show');
+         
+      }
+      $("#mapImage").fileinput({
+        theme: 'fas',
+        language: 'ja',
+        uploadUrl: '<?php echo base_url()?>setting/mappingmanagement/uploadImage',
+        uploadExtraData: function (previewId, index) {
+            var info = {"mapname": $("#map_name").text()};
+            return info;
+          }
+    })
+     
+</script>
 </html>
 
 

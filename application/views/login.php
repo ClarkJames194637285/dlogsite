@@ -258,9 +258,19 @@ if (isset($_POST['login'])) {
                         <!-- <input type="text" class="input-form langCng" 
                         lang="en" placeholder="User Name" name="user_name_en" required> -->
                         <input type="password" class="input-form langCng" 
-                        placeholder="<?=$this->lang->line('password');?>" width="100%" name="password" value="" required>
-                        <!-- <input type="password" class="input-form langCng" 
-                        lang="en" placeholder="Password" name="password_en" required> -->
+                        placeholder="<?=$this->lang->line('password');?>" width="100%" name="password" 
+                        <?php
+                        if(isset($password)){
+                            echo 'value="' . $password . '"';
+                        }else{
+                            if (isset($get_data)&&isset($get_data['resaved'])) {
+                                if($get_data['resaved']&&$register=="false")
+                                echo 'value="' . $get_data['password'] . '"';
+                            }
+                        }
+                        
+                        ?> required>
+                       
                         <select name="Timezone" id="Timezone">
                         <?php
                         if (isset($get_data)) {
