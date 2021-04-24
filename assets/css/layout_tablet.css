@@ -2323,6 +2323,7 @@ input[type="range"]::-ms-tooltip {
     width: 30rem;
     padding: 0.5rem 0;
     text-align: left;
+    cursor: pointer;
 }
 .mapping-content .mapping-grid .mapping-block .mapping-name {
     width: 20rem;
@@ -2333,6 +2334,7 @@ input[type="range"]::-ms-tooltip {
     width: calc( 100% - 40rem );
     max-width: 50rem;
     height: 50rem;
+    cursor: pointer;
 }
 .mapping-content .mapping-add .map-name,
 .mapping-content .mapping-map .map-name {

@@ -27,8 +27,8 @@ class MappingManagement extends MY_Controller
     }
 	public function index()
 	{
-		$data['unread']=$this->unread_message;
-        $data['user_name']=$this->session->userdata('user_name');
+		$datas['unread']=$this->unread_message;
+        $datas['user_name']=$this->session->userdata('user_name');
 		$id=$this->sensor_Model->getUserId($this->session->userdata('user_name'));
 		$mapId=$this->sensor_Model->GetMapId($id[0]['ID']);
 		$str='';$n=1;
@@ -39,38 +39,97 @@ class MappingManagement extends MY_Controller
 				<input type="checkbox">
 				<span class="checkmark"></span>
 			</label>
-			<a  onclick="editMap('.$map['ID'].')" class="edit-btn"></a>
 			<p class="mapping-name">'.$map['name'].'</p>
 			<a class="drop-btn"></a></div>';$n++;
 		}
 		$datas['mapName']=$str;
-		$this->load->view('header',$data);
+	// 	.' <div class="mapping-block flexlyr">
+	// 		<label class="container1">
+	// 				<input type="checkbox">
+	// 				<span class="checkmark"></span>
+	// 		</label>
+	// 		<p class="mapping-name">名称未設定</p>
+	// 		<a class="drop-btn"></a>
+	// </div>'
+		// $this->load->view('header',$data);
 		$this->load->view('setting/mappingManagement',$datas);
 	}
-
+	public function add()
+	{
+			$data['unread']=$this->unread_message;
+			$data['user_name']=$_SESSION['user_name'];
+			$this->load->view('header',$data);
+			$this->load->view('setting/mappingManagement_Edit');
+			
+	}
+	public function edit()
+	{
+			$mapId=$this->input->get('mapId');
+			$mapName=$this->input->get('mapName');
+			$data['unread']=$this->unread_message;
+			$data['user_name']=$_SESSION['user_name'];
+			$map['mapId']=$mapId;
+			$map['mapName']=$mapName;
+			$this->load->view('header',$data);
+			$this->load->view('setting/mappingManagement_Edit',$map);
+			
+	}
+	public function update()
+	{
+			$data['unread']=$this->unread_message;
+			$data['user_name']=$_SESSION['user_name'];
+			$mapName = $this->input->post('mapName');
+			$mapId = $this->input->post('mapId');
+			if($mapId){
+					$id=$this->sensor_Model->getUserId($this->session->userdata('user_name'));
+					$this->sensor_Model->setMap($mapName,$mapId,$id[0]['ID']);
+					redirect('setting/mappingManagement');
+			}else{
+					$id=$this->sensor_Model->getUserId($this->session->userdata('user_name'));
+					$data=$this->sensor_Model->GetMapId($id[0]['ID']);
+					$check=false;
+					foreach($data as $map){
+						if($map['name']==$mapName){
+							$this->session->set_flashdata('error', '同じ名前のマップが既に存在しています。');
+							$check=true;
+							break;
+						}
+					}
+					if($check){
+						$this->load->view('header',$data);
+						$this->load->view('setting/mappingManagement_Edit');
+					}else{
+						$mapId="";
+						$this->sensor_Model->setMap($mapName,$mapId,$id[0]['ID']);
+						redirect('setting/mappingManagement');
+					}
+				
+			}
+	}
 	//--------------------------------------------------------------------
 	public function uploadImage() { 
 		header('Content-Type: application/json');
-		$map = $_POST['map'];
+		$map = $_FILES['mapImage']['tmp_name'];
 		$mapname = $this->input->post('mapname');
-		$mapID = $this->input->post('mapid');
-		list($type, $map) = explode(';',$map);
-		list(, $map) = explode(',',$map);
-		$map = base64_decode($map);
+	
 		$map_url ='assets/upload/'.$this->session->userdata('user_name').'/map_'.time().'.png';
 		$path = 'assets/upload/'.$this->session->userdata('user_name').'/';
-		if (!file_exists($map_url)) {
-			mkdir($path, 0777, true);
+		if (!file_exists(FCPATH.$map_url)) {
+			mkdir(FCPATH.$path, 0777, true);
 		}
-		file_put_contents($map_url, $map);
-		$id=$this->sensor_Model->getUserId($this->session->userdata('user_name'));
-		//Insert thank_photo URL to database
-		if ($this->sensor_Model->set_map_Info($map_url,$mapname,$mapID,$id[0]['ID'])) {
-			echo '<div id="editImage"><p class="map-name">'.$mapname.'</p> <div class="editimage"><img src="'.base_url().$map_url.'" alt=""></div></div> ';
-		} else {
-			echo false;
+		if(move_uploaded_file($map,FCPATH.$map_url)){
+				$id=$this->sensor_Model->getUserId($this->session->userdata('user_name'));
+				//Insert thank_photo URL to database
+				if ($this->sensor_Model->set_map_Info($map_url,$mapname,$id[0]['ID'])) {
+					echo true;
+				} else {
+					echo false;
+				}
 		}
+		
 	 }
+
+
 	 public function mapList() { 
 		$data['user_name']=$this->session->userdata('user_name');
 		$id=$this->sensor_Model->getUserId($this->session->userdata('user_name'));
@@ -89,6 +148,7 @@ class MappingManagement extends MY_Controller
 		$str.='</div>';
 		echo json_encode($str);
 	 }
+
 	 public function getMap(){ 
 		$data['user_name']=$this->session->userdata('user_name');
 		$id=$this->sensor_Model->getUserId($this->session->userdata('user_name'));
@@ -97,12 +157,14 @@ class MappingManagement extends MY_Controller
 		$data->imageurl=base_url().$data->imageurl;
 		echo json_encode($data);
 	 }
+
 	 public function deleteMap(){ 
 		$data = $this->input->post('data');
 		foreach($data as $id){
 			if($id=="")continue;
 			$result=$this->sensor_Model->deleteMap($id);
 		}
+		if($result==true)	redirect('/setting/mappingmanagement');
 		echo $result;
 	 }
 	 public function mapDecide(){
