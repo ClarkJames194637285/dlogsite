@@ -2321,6 +2321,7 @@ input[type="range"]::-ms-tooltip {
     width: 100%;
     padding: 0.5rem 0;
     text-align: left;
+    cursor: pointer;
 }
 .mapping-content .mapping-grid .mapping-block .mapping-name {
     /* width: 20rem; */
