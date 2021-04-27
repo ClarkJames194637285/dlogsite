@@ -5,6 +5,12 @@ $fieldname = "UserName";
 $user_name = $this->session->userdata('user_name');
 $dlogdb = new Dbclass();
 $dbpdo = $dlogdb->dbCi($this->config->item('host'),$this->config->item('username'),$this->config->item('password'), $this->config->item('dbname'));
+// userdata取得
+$userlist = $dlogdb->dbSelectUser($dbpdo,$user_name);
+// List読み込み
+$res = $userlist->fetchAll(\PDO::FETCH_ASSOC);
+$groupId=$res[0]['GroupID'];
+
 $defoulttz = date_default_timezone_get();
 $newTime = new \DateTime();
 $ctime = new \DateTime($newTime->format('Y-m-d H:i:s'), new \DateTimeZone($defoulttz));
@@ -27,6 +33,7 @@ if (isset($_GET['M'])) {
             $up_data = array(
                 'Password' => openssl_encrypt($_POST["Password"], $this->config->item('cipher') ,$this->config->item('key')),
                 'RoleID' => bindec($_POST['RoleID']),
+                'GroupID' => $groupId,
                 'CreateTime' => $ctime->format('Y-m-d H:i:s')
             );
             $update_stmt = $dlogdb->dbUpdate($dbpdo, "users", $up_data, 'ID', $_GET['ids']);
@@ -36,6 +43,7 @@ if (isset($_GET['M'])) {
                 'UserName' => $_POST['UserName'],
                 'Password' => openssl_encrypt($_POST["Password"], $this->config->item('cipher') ,$this->config->item('key')),
                 'RoleID' => bindec($_POST['RoleID']),
+                'GroupID' => $groupId,
                 'CreateTime' => $ctime->format('Y-m-d H:i:s')
             );
             $insertuser = $dlogdb->insertData($dbpdo, $tname, $insert_data);
@@ -50,10 +58,11 @@ if (isset($_GET['M'])) {
     }
 }
 
-// userdata取得
+
+
 $like = ' = ';
 $order = ' ORDER BY FailedCount ASC';
-$userlist = $dlogdb->dbSelect($dbpdo, $tname, $like, 'GroupID', "%", $order);
+$userlist = $dlogdb->dbSelect($dbpdo, $tname, $like, 'GroupID', $groupId, $order);
 // List読み込み
 $res = $userlist->fetchAll(\PDO::FETCH_ASSOC);
 $row = $res;
@@ -112,6 +121,7 @@ $dlogdb = null;
             if (isset($row)) {
                 $roleid = array();
                 foreach ($row as $key => $val) {
+                    if($val['UserName']==$user_name)continue;
                     for ($i = 5; $i > 0; $i --) {
                         $strval = '00000' . (string)decbin($val['RoleID']);
                         $toi = $i * -1;

@@ -29,7 +29,7 @@ class User_model extends CI_Model {
 	 * @param mixed $password
 	 * @return bool true on success, false on failure
 	 */
-	public function create_user($username, $email, $password) {
+	public function create_user($username, $email, $password,$GroupID) {
 		
 		$data = array(
 			'UserName' =>$username,
@@ -37,7 +37,7 @@ class User_model extends CI_Model {
 			'Password'   => $password,
 			'IsLocked'   => '0',
 			'RoleID'   => '31',
-			'GroupID'   => '31',
+			'GroupID'   => $GroupID,
 			'Timezone'   => '9',
 			'Language'   => 'ja_JP',
 			'CreateTime' => date('Y-m-j H:i:s'),
@@ -85,6 +85,12 @@ class User_model extends CI_Model {
 
 		$result=$this->db->get()->row();
 		return $result;
+	}
+
+	public function getGroupID(){
+	  $sql="SELECT MAX(GroupID) as GroupID FROM users";
+		$query = $this->db->query($sql);
+		return $query->result_array();
 	}
 
 	public function getUserByEmail($email){
