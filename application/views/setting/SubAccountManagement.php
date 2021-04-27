@@ -34,6 +34,7 @@ if (isset($_GET['M'])) {
                 'Password' => openssl_encrypt($_POST["Password"], $this->config->item('cipher') ,$this->config->item('key')),
                 'RoleID' => bindec($_POST['RoleID']),
                 'GroupID' => $groupId,
+                'UserStateID' => '0',
                 'CreateTime' => $ctime->format('Y-m-d H:i:s')
             );
             $update_stmt = $dlogdb->dbUpdate($dbpdo, "users", $up_data, 'ID', $_GET['ids']);
@@ -44,6 +45,7 @@ if (isset($_GET['M'])) {
                 'Password' => openssl_encrypt($_POST["Password"], $this->config->item('cipher') ,$this->config->item('key')),
                 'RoleID' => bindec($_POST['RoleID']),
                 'GroupID' => $groupId,
+                'UserStateID' => '0',
                 'CreateTime' => $ctime->format('Y-m-d H:i:s')
             );
             $insertuser = $dlogdb->insertData($dbpdo, $tname, $insert_data);
