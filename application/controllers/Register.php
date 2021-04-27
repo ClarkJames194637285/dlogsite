@@ -60,7 +60,13 @@ class Register extends CI_Controller
         $raw_password = $this->input->post('password');
 
         $password = openssl_encrypt($raw_password, $this->config->item('cipher'), $this->config->item('key'));
-        $created_row = $this->user_model->create_user($username, $email, $password);
+        $groupId=$this->user_model->getGroupID();
+        if($groupId){
+            $groupId=$groupId[0]['GroupID']+1;
+        }else{
+            $groupId=0;
+        }
+        $created_row = $this->user_model->create_user($username, $email, $password,$groupId);
 
         if (!$created_row) {
             $this->session->set_flashdata('error', '問題が発生しました！ もう一度やり直すか、管理者に連絡してください。');
