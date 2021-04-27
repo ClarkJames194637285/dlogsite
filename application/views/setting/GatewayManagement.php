@@ -120,7 +120,7 @@ $dlogdb = null;
             <h1 class="page-title">ゲートウェイ管理</h1>
             <div class="gateway-grid setting-grid">
                 <!-- <p class="group-label">グループ</p> -->
-                <form id="sort_form" name="sort_form" action="page1_6.php?M=Sort" method="post">
+                <form id="sort_form" name="sort_form" action="gatewayManagement?M=Sort" method="post">
                     <!-- <div id="columns"> -->
                         <!-- ダミー -->
                         <input style="display: none;" value="" type="checkbox" class="checkboxes">

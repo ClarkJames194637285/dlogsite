@@ -15,9 +15,7 @@ class UserOperation extends MY_Controller
 					redirect('/');
 				}
 				$this->load->helper('language');
-				if ($_SESSION['user_name']!=='admin') {
-					$this->load->view('nonaccess');
-				}
+			
 				$site_lang=$this->session->userdata('lang');
 				if ($site_lang) {
 					$this->lang->load('menu',$site_lang);
@@ -28,6 +26,9 @@ class UserOperation extends MY_Controller
 
 	public function index()
 	{
+		if ($_SESSION['user_name']!=='admin') {
+			$this->load->view('nonaccess');
+		}
 			$data['unread']=$this->unread_message;
 			$data['user_name']=$_SESSION['user_name'];
 			$this->config->load('db_config');
