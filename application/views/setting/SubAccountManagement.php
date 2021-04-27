@@ -31,6 +31,7 @@ if (isset($_GET['M'])) {
             break;
         case 'Edit':
             $up_data = array(
+                'UserName' => $_POST['UserName'],
                 'Password' => openssl_encrypt($_POST["Password"], $this->config->item('cipher') ,$this->config->item('key')),
                 'RoleID' => bindec($_POST['RoleID']),
                 'GroupID' => $groupId,
@@ -46,7 +47,8 @@ if (isset($_GET['M'])) {
                 'RoleID' => bindec($_POST['RoleID']),
                 'GroupID' => $groupId,
                 'UserStateID' => '0',
-                'CreateTime' => $ctime->format('Y-m-d H:i:s')
+                'CreateTime' => $ctime->format('Y-m-d H:i:s'),
+                'isdelete' =>'0'
             );
             $insertuser = $dlogdb->insertData($dbpdo, $tname, $insert_data);
             break;
