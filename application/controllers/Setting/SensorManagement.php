@@ -13,9 +13,7 @@ class SensorManagement extends MY_Controller
 				if (!isset($_SESSION['user_id'])) {
 					redirect('/');
 				}
-				if($this->roleid[3]!=="checked"){
-					$this->load->view('nonaccess');
-				}
+			
 				$this->load->helper('language');
 				$site_lang=$this->session->userdata('lang');
 				if ($site_lang) {
@@ -27,6 +25,9 @@ class SensorManagement extends MY_Controller
 
 	public function index()
 	{
+		if($this->roleid[3]!=="checked"){
+			$this->load->view('nonaccess');
+		}
 		$this->config->load('db_config');
 		$this->load->library('DbClass');
 		$this->load->library('MethodClass');

@@ -12,9 +12,7 @@ class GroupManagement extends MY_Controller
 				if (!isset($_SESSION['user_id'])) {
 					redirect('/');
 				}
-				if($this->roleid[4]!=="checked"){
-					$this->load->view('nonaccess');
-				}
+			
 				$this->load->helper('language');
 				$site_lang=$this->session->userdata('lang');
 				if ($site_lang) {
@@ -26,6 +24,10 @@ class GroupManagement extends MY_Controller
 
 	public function index()
 	{
+		if($this->roleid[4]!=="checked"){
+			$this->load->view('nonaccess');
+			return;
+		}
 		$this->config->load('db_config');
 		$this->load->library('DbClass');
 		$this->load->library('MethodClass');
