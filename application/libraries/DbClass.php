@@ -103,6 +103,27 @@ class Dbclass
         return $stmt;
     }
 
+    public function dbSelectUser($dbpdo,$user)
+    {
+        /**
+         * dbpdo = PDOインスタンス
+         * tname = テーブル名
+         * wfname = 照合フィールド名
+         * wstr = 照合データ
+         * セレクトデータ配列を返す
+         */
+        try {
+            $query="SELECT GroupID FROM users WHERE UserName='".$user."'";
+            $stmt = $dbpdo->prepare($query);
+            $stmt->execute();
+        } catch (\PDOException $e) {
+            $elogstr ="Error:".$e->getMessage();
+            error_log($elogstr, 3, APPPATH."logs/test.log");
+            die();
+        }
+        return $stmt;
+    }
+
     public function dbUpdate($dbpdo, $tname, $up_darry, $wfname, $wstr)
     {
         /**
