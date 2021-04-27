@@ -38,6 +38,7 @@ class User_model extends CI_Model {
 			'IsLocked'   => '0',
 			'RoleID'   => '31',
 			'GroupID'   => $GroupID,
+			'UserStateID' =>'1',
 			'Timezone'   => '9',
 			'Language'   => 'ja_JP',
 			'CreateTime' => date('Y-m-j H:i:s'),
