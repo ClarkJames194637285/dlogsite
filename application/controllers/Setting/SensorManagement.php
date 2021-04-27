@@ -27,6 +27,7 @@ class SensorManagement extends MY_Controller
 	{
 		if($this->roleid[3]!=="checked"){
 			$this->load->view('nonaccess');
+			return;
 		}
 		$this->config->load('db_config');
 		$this->load->library('DbClass');
