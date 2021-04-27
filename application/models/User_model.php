@@ -35,6 +35,11 @@ class User_model extends CI_Model {
 			'UserName' =>$username,
 			'Email'   => $email,
 			'Password'   => $password,
+			'IsLocked'   => '0',
+			'RoleID'   => '31',
+			'GroupID'   => '31',
+			'Timezone'   => '9',
+			'Language'   => 'ja_JP',
 			'CreateTime' => date('Y-m-j H:i:s'),
 			'isdelete' =>'0'
 		);
