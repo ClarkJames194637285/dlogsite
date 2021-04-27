@@ -27,6 +27,7 @@ class MappingManagement extends MY_Controller
 	{
 		if($this->roleid[2]!=="checked"){
 			$this->load->view('nonaccess');
+			return;
 		}
 		$datas['unread']=$this->unread_message;
         $datas['user_name']=$this->session->userdata('user_name');

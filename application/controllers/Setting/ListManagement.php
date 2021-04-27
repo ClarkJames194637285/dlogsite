@@ -25,6 +25,7 @@ class ListManagement extends MY_Controller
 	{
 		if($this->roleid[1]!=="checked"){
 			$this->load->view('nonaccess');
+			return;
 		}
 		$data['unread']=$this->unread_message;
         $data['user_name']=$this->session->userdata('user_name');

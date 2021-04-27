@@ -31,19 +31,19 @@ class UserSetting extends MY_Controller
 		$this->config->load('openSSL_config');
 		$this->config->load('reCAPTURE_config');
 		$data['unread']=$this->unread_message;
-        $data['user_name']=$this->session->userdata('user_name');
-        $this->load->view('header',$data);
+		$data['user_name']=$this->session->userdata('user_name');
+		$this->load->view('header',$data);
 		$this->load->view('setting/userSetting');
 	}
 	public function confirm(){
-		$this->config->load('db_config');
-		$this->load->library('DbClass');
-		$this->load->library('MethodClass');
-		$this->config->load('openSSL_config');
-		$this->config->load('reCAPTURE_config');
-        $data['user_name']=$this->session->userdata('user_name');
-        $this->load->view('header',$data);
-		$this->load->view('setting/userSetting_Confirm');
+			$this->config->load('db_config');
+			$this->load->library('DbClass');
+			$this->load->library('MethodClass');
+			$this->config->load('openSSL_config');
+			$this->config->load('reCAPTURE_config');
+			$data['user_name']=$this->session->userdata('user_name');
+			$this->load->view('header',$data);
+			$this->load->view('setting/userSetting_Confirm');
 	}
 
 	
