@@ -8,25 +8,26 @@ class SensorManagement extends MY_Controller
 	function __construct() {
         parent:: __construct();
         $this->load->helper('url');
-				$this->load->helper('cookie');
-				$this->load->library(array('session'));
-				if (!isset($_SESSION['user_id'])) {
-					redirect('/');
-				}
-				if($this->roleid[3]!=="checked"){
-					$this->load->view('nonaccess');
-				}
-				$this->load->helper('language');
-				$site_lang=$this->session->userdata('lang');
-				if ($site_lang) {
-					$this->lang->load(array('menu','setting'),$site_lang);
-					} else {
-					$this->lang->load(array('menu','setting'),'japanese');
-				}
+		$this->load->helper('cookie');
+		$this->load->library(array('session'));
+		if (!isset($_SESSION['user_id'])) {
+			redirect('/');
+		}
+	
+		$this->load->helper('language');
+		$site_lang=$this->session->userdata('lang');
+		if ($site_lang) {
+			$this->lang->load(array('menu','setting'),$site_lang);
+			} else {
+			$this->lang->load(array('menu','setting'),'japanese');
+		}
     }
 
 	public function index()
 	{
+		if($this->roleid[3]!=="checked"){
+			$this->load->view('nonaccess');
+		}
 		$this->config->load('db_config');
 		$this->load->library('DbClass');
 		$this->load->library('MethodClass');

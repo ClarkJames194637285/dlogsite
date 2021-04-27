@@ -9,25 +9,26 @@ class UserOperation extends MY_Controller
 	function __construct() {
         parent:: __construct();
         $this->load->helper('url');
-				$this->load->helper('cookie');
-				$this->load->library(array('session'));
-				if (!isset($_SESSION['user_id'])) {
-					redirect('/');
-				}
-				$this->load->helper('language');
-				if ($_SESSION['user_name']!=='admin') {
-					$this->load->view('nonaccess');
-				}
-				$site_lang=$this->session->userdata('lang');
-				if ($site_lang) {
-					$this->lang->load('menu',$site_lang);
-						} else {
-					$this->lang->load('menu','japanese');
-				}
+		$this->load->helper('cookie');
+		$this->load->library(array('session'));
+		if (!isset($_SESSION['user_id'])) {
+			redirect('/');
+		}
+		$this->load->helper('language');
+	
+		$site_lang=$this->session->userdata('lang');
+		if ($site_lang) {
+			$this->lang->load('menu',$site_lang);
+				} else {
+			$this->lang->load('menu','japanese');
+		}
     }
 
 	public function index()
 	{
+		if ($_SESSION['user_name']!=='admin') {
+			$this->load->view('nonaccess');
+		}
 			$data['unread']=$this->unread_message;
 			$data['user_name']=$_SESSION['user_name'];
 			$this->config->load('db_config');
