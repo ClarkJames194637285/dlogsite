@@ -90,7 +90,7 @@ class Dbclass
             } else {
                 $query = 'SELECT * FROM ';
                 $query .= '`' .  $tname . '` ';
-                $query .= ' WHERE ';
+                $query .= ' WHERE UserStateID=0 and';
                 $query .= '`' . $wfname . '`' .$like. ' "' . $wstr . '" ' . $and_isdelete . $order;
             }
             $stmt = $dbpdo->prepare($query);
