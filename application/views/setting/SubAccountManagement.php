@@ -5,12 +5,6 @@ $fieldname = "UserName";
 $user_name = $this->session->userdata('user_name');
 $dlogdb = new Dbclass();
 $dbpdo = $dlogdb->dbCi($this->config->item('host'),$this->config->item('username'),$this->config->item('password'), $this->config->item('dbname'));
-// userdata取得
-$userlist = $dlogdb->dbSelectUser($dbpdo,$user_name);
-// List読み込み
-$res = $userlist->fetchAll(\PDO::FETCH_ASSOC);
-$groupId=$res[0]['GroupID'];
-
 $defoulttz = date_default_timezone_get();
 $newTime = new \DateTime();
 $ctime = new \DateTime($newTime->format('Y-m-d H:i:s'), new \DateTimeZone($defoulttz));
@@ -31,11 +25,8 @@ if (isset($_GET['M'])) {
             break;
         case 'Edit':
             $up_data = array(
-                'UserName' => $_POST['UserName'],
                 'Password' => openssl_encrypt($_POST["Password"], $this->config->item('cipher') ,$this->config->item('key')),
                 'RoleID' => bindec($_POST['RoleID']),
-                'GroupID' => $groupId,
-                'UserStateID' => '0',
                 'CreateTime' => $ctime->format('Y-m-d H:i:s')
             );
             $update_stmt = $dlogdb->dbUpdate($dbpdo, "users", $up_data, 'ID', $_GET['ids']);
@@ -44,13 +35,23 @@ if (isset($_GET['M'])) {
             $insert_data = array(
                 'UserName' => $_POST['UserName'],
                 'Password' => openssl_encrypt($_POST["Password"], $this->config->item('cipher') ,$this->config->item('key')),
-                'RoleID' => bindec($_POST['RoleID']),
-                'GroupID' => $groupId,
-                'UserStateID' => '0',
+                'RoleID' => (double)bindec($_POST['RoleID']),
+                'UserStateID' => 1,
+                'TimeZone' => (double)$_SESSION['TimeZone'],
+                'GroupID' => (double)$_SESSION['user_id'],
                 'CreateTime' => $ctime->format('Y-m-d H:i:s'),
-                'isdelete' =>'0'
+                'isdelete' => 0
             );
-            $insertuser = $dlogdb->insertData($dbpdo, $tname, $insert_data);
+            $insert_user = $dlogdb->dbSelectuname($dbpdo, $tname, " LIKE ", 'UserName', $_POST['UserName']);
+            $res = $insert_user->fetchAll(\PDO::FETCH_ASSOC);
+            if (count($res) == 0) {
+                $insertuser = $dlogdb->insertData($dbpdo, $tname, $insert_data);
+                $username_alert = "サブアカウント登録が完了しました。";
+                $ins_flg = true;
+            } else {
+                $username_alert = "サブアカウント名が重複しています。別の名前で登録してください。";
+                $ins_flg = false;
+            }
             break;
         case 'Delete':
             $delete_id = explode(',', $_GET['ids']);
@@ -62,11 +63,10 @@ if (isset($_GET['M'])) {
     }
 }
 
-
-
+// userdata取得
 $like = ' = ';
 $order = ' ORDER BY FailedCount ASC';
-$userlist = $dlogdb->dbSelect($dbpdo, $tname, $like, 'GroupID', $groupId, $order);
+$userlist = $dlogdb->dbSelect($dbpdo, $tname, $like, 'GroupID', $_SESSION['user_id'], $order);
 // List読み込み
 $res = $userlist->fetchAll(\PDO::FETCH_ASSOC);
 $row = $res;
@@ -313,6 +313,18 @@ $dlogdb = null;
         }
     }
     </script>
+    <?php
+    if (isset($_GET['M']) && $_GET['M'] == 'Add') {
+        $alert = "<script type='text/javascript'>alert('" . $username_alert . "');";
+        if ($ins_flg) {
+            $alert .= "location.href='./SubAccountManagement';</script>";
+        } else {
+            $alert .= "location.href='./SubAccountManagement/edit?M=Add';</script>";
+        }
+        echo $alert;
+    }
+        
+    ?>
 </body>
 
 </html>
