@@ -90,7 +90,7 @@ class Dbclass
             } else {
                 $query = 'SELECT * FROM ';
                 $query .= '`' .  $tname . '` ';
-                $query .= ' WHERE ';
+                $query .= ' WHERE UserStateID=0 and';
                 $query .= '`' . $wfname . '`' .$like. ' "' . $wstr . '" ' . $and_isdelete . $order;
             }
             $stmt = $dbpdo->prepare($query);
@@ -498,12 +498,17 @@ class Dbclass
         $query .= "ON rp.PID=pd.ID ";
         $query .= "WHERE rp.PID=:pid ";
         $query .= "ORDER BY rp.CreateTime DESC LIMIT 10";
+        $dcont = 0;
         try {
             $stmt = $dbpdo->prepare($query);
-            foreach ($res as $key => $val) {
+            foreach ($res as $val) {
                 $stmt->bindValue(":pid", $val['ID'], \PDO::PARAM_INT);
                 $stmt->execute();
-                $list[$key] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                $dres = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                if (count($dres) > 0) {
+                    $list[$dcont] = $dres;
+                    $dcont ++;
+                }
             }
         } catch (\PDOException $e) {
             $elogstr ="Error:".$e->getMessage();
@@ -523,7 +528,8 @@ class Dbclass
         $query = "";
         $product_tn = "product";
         $user_tn = "users";
-        $terminalhistory_tn = "terminalhistory".$pid;
+        //$terminalhistory_tn = "terminalhistory".$pid;
+        $terminalhistory_tn = "terminalhistory";
         $query = "";
         $query .= "SELECT ";
         $query .= "pd.IMEI AS IMEI, ";
@@ -541,19 +547,26 @@ class Dbclass
         $query .= "max(th.RTC) AS txtEndTime, ";
         $query .= "min(th.RTC) AS txtBeginTime, ";
         $query .= "count(th.ID) AS DataCount ";
-        $query .= "FROM ".$terminalhistory_tn;
-        $query .= " AS th ";
+        $query .= "FROM (";
+        $query .= "SELECT * FROM " . $terminalhistory_tn;
+        $query .= " WHERE PID=:pid ";
+        $query .= "AND RTC>=:b_time ";
+        $query .= "AND RTC<=:e_time";
+        $query .= ") AS th ";
+
+        /* $query .= "FROM ".$terminalhistory_tn;
+        $query .= " AS th "; */
         
         $query .= "INNER JOIN " . $product_tn . " AS pd ";
         $query .= "ON th.PID=pd.ID ";
         $query .= "INNER JOIN " . $user_tn . " AS us ";
         $query .= "ON pd.UserID=us.ID ";
-        $query .= "where th.RTC>=:b_time ";
-        $query .= "AND th.RTC<=:e_time ";
-        // $query .= "WHERE th.PID=:pid;";
+        /* $query .= "where th.RTC>=:b_time ";
+        $query .= "AND th.RTC<=:e_time "; */
+        $query .= "WHERE th.PID=:pid;";
         try {
             $stmt = $dbpdo->prepare($query);
-            // $stmt->bindValue(":pid", $pid, \PDO::PARAM_INT);
+            $stmt->bindValue(":pid", $pid, \PDO::PARAM_INT);
             $stmt->bindValue(":b_time", $b_time, \PDO::PARAM_STR);
             $stmt->bindValue(":e_time", $e_time, \PDO::PARAM_STR);
             $stmt->execute();
@@ -574,19 +587,24 @@ class Dbclass
          * テーブルの情報を連想配列で返す
          */
 
-        $terminalhistory_tn = "terminalhistory".$pid;
+        //$terminalhistory_tn = "terminalhistory".$pid;
+        $terminalhistory_tn = "terminalhistory";
         $query = "";
         $query .= "SELECT ";
         $query .= "th.RTC AS RTC, ";
         $query .= "th.Temperature AS Temperature, ";
         $query .= "th.Humidity AS Humidity ";
         $query .= "FROM " . $terminalhistory_tn . ' AS th ';
-        $query .= " WHERE  ";
-        $query .= " th.RTC>=:b_time ";
+        // $query .= " WHERE  ";
+        // $query .= " th.RTC>=:b_time ";
+        $query .= "WHERE th.PID=:pid ";
+        $query .= "AND th.RTC>=:b_time ";
         $query .= "AND th.RTC<=:e_time;";
         try {
+            //echo $query . '<br>';
+            //exit;
             $stmt = $dbpdo->prepare($query);
-            // $stmt->bindValue(":pid", $pid, \PDO::PARAM_INT);
+            $stmt->bindValue(":pid", $pid, \PDO::PARAM_INT);
             $stmt->bindValue(":b_time", $b_time, \PDO::PARAM_STR);
             $stmt->bindValue(":e_time", $e_time, \PDO::PARAM_STR);
             $stmt->execute();
@@ -689,5 +707,34 @@ class Dbclass
             die();
         }
         return $list;
+    }
+
+    public function dbSelectuname($dbpdo, $tname, $like, $wfname, $wstr, string $order = null)
+    {
+        /**
+         * dbpdo = PDOインスタンス
+         * tname = テーブル名
+         * wfname = 照合フィールド名
+         * wstr = 照合データ
+         * セレクトデータ配列を返す
+         */
+        try {
+            if ($wstr == '*') {
+                $query = 'SELECT * FROM ';
+                $query .= '`' . $tname . '`;';
+            } else {
+                $query = 'SELECT * FROM ';
+                $query .= '`' .  $tname . '` ';
+                $query .= ' WHERE ';
+                $query .= '`' . $wfname . '`' .$like. ' "' . $wstr . '" ' . $order;
+            }
+            $stmt = $dbpdo->prepare($query);
+            $stmt->execute();
+        } catch (\PDOException $e) {
+            $elogstr ="Error:".$e->getMessage();
+            error_log($elogstr, 3, APPPATH."logs/test.log");
+            die();
+        }
+        return $stmt;
     }
 }

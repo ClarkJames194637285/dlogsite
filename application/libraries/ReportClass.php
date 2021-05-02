@@ -47,7 +47,7 @@ class Reportclass
         $fugo = "";
         $ts1 = strtotime($hed_data_arr['txtEndTime']);
         $ts2 = strtotime($hed_data_arr['txtBeginTime']);
-        $measurement_day = $ts2 - $ts1;
+        $measurement_day = $ts1 - $ts2;
         $time_d = (int)($measurement_day / (60 * 60 * 24));
         $time_h = (int)(($measurement_day % (60 * 60 * 24)) / (60 * 60));
         $time_m = (int)(($measurement_day % (60 * 60 * 24)) % (60 * 60) / 60);
@@ -151,7 +151,7 @@ class Reportclass
         }
         $jsondata = rtrim($jsondata, ',');
         $jsondata .= ']';
-        $path = './json/';
+        $path = dirname(__DIR__, 2) . '/assets/json/';
         if (is_writable($path)) {
             $file_handle = fopen($path."temphumi.json", "w");
             fwrite($file_handle, $jsondata);
@@ -167,7 +167,8 @@ class Reportclass
          */
 
         $row_count = 100;
-        $folder = './res_data/report/';
+        $logo_gurl = dirname(__DIR__, 2) . "/assets/img/dlog_rogo.png";
+        $folder = base_url() . 'assets/res_data/report/';
         $print_row = 0;
         $csvfile_name = $file_name . '.csv';
         $row = 1;
@@ -328,7 +329,11 @@ class Reportclass
                     <tbody>
                         <tr>
                             <td colspan="1">
-                                <span><img src="./img/dlog_rogo.png" alt="dlog-cloud"></span>
+                                <span>
+        EOF;
+        $html[0] .= '<img src="' . $logo_gurl . '" alt="dlog-cloud">';
+        $html[0] .= <<< EOF
+                                </span>
                             </td>
                             <td colspan="3">
                                 <span><h1 style="margin-left: 50px">データー レポート</h1></span>
@@ -398,18 +403,18 @@ class Reportclass
                             </th>
                         </tr>
                         <tr>
-                            <td>
+                            <td width="20%">
                                 <span class="top">開始時刻：</span>
                             </td>
-                            <td>
+                            <td width="30%">
         EOF;
         $html[0] .= '<span class="top_data">' . $bigintime . '</span>';
         $html[0] .= <<< EOF
                             </td>
-                            <td>
+                            <td width="20%">
                                 <span class="top">最大値：</span>
                             </td>
-                            <td>
+                            <td width="30%">
         EOF;
         $html[0] .= '<span class="top_data">' . $tmp_maxt . '(Temp)/'. $tmp_maxh . '(Humidity)</span>';
         $html[0] .= <<< EOF
@@ -562,7 +567,11 @@ class Reportclass
                         <tbody>
                             <tr>
                                 <td colspan="5">
-                                    <span><img src="./img/dlog_rogo.png" alt="dlog-cloud"></span>
+                                    <span>
+            EOF;
+            $html[$p_cont] .= '<img src="' . $logo_gurl . '" alt="dlog-cloud">';
+            $html[$p_cont] .= <<< EOF
+                                    </span>
                                 </td>
                             </tr>
                             <tr>  
@@ -723,7 +732,7 @@ class Reportclass
         // 計測時間計算
         $ts1 = strtotime($hed_data_arr[0]['txtEndTime']);
         $ts2 = strtotime($hed_data_arr[0]['txtBeginTime']);
-        $measurement_day = $ts2 - $ts1;
+        $measurement_day = $ts1 - $ts2;
         $f_fl = 273.15;
         $aeh = -10000;
         $t = [];

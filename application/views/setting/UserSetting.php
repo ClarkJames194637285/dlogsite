@@ -8,7 +8,12 @@
     date_default_timezone_set($defoulttz);
 
     $dlogdb = new Dbclass();
-    $dbpdo = $dlogdb->dbCi($this->config->item('host'),$this->config->item('username'),$this->config->item('password'), $this->config->item('dbname'));
+    $dbpdo = $dlogdb -> dbCi(
+        $this->config->item('host'),
+        $this->config->item('username'),
+        $this->config->item('password'),
+        $this->config->item('dbname')
+    );
     $like = ' LIKE ';
     $userlist = $dlogdb->dbSelect($dbpdo, $tname, $like, $fieldname, $user_name);
     $dlogdb = null;
@@ -182,10 +187,6 @@
                     </div>
                     <button id="update" class="confirm-btn" onclick="formSubmit();">パスワードを変更する</button>
                 </form>
-                <div style="display:none;" id="base_url"><?php echo base_url();?></div>
-                <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-                 async defer></script>
-
             </div>
         </div>
     </div>
