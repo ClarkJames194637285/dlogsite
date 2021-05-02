@@ -39,8 +39,8 @@
                     <a href="<?php echo base_url()?>setting/systemSetting"><?=$this->lang->line('systemSetting');?></a>
                 </li>
                 <li class="menu1_3">
-                        <a href="<?php echo base_url()?>setting/subAccountManagement"><?=$this->lang->line('accountManagement');?></a>
-                    </li>
+                    <a href="<?php echo base_url()?>setting/subAccountManagement"><?=$this->lang->line('accountManagement');?></a>
+                </li>
                 <li class="menu1_4">
                     <a href="<?php echo base_url()?>setting/groupManagement"><?=$this->lang->line('graphManagement');?></a>
                 </li>
@@ -66,9 +66,17 @@
                 <img src="<?php echo base_url()?>assets/img/asset_08.png" alt=""><p><?=$this->lang->line('message');?></p>
             </a>
             <ul class="collapse list-unstyled" id="pageSubmenu2">
+                <li class="menu5_1">
+                    <a href="<?php echo base_url()?>message/outgoing"><?=$this->lang->line('outgoing');?></a>
+                    <!-- <a href="page5_1.php">送信メッセージ（管理者に）</a> -->
+                </li>
                
                 <li class="menu5_2">
                     <a href="<?php echo base_url()?>message/inbox"><?=$this->lang->line('inboxMessage');?></a>
+                </li>
+               
+                <li class="menu5_3">
+                    <a href="<?php echo base_url()?>message/outbox"><?=$this->lang->line('outboxMessage');?></a>
                 </li>
                 
         </li>
