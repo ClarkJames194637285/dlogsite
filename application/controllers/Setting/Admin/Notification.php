@@ -3,7 +3,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class UserOperation extends MY_Controller
+class Notification extends MY_Controller
 {
 
 	function __construct() {
@@ -35,7 +35,7 @@ class UserOperation extends MY_Controller
 			$this->config->load('openSSL_config');
 			$this->load->library('User_logic');
 			$this->load->view('header',$data);
-			$this->load->view('useroperation/publish_info');
+			$this->load->view('setting/admin/notification');
 	}
 	public function publish_upload()
 	{
