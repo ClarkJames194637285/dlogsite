@@ -22,9 +22,9 @@
             </a>
             <ul class="collapse list-unstyled" id="pageSubmenu">
                 <?php if($this->role=="admin"){?>
-                    <li class="menu1_3">
+                    <!-- <li class="menu1_3">
                         <a href="<?php echo base_url()?>setting/subAccountManagement"><?=$this->lang->line('accountManagement');?></a>
-                    </li>
+                    </li> -->
                     <li class="menu1_9">
                         <a href="<?php echo base_url()?>setting/useroperation"><?=$this->lang->line('useroperation');?></a>
                     </li>
