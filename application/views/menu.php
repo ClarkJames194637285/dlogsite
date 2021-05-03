@@ -22,11 +22,14 @@
             </a>
             <ul class="collapse list-unstyled" id="pageSubmenu">
                 <?php if($this->role=="admin"){?>
+                    <li class="menu1_1">
+                        <a href="<?php echo base_url()?>setting/admin/userdelete"><?=$this->lang->line('userdelete');?></a>
+                    </li>
                     <li class="menu1_3">
-                        <a href="<?php echo base_url()?>setting/subAccountManagement"><?=$this->lang->line('accountManagement');?></a>
+                        <a href="<?php echo base_url()?>setting/admin/notification"><?=$this->lang->line('notification');?></a>
                     </li>
                     <li class="menu1_9">
-                        <a href="<?php echo base_url()?>setting/useroperation"><?=$this->lang->line('useroperation');?></a>
+                        <a href="<?php echo base_url()?>setting/admin/advertisement"><?=$this->lang->line('advertisement');?></a>
                     </li>
                    
                 <?php } else{?>
