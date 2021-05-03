@@ -3,25 +3,25 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class UserOperation extends MY_Controller
+class Advertisement extends MY_Controller
 {
 
 	function __construct() {
         parent:: __construct();
         $this->load->helper('url');
-		$this->load->helper('cookie');
-		$this->load->library(array('session'));
-		if (!isset($_SESSION['user_id'])) {
-			redirect('/');
-		}
-		$this->load->helper('language');
-	
-		$site_lang=$this->session->userdata('lang');
-		if ($site_lang) {
-			$this->lang->load('menu',$site_lang);
-				} else {
-			$this->lang->load('menu','japanese');
-		}
+				$this->load->helper('cookie');
+				$this->load->library(array('session'));
+				if (!isset($_SESSION['user_id'])) {
+					redirect('/');
+				}
+				$this->load->helper('language');
+			
+				$site_lang=$this->session->userdata('lang');
+				if ($site_lang) {
+					$this->lang->load('menu',$site_lang);
+						} else {
+					$this->lang->load('menu','japanese');
+				}
     }
 
 	public function index()
@@ -35,7 +35,7 @@ class UserOperation extends MY_Controller
 			$this->config->load('openSSL_config');
 			$this->load->library('User_logic');
 			$this->load->view('header',$data);
-			$this->load->view('useroperation/publish_info');
+			$this->load->view('setting/admin/advertisement');
 	}
 	public function publish_upload()
 	{
