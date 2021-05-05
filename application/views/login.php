@@ -123,7 +123,7 @@ if (isset($_POST['login'])) {
             $userlist = $dlogdb->dbUpdate($dbpdo, 'users', $up_darry, 'ID', $this->session->userdata('user_id'));
             $dlogdb = null;
             date_default_timezone_set($tzstr);
-
+            $_SESSION['timestamp']=time();
             redirect(base_url().'home');
             exit;
         } else {
