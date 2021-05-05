@@ -31,6 +31,7 @@ class MY_Controller  extends CI_Controller{
         if(!isset($_SESSION['user_name'])){
             redirect('/');
         }
+
         $this->role = $this->user_model->get_role($_SESSION['user_id']);
         $this->roleval = $this->user_model->get_user_role($_SESSION['user_id']);
         for ($i = 5; $i > 0; $i --) {
@@ -57,11 +58,67 @@ class MY_Controller  extends CI_Controller{
             //     $this->load->view('mailserver_error');
             // }
         }else{
+             //on pageload
+            session_start();
+
+            $durationtime=1800;//after 30 minutes the user gets logged out
+
+            if (time()-$_SESSION['timestamp']>$durationtime){
+                session_destroy();
+                session_unset();
+                $this->logout();
+                
+            }else{
+                $_SESSION['timestamp']=time();
+            }
             $this->load->model('inbox_model');
             $this->unread_message=$this->inbox_model->count_unread_message();
         }
         $errors = imap_errors();
     }
+
+    public function logout() {
+		$this->config->load('db_config');
+		$this->load->library('DbClass');
+		$this->load->library('MethodClass');
+		$this->config->load('openSSL_config');
+		$this->config->load('reCAPTURE_config');
+		$dlogdb = new Dbclass();
+		$dbpdo = $dlogdb->dbCi($this->config->item('host'),$this->config->item('username'),$this->config->item('password'), $this->config->item('dbname'));
+		$tzstr = date_default_timezone_get();
+		$defoulttz = "Asia/Tokyo";
+		date_default_timezone_set($defoulttz);
+		$new_time = new \DateTime();
+		$logouttime = new \DateTime($new_time->format('Y-m-d H:i:s'), new \DateTimeZone($defoulttz));
+		$up_darry = array(
+			'UserStateID' => 1,
+			'LastLoginTime' => $logouttime->format('Y-m-d H:i:s')
+		);
+		$userlist = $dlogdb->dbUpdate($dbpdo, 'users', $up_darry, 'ID', $this->session->userdata('user_id'));
+		$dlogdb = null;
+		date_default_timezone_set($tzstr);
+		if (isset($_COOKIE['BSCM'])) {
+			$get_cookie = $_COOKIE['BSCM'];
+			$cookie_arry = explode(',', $get_cookie);
+			for ($i = 0; $i < count($cookie_arry); $i ++) {
+				$keyval = explode(':', $cookie_arry[$i]);
+				$get_data[$keyval[0]] = $keyval[1];
+			}
+			if ((int)$get_data['resaved'] == 0) {
+				$cookiestr = null;
+				$expiration_time = time() - 60 * 60 * 24 * 30;
+				setcookie('BSCM', $cookiestr, $expiration_time);
+				$get_data['resaved'] = 0;
+				$resaved = "";
+			} else {
+				$get_data['resaved'] = 1;
+				$resaved = "checked";
+			}
+		}
+		$this->session->sess_destroy();
+		redirect(base_url());
+		
+	}
     public function index()
 	{
         
