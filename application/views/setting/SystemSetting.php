@@ -25,7 +25,7 @@ $timezone = array(
     '+10.5' => 10.5,
     '+10'   => 10,
     '+9.5'  => 9.5,
-    'タイムゾーン +9（日本)'    => 9,
+    $this->lang->line('time_zone')    => 9,
     '+8'    => 8,
     '+7'    => 7,
     '+6.5'  => 6.5,
@@ -88,14 +88,14 @@ $timezone = array(
         
         <!-- Sidebar  -->
         <?php $this->load->view('menu'); ?>
-    
+        
         <!-- Page Content  -->
         <div class="content">
             <form id="form1" method="post" action="SystemSetting/confirm">
-                <h1 class="page-title">システム設定</h1>
+                <h1 class="page-title"><?=$this->lang->line('system_title');?></h1>
                 <div class="content-grid">
                     <div class="sys-info-block flexlyr">
-                        <p class=" confirm-msg">システム時間</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('system_time');?></p>
                         <p class=" confirm-input">
                             <select name="systime" id="systime">
                                 <!-- サーバー時間orPC時間選択 DB 不明 yama-->
@@ -107,12 +107,12 @@ $timezone = array(
                                     $val[0] = "";
                                     $val[1] = "selected";
                                 }
-                                echo '<option value="0" ' . $val[0] . '>サーバー時間</option>';
-                                echo '<option value="1" ' . $val[1] . '>PC時間</option>';
+                                echo '<option value="0" ' . $val[0] . '>'.$this->lang->line('server_time').'</option>';
+                                echo '<option value="1" ' . $val[1] . '>'.$this->lang->line('pc_time').'</option>';
                                 ?>
                             </select>
                         </p>
-                        <p class=" confirm-msg">温度単位</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('temperature_unit');?></p>
                         <p class=" confirm-input">
                             <select name="corf" id="corf">
                             <?php
@@ -123,13 +123,13 @@ $timezone = array(
                                 $val[0] = "";
                                 $val[1] = "selected";
                             }
-                            echo '<option value="0" ' . $val[0] . '>℃（摂氏）</option>';
+                            echo '<option value="0" ' . $val[0] . '>℃（'.$this->lang->line('tp_c').'）</option>';
                                 // 華氏は必要有無確認 オリジナルでは摂氏のみ yama
-                            echo '<option value="1" ' . $val[1] . '>℉（華氏）</option>'
+                            echo '<option value="1" ' . $val[1] . '>℉（'.$this->lang->line('tp_f').'）</option>'
                             ?>
                             </select>
                         </p>
-                        <p class=" confirm-msg">タイムゾーン</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('time_zone_str');?></p>
                         <p class=" confirm-input">
                             <select name="timezone" id="timezone">
                                 <?php
@@ -152,7 +152,7 @@ $timezone = array(
                             value="<?php echo (int)$userset_res['ID'];?>"/>
                         </p>
                     </div>
-                    <button class="confirm-btn">設定を保存する</a>
+                    <button class="confirm-btn"><?=$this->lang->line('save_settings');?></a>
                 </div>
             </form>
         </div>

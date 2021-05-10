@@ -58,8 +58,8 @@
     align-items: stretch;
 }
 #sidebar {
-    min-width: 225px;
-    max-width: 225px;
+    min-width: 250px;
+    max-width: 250px;
     background: #3F3F3F;
     color: #fff;
     transition: all 0.4s;

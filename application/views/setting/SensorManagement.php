@@ -106,6 +106,10 @@ $dlogdb = null;
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/wow.min.js"></script>
     <!-- yamaguchi -->
     <link rel="stylesheet" href="<?php echo base_url()?>assets/sitecss/page1_5.css" type="text/css">
+    <script type="text/javascript">
+    var delete_check_msg = <?php echo json_encode($this->lang->line('delete_check_msg'));?>;
+    var delete_msg = <?php echo json_encode($this->lang->line('delete_msg'));?>;
+    </script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/sitejs/page1_5.js"></script>
 
 </head>
@@ -120,7 +124,7 @@ $dlogdb = null;
     
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">センサー管理</h1>
+            <h1 class="page-title"><?=$this->lang->line('senser_manage');?></h1>
             <div class="sensor-grid setting-grid">
                 <!-- <p class="group-label">グループ</p> -->
                 <form id="sort_form" name="sort_form" action="SensorManagement?M=Sort" method="post">
@@ -129,6 +133,7 @@ $dlogdb = null;
                         <input style="display: none;" value="" type="checkbox" class="checkboxes">
                         <?php
                         if (isset($res)) {
+                            //var_dump($res);
                             foreach ($res as $key => $val) {
                                 echo '<div class="sensor-block flexlyr" ';
                                 echo ' id="' . ((int)$key + 1) . '" draggable="true">';
@@ -161,7 +166,7 @@ $dlogdb = null;
                     <a onclick="DeleteMulti();" class="del-btn"></a>    
                 </div>
             </div>
-            <a href="<?php echo base_url();?>home" class="confirm-btn">ホームに戻る</a>
+            <a href="<?php echo base_url();?>home" class="confirm-btn"><?=$this->lang->line('home');?></a>
         </div>
     </div>
     <script type="text/javascript">

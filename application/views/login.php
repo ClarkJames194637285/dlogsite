@@ -5,7 +5,7 @@ $select_arr = array(
     '+10.5'   => 10.5,
     '+10'   => 10,
     '+9.5'   => 9.5,
-    'タイムゾーン +9（日本）'   => "9",
+    $this->lang->line('timezone')   => "9",
     '+8'   => 8,
     '+7'   => 7,
     '+6.5'   => 6.5,
@@ -123,7 +123,7 @@ if (isset($_POST['login'])) {
             $userlist = $dlogdb->dbUpdate($dbpdo, 'users', $up_darry, 'ID', $this->session->userdata('user_id'));
             $dlogdb = null;
             date_default_timezone_set($tzstr);
-
+            $_SESSION['timestamp']=time();
             redirect(base_url().'home');
             exit;
         } else {

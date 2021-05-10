@@ -28,7 +28,7 @@ if (isset($_GET['M'])) {
             $insert_data = array(
                 'GroupName' => $_POST['GroupName'],
                 'ParentID' => 0,
-                'UserID' => $userid,
+                'UserID' => (int)$userid,
                 'SortID' => 0,
                 'Permission' => "",
                 'Description' => "",
@@ -92,6 +92,10 @@ $dlogdb = null;
 
     <!-- yamaguchi -->
     <link rel="stylesheet" href="<?php echo base_url()?>assets/sitecss/page1_4.css" type="text/css">
+    <script type="text/javascript">
+    var delete_check_msg = <?php echo json_encode($this->lang->line('delete_check_msg'));?>;
+    var delete_msg = <?php echo json_encode($this->lang->line('delete_msg'));?>;
+    </script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/sitejs/page1_4.js"></script>
 </head>
 
@@ -104,9 +108,9 @@ $dlogdb = null;
     
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">グループ管理</h1>
+            <h1 class="page-title"><?=$this->lang->line('group_title');?></h1>
             <div class="group-grid setting-grid">
-                <p class="group-label grid-label">グループ</p>
+                <p class="group-label grid-label"><?=$this->lang->line('group_subtitle');?></p>
                 <form id="sort_form" name="sort_form" action="GroupManagement?M=Sort" method="post">
                     <!-- <div id="columns"> -->
                         <!-- ダミー -->
@@ -142,7 +146,7 @@ $dlogdb = null;
                     <a onclick="DeleteMulti();" class="del-btn"></a>
                 </div>
             </div>
-            <a href="<?php echo base_url();?>home" class="confirm-btn">ホームに戻る</a>
+            <a href="<?php echo base_url();?>home" class="confirm-btn"><?=$this->lang->line('home');?></a>
         </div>
     </div>
     <script type="text/javascript">

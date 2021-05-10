@@ -70,7 +70,7 @@
 
 function Delete(id)
 {
-    if (!confirm("削除してもよろしいですか？")) {
+    if (!confirm(delete_msg)) {
         return;
     }
     location.href = "GatewayManagement?M=Delete&ids=" + id;
@@ -89,7 +89,7 @@ function DeleteMulti() {
     if (ids.length > 0) {
         Delete(ids);
     } else {
-        alert('チェックしてから削除をクリックしてください。');
+        alert(delete_check_msg);
     }
 }
 

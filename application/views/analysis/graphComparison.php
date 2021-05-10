@@ -178,6 +178,13 @@
         // }
         // A $( document ).ready() block.
         $( document ).ready(function() {
+             var mode='<?php echo $this->session->userdata('lang');?>';
+            var comp='';
+            if(mode=='english'){
+                comp='Sensor comparison';
+            }else{
+                comp='センサーの比較';
+            }
             $(document).on ("click", ".srh-block li a", function () {
                 var type=$(this).parent('li')[0].id;
                 if((type=="temperature")||(type=="humidity")){
@@ -264,7 +271,7 @@
                                 },
 
                             title: {
-                                text: 'センサーの比較'
+                                text: comp
                                 },
 
                             series: [{
@@ -347,7 +354,7 @@
                             },
 
                         title: {
-                            text: 'センサーの比較'
+                            text: comp
                             },
                         
                         series: [{
