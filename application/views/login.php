@@ -195,6 +195,12 @@ if (isset($_POST['login'])) {
     <!-- custom jscript -->
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/custom.js"></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/wow.min.js"></script>
+    <style>
+        .rememer{
+            text-align:left;
+            margin-left:13px;
+        }
+    </style>
     <script>
     function check_valset(id) {
         if (id.checked){
@@ -318,7 +324,7 @@ if (isset($_POST['login'])) {
                         ?>
                         </select>
                         <label class="container">
-                            <p class="langCng"><?=$this->lang->line('remember_me');?></p>
+                            <p class="langCng rememer"><?=$this->lang->line('remember_me');?></p>
                             <!-- <p class="langCng" lang="en">Remember Me</p> -->
                             <?php
                             echo '<input id="resaved" name="resaved" onChange="check_valset(this);"';
