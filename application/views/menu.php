@@ -33,30 +33,41 @@
                     </li>
                    
                    
-                <?php } else{?>
+                <?php } else{ ?>
+                    <?php if($this->user_check==31){?>
+                        <li class="menu1_1">
+                            <a href="<?php echo base_url()?>setting/userSetting"><?=$this->lang->line('userSetting');?></a>
+                        </li>
+                    <?php }?>
 
-                    <li class="menu1_1">
-                        <a href="<?php echo base_url()?>setting/userSetting"><?=$this->lang->line('userSetting');?></a>
-                    </li>
-                
                     <li class="menu1_2">
                         <a href="<?php echo base_url()?>setting/systemSetting"><?=$this->lang->line('systemSetting');?></a>
                     </li>
-                    <li class="menu1_3">
-                        <a href="<?php echo base_url()?>setting/subAccountManagement"><?=$this->lang->line('accountManagement');?></a>
-                    </li>
+
+                    <?php if($this->user_check==31){?>
+                        <li class="menu1_3">
+                            <a href="<?php echo base_url()?>setting/subAccountManagement"><?=$this->lang->line('accountManagement');?></a>
+                        </li>
+                    <?php }?>
+
                     <li class="menu1_4">
                         <a href="<?php echo base_url()?>setting/groupManagement"><?=$this->lang->line('graphManagement');?></a>
                     </li>
+
                     <li class="menu1_5">
                         <a href="<?php echo base_url()?>setting/sensorManagement"><?=$this->lang->line('sensorManagement');?></a>
                     </li>
-                    <li class="menu1_6">
+
+                    <?php if($this->user_check==31){?>
+                        <li class="menu1_6">
                             <a href="<?php echo base_url()?>setting/gatewayManagement"><?=$this->lang->line('gatewayManagement');?></a>
                         </li>
+                    <?php }?>
+
                     <li class="menu1_7">
                         <a href="<?php echo base_url()?>setting/mappingManagement"><?=$this->lang->line('mapManagement');?></a>
                     </li>
+                    
                     <li class="menu1_8">
                         <a href="<?php echo base_url()?>setting/listManagement"><?=$this->lang->line('listManagement');?></a>
                     </li>

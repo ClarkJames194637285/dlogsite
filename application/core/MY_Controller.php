@@ -6,6 +6,7 @@ class MY_Controller  extends CI_Controller{
     // imap server connection
     public $conn;
     public $role;
+    public $user_check;
     public $roleid;
     // inbox storage and inbox message count
     private $inbox;
@@ -33,6 +34,7 @@ class MY_Controller  extends CI_Controller{
         }
 
         $this->role = $this->user_model->get_role($_SESSION['user_id']);
+        $this->user_check = $this->user_model->user_check($_SESSION['user_id']);
         $this->roleval = $this->user_model->get_user_role($_SESSION['user_id']);
         for ($i = 5; $i > 0; $i --) {
             $strval = '00000' . (string)decbin($this->roleval);

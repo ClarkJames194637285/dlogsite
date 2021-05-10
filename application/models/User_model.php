@@ -168,6 +168,15 @@ class User_model extends CI_Model {
 		return $result;
 	}
 
+	public function user_check($ID) {
+
+		$this->db->select();
+		$this->db->from('users');
+		$this->db->where('id', $ID);
+		$result=$this->db->get()->row('RoleID');
+		return $result;
+	}
+
 	public function get_user_role($ID) {
 
 		$this->db->select('ROLEID');
