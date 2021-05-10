@@ -36,7 +36,7 @@ class User_model extends CI_Model {
 			'Email'   => $email,
 			'Password'   => $password,
 			'IsLocked'   => '0',
-			'RoleID'   => '31',
+			'RoleID'   => '63',
 			'GroupID'   => $GroupID,
 			'UserStateID' =>'1',
 			'Timezone'   => '9',
