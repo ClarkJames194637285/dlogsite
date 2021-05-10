@@ -16,7 +16,7 @@
 
 class Reportclass
 {
-    public function setReportCsvdata($hed_data_arr, $data_arr)
+    public function setReportCsvdata($hed_data_arr, $data_arr, $temperatureunit, $langage)
     {
         /**
          * $hed_data_arr = ヘッダー表示用連想配列データ
@@ -42,7 +42,16 @@ class Reportclass
          * $humidity（温度）= $data_arr[terminalhistory.Humidity] * 100 : -1000 => (--)
          * データ追加になる可能性あり
          */
-        
+        if ($temperatureunit == "1") {
+            $ttu_str = "F";
+            $kanzanchi_a = 1.8;
+            $kanzanchi_b = 32;
+        } else {
+            $ttu_str = "℃";
+            $kanzanchi_a = 1;
+            $kanzanchi_b = 0;
+        }
+
         $timezone = floatval($hed_data_arr['TimeZone']);
         $fugo = "";
         $ts1 = strtotime($hed_data_arr['txtEndTime']);
@@ -52,21 +61,21 @@ class Reportclass
         $time_h = (int)(($measurement_day % (60 * 60 * 24)) / (60 * 60));
         $time_m = (int)(($measurement_day % (60 * 60 * 24)) % (60 * 60) / 60);
         $time_s = (int)(($measurement_day % (60 * 60 * 24)) % (60 * 60) % 60);
-        $T_Max = $hed_data_arr['T_Max'];
+        $T_Max = number_format($hed_data_arr['T_Max'] * $kanzanchi_a + $kanzanchi_b, 1);
         if ($hed_data_arr['H_Max'] != -1000) {
-            $H_Max = $hed_data_arr['H_Max'] * 100;
+            $H_Max = number_format($hed_data_arr['H_Max'] * 100, 1);
         } else {
             $H_Max = "--";
         }
-        $T_Min = $hed_data_arr['T_Min'];
+        $T_Min = number_format($hed_data_arr['T_Min'] * $kanzanchi_a + $kanzanchi_b, 1);
         if ($hed_data_arr['H_Min'] != -1000) {
-            $H_Min = $hed_data_arr['H_Min'] * 100;
+            $H_Min = number_format($hed_data_arr['H_Min'] * 100, 1);
         } else {
             $H_Min = "--";
         }
-        $T_Average = round($hed_data_arr['T_Average'], 2);
+        $T_Average = number_format(round($hed_data_arr['T_Average'] * $kanzanchi_a + $kanzanchi_b, 2), 1);
         if ($hed_data_arr['H_Average'] != -1000) {
-            $H_Average = round($hed_data_arr['H_Average'] * 100, 2);
+            $H_Average = number_format(round($hed_data_arr['H_Average'] * 100, 2), 1);
         } else {
             $H_Average = "--";
         }
@@ -78,40 +87,35 @@ class Reportclass
             $t[$key] = exp($aeh / ($val['Temperature'] + $f_fl));
         }
         $t_average = array_sum($t) / count($t);
-        $MKT_Average = round($aeh / log($t_average) - $f_fl, 2);
-
+        $mktave_tmp = round($aeh / log($t_average) - $f_fl, 2);
+        $MKT_Average = number_format($mktave_tmp * $kanzanchi_a + $kanzanchi_b, 1);
         if ($timezone > 0) {
             $fugo = "+";
         }
-        $csvdata[0] = "デバイス情報";
+        $csvdata[0] = $langage->line('device_title');
         $csvdata[1] = "******************************";
-        $csvdata[2] = "デバイスタイプ: " . $hed_data_arr['ProductName'];
+        $csvdata[2] = $langage->line('device_type') . $hed_data_arr['ProductName'];
         $csvdata[3] = "ID: " . $hed_data_arr['IMEI'];
-        $csvdata[4] = "測定間隔: " . $hed_data_arr['TerminalDataInterval'] . "min";
-        if ($hed_data_arr['Language'] == "ja_JP") {
-            $csvdata[5] = "注:";
-            $csvdata[6] = "表示されるすべての時間は  UTC" . $fugo . $timezone;
-            $csvdata[6] .= " および24時間制に基づいています。 [yyyy-MM-dd HH:mm:ss]";
-        } else {
-            $csvdata[5] = "Note:";
-            $csvdata[6] = "All times shown are based on UTC" . $fugo . $timezone;
-            $csvdata[6] .= " and 24-Hour clock [yyyy-MM-dd HH:mm:ss]";
-        }
+        $csvdata[4] = $langage->line('measurement_interval_str') . $hed_data_arr['TerminalDataInterval'] . "min";
+        $csvdata[5] = $langage->line('note_str');
+        $csvdata[6] = $langage->line('time_utc_str') . $fugo . $timezone;
+        $csvdata[6] .= $langage->line('datetime_msg_str');
         $csvdata[7] = "";
-        $csvdata[8] = "ロギング情報";
+        $csvdata[8] = $langage->line('loging_title');
         $csvdata[9] = "******************************";
-        $csvdata[10] = "開始時刻: " . $hed_data_arr['txtBeginTime'];
-        $csvdata[11] = "終了時刻: " . $hed_data_arr['txtEndTime'];
-        $csvdata[12] = "測定データ数: " . count($data_arr);
-        $csvdata[13] = "測定時間: " . $time_d . 'd ' . $time_h . 'h ' . $time_m . 'm ' . $time_s . 's';
-        $csvdata[14] = "最大値: " . $T_Max . '℃/' . $H_Max . '%RH';
-        $csvdata[15] = "最小値: " . $T_Min . '℃/' . $H_Min . '%RH';
-        $csvdata[16] = "平均値: " . $T_Average . '℃/' . $H_Average . '%RH';
-        $csvdata[17] = "平均動態温度: " . $MKT_Average . '℃';
+        $csvdata[10] = $langage->line('start_time_str') . $hed_data_arr['txtBeginTime'];
+        $csvdata[11] = $langage->line('ending_time_str') . $hed_data_arr['txtEndTime'];
+        $csvdata[12] = $langage->line('data_cont_str') . count($data_arr);
+        $csvdata[13] = $langage->line('measurement_time_str') . $time_d . 'd ' . $time_h . 'h ' . $time_m . 'm ' . $time_s . 's';
+        $csvdata[14] = $langage->line('max_value_str') . $T_Max . $ttu_str . '/' . $H_Max . '%RH';
+        $csvdata[15] = $langage->line('min_value_str') . $T_Min . $ttu_str. '/' . $H_Min . '%RH';
+        $csvdata[16] = $langage->line('ave_value_str') . $T_Average . $ttu_str . '/' . $H_Average . '%RH';
+        $csvdata[17] = $langage->line('mkt_value_str') . $MKT_Average . $ttu_str;
         $csvdata[18] = "";
         $csvdata[19] = "";
         // ここからヘッダー部
-        $csvdata[20] = "日付,時刻,温度(℃),湿度(%RH)";
+        $csvdata[20] = $langage->line('hiduke_str') . "," . $langage->line('jikan_str') .",";
+        $csvdata[20] .= $langage->line('temper_str') . "(" . $ttu_str . ")," . $langage->line('humi_str') . "(%RH)";
         $csvdata[21] = $csvdata[9] . ',' . $csvdata[9] . ',' . $csvdata[9] . ',' . $csvdata[9] . ',' . $csvdata[9];
         // ここからデータ部
         foreach ($data_arr as $key => $val) {
@@ -119,13 +123,14 @@ class Reportclass
             if ($val['Humidity'] == -1000) {
                 $h_d = "--";
             } else {
-                $h_d = round($val['Humidity'] * 100, 2);
+                $h_d = number_format(round($val['Humidity'] * 100, 2), 1);
             }
-            $csvdata[$key + 22] = $date_str[0] . ',' . $date_str[1] . ',' . $val['Temperature'] . ',' . $h_d;
+            $temp_cf =  number_format($val['Temperature'] * $kanzanchi_a + $kanzanchi_b, 1);
+            $csvdata[$key + 22] = $date_str[0] . ',' . $date_str[1] . ',' . $temp_cf . ',' . $h_d;
         }
         return $csvdata;
     }
-    public function makeJsonDataFile($data_arr)
+    public function makeJsonDataFile($data_arr, $temperatureunit)
     {
         /**
          * json data file make pg
@@ -134,6 +139,13 @@ class Reportclass
          * Temperature = terminalhistory.Temperature
          * Humidity = terminalhistory.Humidity
          */
+        if ($temperatureunit == "1") {
+            $kanzanchi_a = 1.8;
+            $kanzanchi_b = 32;
+        } else {
+            $kanzanchi_a = 1;
+            $kanzanchi_b = 0;
+        }
 
         $jsondata = '[';
         foreach ($data_arr as $val) {
@@ -145,8 +157,8 @@ class Reportclass
             $date_time = strtotime($val['RTC']) * 1000;
             $jsondata .= '[';
             $jsondata .= $date_time . ',';
-            $jsondata .= $val['Temperature'] . ',';
-            $jsondata .= $humidity;
+            $jsondata .= number_format($val['Temperature'] * $kanzanchi_a + $kanzanchi_b, 1) . ',';
+            $jsondata .= number_format($humidity, 1);
             $jsondata .= '],';
         }
         $jsondata = rtrim($jsondata, ',');
@@ -158,14 +170,18 @@ class Reportclass
             fclose($file_handle);
         }
     }
-    public function makePdfFile($tcpdf, $gurl, $file_name)
+    public function makePdfFile($tcpdf, $gurl, $file_name, $temperatureunit, $langage)
     {
         /**
          * tcpdf インスタンス
          * pdf file make pg
          * data_arr = jsondata
          */
-
+        if ($temperatureunit == "1") {
+            $ttu_str = "F";
+        } else {
+            $ttu_str = "℃";
+        }
         $row_count = 100;
         $logo_gurl = dirname(__DIR__, 2) . "/assets/img/dlog_rogo.png";
         $folder = base_url() . 'assets/res_data/report/';
@@ -336,7 +352,11 @@ class Reportclass
                                 </span>
                             </td>
                             <td colspan="3">
-                                <span><h1 style="margin-left: 50px">データー レポート</h1></span>
+                                <span>
+        EOF;
+        $html[0] .= '<h1 style="margin-left: 50px">' . $langage->line('datareport_title') . '</h1>';
+        $html[0] .= <<< EOF
+                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -349,13 +369,15 @@ class Reportclass
                         </tr>
                         <tr>
                             <th colspan="5" align="left">
-                                <span style="font-size: 12px;">ファイル情報</span>
+        EOF;
+        $html[0] .= '<span style="font-size: 12px;">' . $langage->line('file_info') . '</span>';
+        $html[0] .= <<< EOF
                             </th>
                         </tr>
                         <tr>
                             <td colspan="4">
-                                <span class="top">ファイル作成日:&emsp;&emsp;</span>
         EOF;
+        $html[0] .= '<span class="top">' . $langage->line('file_creation_date') . '&emsp;&emsp;</span>';
         $html[0] .= '<span class="top_data">' . $maketime . '</span><br>';
         $html[0] .= '<span class="top" style="color: red;">' . $note . '</span>';
         $html[0] .= '<span class="top_data" style="color: red;">' . $note_str . '</span>';
@@ -364,12 +386,16 @@ class Reportclass
                         </tr>
                         <tr>
                             <th colspan="4" align="left">
-                                <span style="font-size: 12px;">デバイス情報</span>
+        EOF;
+        $html[0] .= '<span style="font-size: 12px;">' . $langage->line('device_title') . '</span>';
+        $html[0] .= <<< EOF
                             </th>
                         </tr>
                         <tr>
                             <td>
-                                <span class="top">デバイスタイプ:</span>
+        EOF;
+        $html[0] .= '<span class="top">' . $langage->line('device_type') . '</span>';
+        $html[0] .= <<< EOF
                             </td>
                             <td>
         EOF;
@@ -377,7 +403,9 @@ class Reportclass
         $html[0] .= <<< EOF
                             </td>
                             <td>
-                                <span class="top">測定間隔：</span>
+        EOF;
+        $html[0] .= '<span class="top">' . $langage->line('measurement_interval_str') . '</span>';
+        $html[0] .= <<< EOF
                             </td>
                             <td>
         EOF;
@@ -399,12 +427,16 @@ class Reportclass
                         </tr>
                         <tr>
                             <th colspan="4" align="left">
-                                <span style="font-size: 12px;">ロギング情報</span>
+        EOF;
+        $html[0] .= '<span style="font-size: 12px;">' . $langage->line('loging_title') . '</span>';
+        $html[0] .= <<< EOF
                             </th>
                         </tr>
                         <tr>
                             <td width="20%">
-                                <span class="top">開始時刻：</span>
+        EOF;
+        $html[0] .= '<span class="top">' . $langage->line('start_time_str') . '</span>';
+        $html[0] .= <<< EOF
                             </td>
                             <td width="30%">
         EOF;
@@ -412,7 +444,9 @@ class Reportclass
         $html[0] .= <<< EOF
                             </td>
                             <td width="20%">
-                                <span class="top">最大値：</span>
+        EOF;
+        $html[0] .= '<span class="top">' . $langage->line('max_value_str') . '</span>';
+        $html[0] .= <<< EOF
                             </td>
                             <td width="30%">
         EOF;
@@ -422,7 +456,9 @@ class Reportclass
                         </tr>
                         <tr>
                             <td>
-                                <span class="top">終了時刻：</span>
+        EOF;
+        $html[0] .= '<span class="top">' . $langage->line('ending_time_str') . '</span>';
+        $html[0] .= <<< EOF
                             </td>
                             <td>
         EOF;
@@ -430,7 +466,9 @@ class Reportclass
         $html[0] .= <<< EOF
                             </td>
                             <td>
-                                <span class="top">最小値：</span>
+        EOF;
+        $html[0] .= '<span class="top">' . $langage->line('min_value_str') . '</span>';
+        $html[0] .= <<< EOF
                             </td>
                             <td>
         EOF;
@@ -440,7 +478,9 @@ class Reportclass
                         </tr>
                         <tr>
                             <td>
-                                <span class="top">測定データ数：</span>
+        EOF;
+        $html[0] .= '<span class="top">' . $langage->line('data_cont_str') . '</span>';
+        $html[0] .= <<< EOF
                             </td>
                             <td>
         EOF;
@@ -448,7 +488,9 @@ class Reportclass
         $html[0] .= <<< EOF
                             </td>
                             <td>
-                                <span class="top_data">平均値：</span>
+        EOF;
+        $html[0] .= '<span class="top">' . $langage->line('ave_value_str') . '</span>';
+        $html[0] .= <<< EOF
                             </td>
                             <td>
         EOF;
@@ -458,7 +500,9 @@ class Reportclass
                         </tr>
                         <tr>
                             <td>
-                                <span class="top">測定時間：</span>
+        EOF;
+        $html[0] .= '<span class="top">' . $langage->line('measurement_time_str') . '</span>';
+        $html[0] .= <<< EOF
                             </td>
                             <td>
         EOF;
@@ -466,7 +510,9 @@ class Reportclass
         $html[0] .= <<< EOF
                             </td>
                             <td>
-                                <span class="top">平均動態温度：</span>
+        EOF;
+        $html[0] .= '<span class="top">' . $langage->line('mkt_value_str') . '</span>';
+        $html[0] .= <<< EOF
                             </td>
                             <td>
         EOF;
@@ -576,7 +622,10 @@ class Reportclass
                             </tr>
                             <tr>  
                                 <td colspan="5" align="center" style="height: 17px;">
-                                    <span style="font-size: 16px;">データー リスト</span>
+            EOF;
+            $html[$p_cont] .= '<span style="font-size: 16px;">' . $langage->line('datalist_title') . '</span>';
+            $html[$p_cont] .= <<< EOF
+                                    
                                 </td>
                             </tr>
                         </tbody>
@@ -585,33 +634,43 @@ class Reportclass
                         <tbody>
                             <tr>
                                 <th class="data_h">
-                                    <span class="hed">日付</span>
-                                    <span class="hed">&emsp;&emsp;時刻</span>
-                                    <span class="hed">&emsp;℃</span>
+            EOF;
+            $html[$p_cont] .= '<span class="hed">' . $langage->line('hiduke_str') . '</span>';
+            $html[$p_cont] .= '<span class="hed">&emsp;&emsp;' . $langage->line('jikan_str') . '</span>';
+            $html[$p_cont] .= '<span class="hed">&emsp;' . $ttu_str . '</span>';
+            $html[$p_cont] .= <<< EOF
                                     <span class="hed">&emsp;%RH</span>
                                 </th>
                                 <th class="data_h">
-                                    <span class="hed">日付</span>
-                                    <span class="hed">&emsp;&emsp;時刻</span>
-                                    <span class="hed">&emsp;℃</span>
+            EOF;
+            $html[$p_cont] .= '<span class="hed">' . $langage->line('hiduke_str') . '</span>';
+            $html[$p_cont] .= '<span class="hed">&emsp;&emsp;' . $langage->line('jikan_str') . '</span>';
+            $html[$p_cont] .= '<span class="hed">&emsp;' . $ttu_str . '</span>';
+            $html[$p_cont] .= <<< EOF
                                     <span class="hed">&emsp;%RH</span>
                                 </th>
                                 <th class="data_h">
-                                    <span class="hed">日付</span>
-                                    <span class="hed">&emsp;&emsp;時刻</span>
-                                    <span class="hed">&emsp;℃</span>
+            EOF;
+            $html[$p_cont] .= '<span class="hed">' . $langage->line('hiduke_str') . '</span>';
+            $html[$p_cont] .= '<span class="hed">&emsp;&emsp;' . $langage->line('jikan_str') . '</span>';
+            $html[$p_cont] .= '<span class="hed">&emsp;' . $ttu_str . '</span>';
+            $html[$p_cont] .= <<< EOF
                                     <span class="hed">&emsp;%RH</span>
                                 </th>
                                 <th class="data_h">
-                                    <span class="hed">日付</span>
-                                    <span class="hed">&emsp;&emsp;時刻</span>
-                                    <span class="hed">&emsp;℃</span>
+            EOF;
+            $html[$p_cont] .= '<span class="hed">' . $langage->line('hiduke_str') . '</span>';
+            $html[$p_cont] .= '<span class="hed">&emsp;&emsp;' . $langage->line('jikan_str') . '</span>';
+            $html[$p_cont] .= '<span class="hed">&emsp;' . $ttu_str . '</span>';
+            $html[$p_cont] .= <<< EOF
                                     <span class="hed">&emsp;%RH</span>
                                 </th>
                                 <th class="data_h">
-                                    <span class="hed">日付</span>
-                                    <span class="hed">&emsp;&emsp;時刻</span>
-                                    <span class="hed">&emsp;℃</span>
+            EOF;
+            $html[$p_cont] .= '<span class="hed">' . $langage->line('hiduke_str') . '</span>';
+            $html[$p_cont] .= '<span class="hed">&emsp;&emsp;' . $langage->line('jikan_str') . '</span>';
+            $html[$p_cont] .= '<span class="hed">&emsp;' . $ttu_str . '</span>';
+            $html[$p_cont] .= <<< EOF
                                     <span class="hed">&emsp;%RH</span>
                                 </th>
                             </tr>

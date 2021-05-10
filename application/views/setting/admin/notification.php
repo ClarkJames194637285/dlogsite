@@ -118,7 +118,7 @@
       var text=$('#inputTextToSave').val();
       if(text=="")return;
       $.ajax({
-                url:"<?php echo base_url()?>setting/useroperation/uploadtext",
+                url:"<?php echo base_url()?>setting/admin/notification/uploadtext",
                 type:'post',
                 data:{
                     'filename':filename,

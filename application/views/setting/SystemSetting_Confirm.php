@@ -75,11 +75,11 @@ $dlogdb = null;
         <?php $this->load->view('menu'); ?>
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">システム設定</h1>
+            <h1 class="page-title"><?=$this->lang->line('system_title');?></h1>
             <section class="main-content flexlyr">
                 <div class="content-grid">
-                    <p class="nrl confirm-msg">設定を保存しました。</p>
-                    <a href="<?php echo base_url();?>home" class="confirm-btn">ホームに戻る</a>
+                    <p class="nrl confirm-msg"><?=$this->lang->line('save_ok');?></p>
+                    <a href="<?php echo base_url();?>home" class="confirm-btn"><?=$this->lang->line('home');?></a>
                 </div>
             </section>
         </div>

@@ -18,25 +18,25 @@
 */
 
 // Errors
-$lang['error_csrf'] = 'This form post did not pass our security checks.';
+$lang['error_csrf']                                           = 'This form post did not pass our security checks.';
 
 // Login
-$lang['username']         = 'username';
-$lang['password']      = 'password';
-$lang['mailaddress']      = 'Email Address';
-$lang['timezone']  = 'Time zone +9 (Japan)';
-$lang['remember_me']  = 'Remember Me';
-$lang['login']      = 'Login';
-$lang['forgot_password'] = 'Forgot your password?';
-$lang['register'] = 'Register';
-$lang['authentication'] = 'Authentication Code';
-$lang['send'] = 'Send Email';
+$lang['username']                                             = 'username';
+$lang['password']                                             = 'password';
+$lang['mailaddress']                                          = 'Email Address';
+$lang['timezone']                                             = 'Time zone +9 (Japan)';
+$lang['remember_me']                                          = 'Remember Me';
+$lang['login']                                                = 'Login';
+$lang['forgot_password']                                      = 'Forgot your password?';
+$lang['register']                                             = 'Register';
+$lang['authentication']                                       = 'Authentication Code';
+$lang['send']                                                 = 'Send Email';
 //Register
-$lang['register_title']                               = 'New user registration';
+$lang['register_title']                                       = 'New user registration';
 
-$lang['confirm_pass']                               = 'confirmed password';
+$lang['confirm_pass']                                         = 'confirmed password';
 //Register
-$lang['New_user_registration']                               = 'New user registration';
+$lang['New_user_registration']                                = 'New user registration';
 $lang['agree_button'] ='Agree';
 
 
@@ -51,7 +51,7 @@ $lang['change_password_validation_new_password_label']         = 'New Password';
 $lang['change_password_validation_new_password_confirm_label'] = 'Confirm New Password';
 
 // Forgot Password
-$lang['forgot_password_heading']                 = 'Forgot Password';
+$lang['forgot_password_heading']                               = 'Forgot Password';
 
 
 // Reset Password

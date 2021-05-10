@@ -70,7 +70,7 @@ class Notification extends MY_Controller
 			$filename = $this->input->post('filename');
 			$this->load->helper('file');
 			// $dir=APPPATH.'advertisement/'.$filename;
-			$dir=APPPATH.'advertisement/advertisement.txt';
+			$dir=APPPATH.'notification/notification.txt';
 			if ( ! write_file($dir, $text))
 			{
 							echo false;

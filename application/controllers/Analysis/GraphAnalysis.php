@@ -52,7 +52,7 @@ class GraphAnalysis extends MY_Controller
 		$arrayData=[];
 		foreach($data as $val){
 			$unit=[];
-			array_push($unit,strtotime($val->RTC)*1000,floatval($val->Temperature));
+			array_push($unit,strtotime($val->RTC."+11 hours")*1000,floatval($val->Temperature));
 			array_push($arrayData,$unit);
 		}
 		$res=json_encode($arrayData);

@@ -46,7 +46,7 @@
     $h_str = $had_day + (int)$dteDiff->format("%H");
     $i_str = $dteDiff->format("%I");
     $s_str = $dteDiff->format("%S");
-    $dteDiffStr = $h_str.' 時間 '.$i_str.' 分 '.$s_str.' 秒 ';
+    $dteDiffStr = $h_str.' '.$this->lang->line('hour').' '.$i_str.' '.$this->lang->line('min').' '.$s_str.$this->lang->line('sec');
     $login_id = $row["ID"];
     date_default_timezone_set($tzstr);
 
@@ -115,7 +115,7 @@
 
         <!-- Sidebar  -->
         <?php $this->load->view('menu'); ?>
-
+        <div id="base_url" style="display:none"><?php echo base_url();?></div>
         <!-- Page Content  -->
         <div class="content">
             <h1 class="page-title"><?=$this->lang->line('user_title');?></h1>
@@ -123,55 +123,55 @@
                 <form id="form1" method="post">
                     <div id="errorMessage"></div>
                     <div class="user-info-block flexlyr">
-                        <p class=" confirm-msg">ユーザー名</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('user_name');?></p>
                         <p class=" confirm-input">
                             <?php
                             echo $row["UserName"];
                             ?>
                         </p>
-                        <p class=" confirm-msg">メールアドレス</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('mail_address');?></p>
                         <p class=" confirm-input">
                             <?php
                             echo $row["Email"];
                             ?>
                         </p>
-                        <p class=" confirm-msg">最新ログイン時刻</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('latest_login_time');?></p>
                         <p class=" confirm-input">
                             <?php
                             echo $row["LoginTime"];
                             ?>
                         </p>
-                        <p class=" confirm-msg">前回のログイン時間</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('last_login_time');?></p>
                         <p class=" confirm-input">
                             <?php
                             echo $row["LastLoginTime"];
                             ?>
                         </p>
-                        <p class=" confirm-msg">ログイン時間</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('login_time');?></p>
                         <p class=" confirm-input">
                             <?php
                             echo $dteDiffStr;
                             ?>
                         </p>
                     </div>
-                    <a href="<?php echo base_url().'home';?>" class="confirm-btn">ホームに戻る</a>
+                    <a href="<?php echo base_url().'home';?>" class="confirm-btn"><?=$this->lang->line('home');?></a>
 
                     <div class="user-info-block flexlyr">
-                        <p class=" confirm-msg">パスワードの変更　　</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('pass_chenge');?></p>
                         <p class=" confirm-input"><?php echo $pass_non;?></p>
-                        <p class=" confirm-msg">現在のパスワード</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('current_pass');?></p>
                         <p class=" confirm-input">
                             <input type="text" value="<?php
                         echo $input_pass;
                         ?>" id="oldpass" name="oldpass" onChange="oldPasscheck(this,<?php
                         echo $inp_swichi;?>);">
                         </p>
-                        <p class=" confirm-msg">新しいパスワード</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('new_pass');?></p>
                         <p class=" confirm-input">
                             <input type="password" class="form_control" id="newpass" name="newpass" required />
 
                         </p>
-                        <p class=" confirm-msg">新しいパスワード（再入力）</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('new_pass_re');?></p>
                         <p class=" confirm-input">
                             <input type="password" class="form_control"
                             onChange="CheckPassword();" id="confirm" name="confirm" required />
@@ -185,7 +185,7 @@
                             ?>"/>
                         </p>
                     </div>
-                    <button id="update" class="confirm-btn" onclick="formSubmit();">パスワードを変更する</button>
+                    <button id="update" class="confirm-btn" onclick="formSubmit();"><?=$this->lang->line('chenge_submit');?></button>
                 </form>
             </div>
         </div>

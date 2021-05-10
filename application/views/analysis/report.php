@@ -349,10 +349,10 @@ $dlogdb = null;
         var form = document.getElementById('make_report');
         form.action = "";
         if (begintime.value == null || begintime.value == "") {
-            alert("From 日付時刻を選択してください。");
+            alert("From 日付時間を選択してください。");
             return false;
         } else if (endtime.value == null || endtime.value == "") {
-            alert("To 日付時刻を選択してください。");
+            alert("To 日付時間を選択してください。");
             return false;
         }
         form.action = $actionUrl;
@@ -369,20 +369,20 @@ $dlogdb = null;
         <?php $this->load->view('menu'); ?>
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">レポート </h1>
+            <h1 class="page-title"><?=$this->lang->line('report_title');?></h1>
             <section class="main-content ">
 
                 <div class="content-grid">
                     <div class="report_grid">
                         <div class="grid-header flexlyr">
-                            <div class="hd-cell cell1">センサー名</div>
-                            <div class="hd-cell cell2">シリアル番号</div>
-                            <div class="hd-cell cell3">センサーの種類</div>
-                            <div class="hd-cell cell4">温度</div>
-                            <div class="hd-cell cell5">湿度</div>
-                            <div class="hd-cell cell6">状態</div>
-                            <div class="hd-cell cell7">更新</div>
-                            <div class="hd-cell cell8">操作</div>
+                            <div class="hd-cell cell1"><?=$this->lang->line('sensor_name');?></div>
+                            <div class="hd-cell cell2"><?=$this->lang->line('serial_number');?></div>
+                            <div class="hd-cell cell3"><?=$this->lang->line('sensor_type');?></div>
+                            <div class="hd-cell cell4"><?=$this->lang->line('temper_str');?></div>
+                            <div class="hd-cell cell5"><?=$this->lang->line('humi_str');?></div>
+                            <div class="hd-cell cell6"><?=$this->lang->line('status_str');?></div>
+                            <div class="hd-cell cell7"><?=$this->lang->line('update_str');?></div>
+                            <div class="hd-cell cell8"><?=$this->lang->line('operation_str');?></div>
                         </div>
                         <?php
                             $tlist = "";
@@ -418,10 +418,10 @@ $dlogdb = null;
                                         }
                                         if ($dval['Status'] == 2) {
                                             $status = 'normal';
-                                            $s_text = '正常';
+                                            $s_text = $this->lang->line('normal_str');
                                         } else {
                                             $status = 'danger';
-                                            $s_text = 'オフライン';
+                                            $s_text = $this->lang->line('offline_str');
                                         }
                                         echo '<div class="grid-content flexlyr view-on gtype-' . $dval['GroupID'];
                                         echo ' group-' . $dval['GroupID'] . '">';
@@ -439,10 +439,10 @@ $dlogdb = null;
                                         echo '<div class="ct-cell cell8">';
                                         echo '<a class="post_window" onclick="Generate(' . $dval['ProductID'] . ', ';
                                         echo '`' . $dval['ProductName'] . '`);">';
-                                        echo '<img src="'.base_url().'assets/img/asset_37.png" alt="" title="PDFを生成">';
+                                        echo '<img src="'.base_url().'assets/img/asset_37.png" alt="" title="'.$this->lang->line('makepdf_str').'">';
                                         echo '</a>';
                                         echo '<a onclick="childShow(' . $dval['ProductID'] . ');">';
-                                        echo '<img src="'.base_url().'assets/img/asset_24.png" alt="" title="レポートを表示する"></a>';
+                                        echo '<img src="'.base_url().'assets/img/asset_24.png" alt="" title="'.$this->lang->line('viewreport_str').'"></a>';
                                         echo '</div>';
                                         echo '</div>';
                                         echo '<div id="child_' . $dval['ProductID'];
@@ -451,29 +451,29 @@ $dlogdb = null;
                                         // レポート表示用内包処理
                                         echo '<div class="grid-content flexlyr">';
                                         echo '<div class="ct-cell ' . $info_class . '">';
-                                        echo ($dkey + 1) . ',時刻:' . $dval['CreateTime'];
+                                        echo ($dkey + 1) . ','.$this->lang->line('datetime_str').':' . $dval['CreateTime'];
                                         echo '</div>';
                                         echo '<div class="ct-cell ' . $info_class . '">';
                                         echo '<a class="bg-red" href="' . $file_dir . $dval['FileName'] . '.pdf" ';
-                                        echo 'target="_blank">PDFダウンロード</a>';
+                                        echo 'target="_blank">'.$this->lang->line('pdf_dl_str').'</a>';
                                         echo '</div>';
                                         echo '<div class="ct-cell ' . $info_class . '">';
                                         echo '<a class="bg-green" href="' . $file_dir . $dval['FileName'] . '.csv" ';
-                                        echo 'target="_blank">CSVダウンロード</a>';
+                                        echo 'target="_blank">'.$this->lang->line('csv_dl_str').'</a>';
                                         echo '</div></div>';
                                     } else {
                                         // レポート表示用内包処理
                                         echo '<div class="grid-content flexlyr">';
                                         echo '<div class="ct-cell ' . $info_class . '">';
-                                        echo ($dkey + 1) . ',時刻:' . $dval['CreateTime'];
+                                        echo ($dkey + 1) . ','.$this->lang->line('datetime_str').':' . $dval['CreateTime'];
                                         echo '</div>';
                                         echo '<div class="ct-cell ' . $info_class . '">';
                                         echo '<a class="bg-red" href="' . $file_dir . $dval['FileName'] . '.pdf" ';
-                                        echo 'target="_blank">PDFダウンロード</a>';
+                                        echo 'target="_blank">'.$this->lang->line('pdf_dl_str').'</a>';
                                         echo '</div>';
                                         echo '<div class="ct-cell ' . $info_class . '">';
                                         echo '<a class="bg-green" href="' . $file_dir . $dval['FileName'] . '.csv" ';
-                                        echo 'target="_blank">CSVダウンロード</a>';
+                                        echo 'target="_blank">'.$this->lang->line('csv_dl_str').'</a>';
                                         echo '</div></div>';
                                     }
                                 }
@@ -491,11 +491,11 @@ $dlogdb = null;
 
                     <!-- search filter type - フィルター -->
                     <div class="side-bar-block srh-filter-block flexlyr">
-                        <p class="side-block-header srh-filter">フィルター</p>
+                        <p class="side-block-header srh-filter"><?=$this->lang->line('filter_str');?></p>
 
                         <div class="srh-block">
                             <select name="" id="">
-                                <option value="" disabled selected>グループ</option>
+                                <option value="" disabled selected><?=$this->lang->line('grupu_str');?></option>
                             </select>
                             <ul class="filter-type">
                                 <?php
@@ -532,25 +532,25 @@ $dlogdb = null;
                                     }
                                     ?>
                             </ul>
-                            <p class="set-view"><a onclick="allsyow();">全て表示する</a></p>
-                            <p class="set-view"><a href="<?php echo base_url()?>setting/listmanagement">並び替える</a></p>
+                            <p class="set-view"><a onclick="allsyow();"><?=$this->lang->line('show_all_str');?></a></p>
+                            <p class="set-view"><a href="<?php echo base_url()?>setting/listmanagement"><?=$this->lang->line('sort_str');?></a></p>
                         </div>
 
                         <div class="srh-block">
-                            <p class="srh-title">センサータイプ</p>
+                            <p class="srh-title"><?=$this->lang->line('sensortype_str');?></p>
                             <ul>
                                 <li class="t-btn view-on">
                                     <?php
                                         echo '<a';
                                         echo ' onclick="tsyow();"';
-                                        echo '>温度計</a>';
+                                        echo '>'.$this->lang->line('thermometer_str').'</a>';
                                         ?>
                                 </li>
                                 <li class="th-btn view-on">
                                     <?php
                                         echo '<a';
                                         echo ' onclick="thsyow();"';
-                                        echo '>温湿度計</a>';
+                                        echo '>'.$this->lang->line('thermo_hygrometer_str').'</a>';
                                     ?>
                                 </li>
                             </ul>
@@ -565,18 +565,19 @@ $dlogdb = null;
                     ?>
             <form id="make_report" method="post" enctype="multipart/form-data">
                 <div class="modal-header">
-                    <h3 id="dialogGenerateName">PDFを生成 <font style="font-size:16px">[長距離温度センサー]</font>
+                    <h3 id="dialogGenerateName"><?=$this->lang->line('makepdf_str');?> 
+                    <!-- <font style="font-size:16px">[長距離温度センサー]</font> -->
                     </h3>
                     <button class="close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="sys-info-block flexlyr">
-                        <h5 class="form-section">日時を設定</h5>
+                        <h5 class="form-section"><?=$this->lang->line('datetime_set_str');?></h5>
                     </div>
                     <div class="sys-info-block flexlyr">
                         <div class="span6">
                             <div class="row-fluid">
-                                <div class="controls">から</div>
+                                <div class="controls"><?=$this->lang->line('datetime_from_str');?></div>
                                 <div class="controls">
                                     <div class="confirm-input">
                                         <input id="txtBeginTime" name="txtBeginTime" class="form_datetime"
@@ -587,7 +588,7 @@ $dlogdb = null;
                         </div>
                         <div class="span6">
                             <div class="row-fluid">
-                                <div class="controls">まで</div>
+                                <div class="controls"><?=$this->lang->line('datetime_until_str');?></div>
                                 <div class="controls">
                                     <div class="confirm-input">
                                         <input id="txtEndTime" name="txtEndTime" class="form_datetime"
@@ -600,29 +601,29 @@ $dlogdb = null;
                 </div>
                 <div class="modal-footer">
                     <button id="btnSubmit" type="button" onclick="Datacheck();"
-                        class="btn btn-primary bg-green">確認</button>
-                    <button id="btnCancel" class="btn btn-primary modal_close">キャンセル</button>
+                        class="btn btn-primary bg-green"><?=$this->lang->line('verification_str');?></button>
+                    <button id="btnCancel" class="btn btn-primary modal_close"><?=$this->lang->line('cancel_str');?></button>
                 </div>
             </form>
         </div>
         <!-- post後pdf作成　完了したらダウンロード用のmodal表示phpで作成する。 -->
         <div id="pconf" class="post_conform" role="dialog">
             <div class="modal-header">
-                <h3 id="dialogGeneratingName">PDFを生成</h3>
+                <h3 id="dialogGeneratingName"><?=$this->lang->line('makepdf_str');?></h3>
                 <button type="button" class="close" data-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div id="Layout_Generating" class="row-fluid" style="display: none;">
                     <img src="<?php echo base_url()?>assets/img/ajax-loading.gif"><br><br>
-                    <label class="Tips">生成しています。お待ちください...</label><br><br>
+                    <label class="Tips"><?=$this->lang->line('waiting_str');?></label><br><br>
                     <label id="labTime"></label>
                 </div>
                 <!-- 資料作成後に表示させる。 -->
                 <div id="Layout_Download" class="row-fluid" style="display: none;">
                     <img src="<?php echo base_url()?>assets/img/success.gif"><br><br>
-                    <p class="Tips">レポートの生成に成功しました。</p><br>
-                    <a id="btnPDF" href="<?php echo $pdf_file;?>" class="bg-red" target="_blank">PDFダウンロード</a>&nbsp;
-                    <a id="btnCSV" href="<?php echo $csv_file;?>" class="bg-green" target="_blank">CSVダウンロード</a>
+                    <p class="Tips"><?=$this->lang->line('successfully_str');?></p><br>
+                    <a id="btnPDF" href="<?php echo $pdf_file;?>" class="bg-red" target="_blank"><?=$this->lang->line('pdf_dl_str');?></a>&nbsp;
+                    <a id="btnCSV" href="<?php echo $csv_file;?>" class="bg-green" target="_blank"><?=$this->lang->line('csv_dl_str');?></a>
                 </div>
             </div>
         </div>

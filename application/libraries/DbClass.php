@@ -90,51 +90,9 @@ class Dbclass
             } else {
                 $query = 'SELECT * FROM ';
                 $query .= '`' .  $tname . '` ';
-                $query .= ' WHERE UserStateID=0 and';
+                $query .= ' WHERE ';
                 $query .= '`' . $wfname . '`' .$like. ' "' . $wstr . '" ' . $and_isdelete . $order;
             }
-            $stmt = $dbpdo->prepare($query);
-            $stmt->execute();
-        } catch (\PDOException $e) {
-            $elogstr ="Error:".$e->getMessage();
-            error_log($elogstr, 3, APPPATH."logs/test.log");
-            die();
-        }
-        return $stmt;
-    }
-
-    public function dbSelectUser($dbpdo,$user)
-    {
-        /**
-         * dbpdo = PDOインスタンス
-         * tname = テーブル名
-         * wfname = 照合フィールド名
-         * wstr = 照合データ
-         * セレクトデータ配列を返す
-         */
-        try {
-            $query="SELECT GroupID FROM users WHERE UserName='".$user."'";
-            $stmt = $dbpdo->prepare($query);
-            $stmt->execute();
-        } catch (\PDOException $e) {
-            $elogstr ="Error:".$e->getMessage();
-            error_log($elogstr, 3, APPPATH."logs/test.log");
-            die();
-        }
-        return $stmt;
-    }
-
-    public function dbSelectUsers($dbpdo,$order)
-    {
-        /**
-         * dbpdo = PDOインスタンス
-         * tname = テーブル名
-         * wfname = 照合フィールド名
-         * wstr = 照合データ
-         * セレクトデータ配列を返す
-         */
-        try {
-            $query="SELECT * FROM users where isdelete='0' ".$order."";
             $stmt = $dbpdo->prepare($query);
             $stmt->execute();
         } catch (\PDOException $e) {
@@ -473,8 +431,8 @@ class Dbclass
         $query .= "SELECT ";
         $query .= "pd.ID AS ID ";
         $query .= "FROM " . $product_tn . " AS pd ";
-        $query .= " JOIN " . $productg_tn . " AS pg ";
-        $query .= "ON pd.GroupID=pg.ID join producttype as t on pd.TypeID=t.ID";
+        $query .= " INNER JOIN " . $productg_tn . " AS pg ";
+        $query .= "ON pd.GroupID=pg.ID ";
         $query .= " WHERE pd.UserID=:userid ";
         $query .= "AND pg.isdelete=0 ";
         $query .= "AND pd.isdelete=0 ";
@@ -729,7 +687,26 @@ class Dbclass
         }
         return $list;
     }
-
+    public function dbSelectUsers($dbpdo,$order)
+    {
+        /**
+         * dbpdo = PDOインスタンス
+         * tname = テーブル名
+         * wfname = 照合フィールド名
+         * wstr = 照合データ
+         * セレクトデータ配列を返す
+         */
+        try {
+            $query="SELECT * FROM users where isdelete='0' ".$order."";
+            $stmt = $dbpdo->prepare($query);
+            $stmt->execute();
+        } catch (\PDOException $e) {
+            $elogstr ="Error:".$e->getMessage();
+            error_log($elogstr, 3, APPPATH."logs/test.log");
+            die();
+        }
+        return $stmt;
+    }
     public function dbSelectuname($dbpdo, $tname, $like, $wfname, $wstr, string $order = null)
     {
         /**
