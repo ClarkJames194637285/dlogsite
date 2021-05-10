@@ -36,7 +36,7 @@ if (isset($_GET['M'])) {
                 'UserName' => $_POST['UserName'],
                 'Password' => openssl_encrypt($_POST["Password"], $this->config->item('cipher') ,$this->config->item('key')),
                 'RoleID' => (double)bindec($_POST['RoleID']),
-                'UserStateID' => 0,
+                'UserStateID' => 1,
                 'TimeZone' => (double)$_SESSION['TimeZone'],
                 'GroupID' => (double)$_SESSION['user_id'],
                 'CreateTime' => $ctime->format('Y-m-d H:i:s'),
