@@ -17,6 +17,8 @@ $lang['useroperation']                      = '広告アップロード';
 $lang['notification']                       = '告知アップロード';
 $lang['advertisement']                      = '広告アップロード';
 $lang['userdelete']                         = 'ユーザー削除';
+$lang['upload']                             = 'ファイル送信';
+
 
 //Analysis
 $lang['analysis']                           = '分析';

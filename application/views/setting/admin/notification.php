@@ -73,7 +73,7 @@
         <?php $this->load->view('menu'); ?>
         <div class="content">
         <div class="publish_pg">
-            <h1 class="page-title">告知アップロード</h1>
+            <h1 class="page-title"><?=$this->lang->line('notification');?></h1>
             <div class="publish-form">
               <div class="form-input">
                   <section class="main-content flexlyr">
@@ -82,7 +82,7 @@
                             <input type="hidden" name="name" value="value">
                             <div class="choosefile"><input type="file" id="userfile"></div>
                             <div class="textarea"><textarea id="inputTextToSave" style="height:256px"></textarea></div>       
-                            <button class="confirm-btn" type="button" onclick="filesave();">ファイル送信</button>
+                            <button class="confirm-btn" type="button" onclick="filesave();"><?=$this->lang->line('upload');?></button>
                         </div>
                       </div>
                     </section>

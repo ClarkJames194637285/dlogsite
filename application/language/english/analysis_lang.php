@@ -33,7 +33,7 @@ $lang['datetime_from_str']                        = 'From';
 $lang['datetime_until_str']                       = 'To';
 $lang['verification_str']                         = 'OK';
 $lang['cancel_str']                               = 'Cancel';
-$lang['waiting_str']                              = 'I am generating. Waiting';
+$lang['waiting_str']                              = 'There is generating now. Please wait';
 $lang['successfully_str']                         = 'The report was successfully generated.';
 // ReportClass.php
 $lang['device_title']                             = 'Device Information';

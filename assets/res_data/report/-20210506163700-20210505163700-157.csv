@@ -1,0 +1,22 @@
+Device Information
+******************************
+Device Type: 
+ID: 
+Measurement Interval: min
+Note:
+All times shown are based on UTC0 and 24-Hour clock [yyyy-MM-dd HH:mm:ss]
+
+Loging Information
+******************************
+Start Time: 
+Ending Time: 
+Number of Measurement Data: 0
+Measurement Time: 0d 0h 0m 0s
+Maximum Value: 32.0F/0.0%RH
+Minimum Value: 32.0F/0.0%RH
+Average Value: 32.0F/0.0%RH
+Mean Kinetic Temperature: nanF
+
+
+Date,Time,Temp(F),Humidity(%RH)
+******************************,******************************,******************************,******************************,******************************

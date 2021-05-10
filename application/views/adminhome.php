@@ -108,15 +108,15 @@
                 </div>
                 <div class="PieChart-grid flexlyr">
                     <div class="PieCharts left-block flexlyr">
-                        <p class="charts-label">ディスク使用量</p>
+                        <p class="charts-label"><?=$this->lang->line('disk_amount');?></p>
                         <!-- google charts -->
                         <!-- <div id="chart_div" class="PieChart-graph"></div> -->
                         <!-- CanvasJS Charts Object -->
                         <div id="left-chartContainer" class="PieChart-graph"></div>
                         <div class="param-block1">
-                            <p class="normal-param">総ディスク容量</p>
-                            <p class="nouse-param">使用した容量</p>
-                            <p class="normal-param">残りのディスク容量</p>
+                            <p class="normal-param"><?=$this->lang->line('total_disk');?></p>
+                            <p class="nouse-param"><?=$this->lang->line('used_disk');?></p>
+                            <p class="normal-param"><?=$this->lang->line('remain_disk');?></p>
                         </div>
                         <div class="param-block2">
                             <p class="normal-param" id="working"><?php echo $total;?>GB</p>
@@ -126,7 +126,7 @@
                        
                     </div>
                     <div class="PieCharts right-block flexlyr">
-                        <p class="charts-label">現在ログインしているユーザー</p>
+                        <p class="charts-label"><?=$this->lang->line('current_login_user');?></p>
                        
                         <div class="param-block1" style="width:40%;">
                            

@@ -116,7 +116,7 @@ $dlogdb = null;
         <?php $this->load->view('menu'); ?>    
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">ユーザー削除</h1>
+            <h1 class="page-title"><?=$this->lang->line('userdelete');?></h1>
             
             <div class="sub-account-grid setting-grid">
                 <form id="sort_form" name="sort_form" action="userdelete?M=Sort" method="post">
@@ -146,11 +146,11 @@ $dlogdb = null;
                     // echo '<a href="userdelete/edit?M=Edit&ids=' . $val['ID'] . '" class="edit-btn"></a>';
                     echo '<p class="account-name">' . $val['UserName'] . '</p>';
                     echo '<p class="account-role flexlyr">';
-                    echo '<span class="'. $roleid[5] . '">システム設定</span>';
-                    echo '<span class="'. $roleid[4] . '">グループ設定</span>';
-                    echo '<span class="'. $roleid[3] . '">センサー管理</span>';
-                    echo '<span class="'. $roleid[2] . '">マッピング管理</span>';
-                    echo '<span class="'. $roleid[1] . '">リスト管理</span>';
+                    echo '<span class="'. $roleid[5] . '">'.$this->lang->line('system_set').'</span>';
+                    echo '<span class="'. $roleid[4] . '">'.$this->lang->line('group_set').'</span>';
+                    echo '<span class="'. $roleid[3] . '">'.$this->lang->line('senser_manage').'</span>';
+                    echo '<span class="'. $roleid[2] . '">'.$this->lang->line('maping_manage').'</span>';
+                    echo '<span class="'. $roleid[1] . '">'.$this->lang->line('list_manage').'</span>';
                     echo '</p>';
                     echo '<p class="drop-btn"></p>';
                     echo '<input id="SortID_' . $val['ID'] . '" name="SortID_' . $val['ID'];
@@ -169,7 +169,7 @@ $dlogdb = null;
                     <a onclick="DeleteMulti();" class="del-btn"></a>
                 </div>
             </div>
-            <a href="<?php echo base_url().'home';?>" class="confirm-btn">ホームに戻る </a>
+            <a href="<?php echo base_url().'home';?>" class="confirm-btn"><?=$this->lang->line('home');?> </a>
         </div>
     </div>
     <script type="text/javascript">

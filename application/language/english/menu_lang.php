@@ -14,6 +14,10 @@ $lang['gatewayManagement']                  = 'Gateway Management';
 $lang['mapManagement']                      = 'Mapping Management';
 $lang['listManagement']                     = 'List Management';
 $lang['useroperation']                      = 'User Operation';
+$lang['notification']                       = 'Notification upload';
+$lang['advertisement']                      = 'Advertisement upload';
+$lang['userdelete']                         = 'User delete';
+$lang['upload']                             = 'File Upload';
 
 //Analysis
 $lang['analysis']                           = 'Analysis';
