@@ -40,7 +40,14 @@
     <script src="<?php echo base_url()?>assets/fileinput/js/plugins/piexif.js" type="text/javascript"></script>
     <script src="<?php echo base_url()?>assets/fileinput/js/plugins/sortable.js" type="text/javascript"></script>
     <script src="<?php echo base_url()?>assets/fileinput/js/fileinput.js" type="text/javascript"></script>
-    <script src="<?php echo base_url()?>assets/fileinput/js/locales/ja.js" type="text/javascript"></script>
+    <?php
+    $site_lang=$this->session->userdata('lang');
+    if ($site_lang=='japanese') {?>
+        <script src="<?php echo base_url()?>assets/fileinput/js/locales/ja.js" type="text/javascript"></script>
+        <?php } else { ?>
+        <script src="<?php echo base_url()?>assets/fileinput/js/locales/en.js" type="text/javascript"></script>
+    <?php }
+    ?>
     <script src="<?php echo base_url()?>assets/fileinput/themes/fas/theme.js" type="text/javascript"></script>
     <script src="<?php echo base_url()?>assets/fileinput/themes/explorer-fas/theme.js" type="text/javascript"></script>
     <style>
@@ -133,7 +140,7 @@
                 data:{'data':data},
                 success:function(responce){
                     if(responce){
-                        alert("成功裏に変更されました。");
+                        alert("順番入れ替えがされました。");
                     }
                     else alert("失敗しました。");
                 }
@@ -158,7 +165,7 @@
             data:{'data':data},
             success:function(responce){
                 if(responce){
-                    alert("成功裏に変更されました。");
+                    alert("順番入れ替えがされました。");
                     location.href = "<?php echo base_url()?>setting/mappingmanagement";
                 }
                 else alert("失敗しました。");
@@ -190,11 +197,11 @@
     
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">マッピング管理</h1>
-            <p class="nrl1">マッピング監視表示されるマップを管理します。</p>
+            <h1 class="page-title"><?=$this->lang->line('map_title');?></h1>
+            <p class="nrl1"><?=$this->lang->line('map_description');?></p>
             <div class="mapping-content flexlyr" >
                 <div class="mapping-grid setting-grid" >
-                    <p class="grid-label mapping-label">マップ</p>
+                    <p class="grid-label mapping-label"><?=$this->lang->line('map');?></p>
                     <div id="sortableMap">
                         <?php 
                             echo $mapName;
@@ -208,14 +215,14 @@
                     </div>
                 </div>
                 <div class="mapping-map setting-grid">
-                    <p class="map-name" id="map_name">名称未設定</p>
+                    <p class="map-name" id="map_name"><?=$this->lang->line('untitled');?></p>
                     <div class="center">
                         <div> <img src="<?php echo base_url();?>assets/img/asset_32.png"id="map_url"  onclick="upload()"> </div><br>
-                        <div style="color:black;">地図の画像をアップロードする</div>
+                        <div style="color:black;"><?=$this->lang->line('map_upload');?></div>
                     </div>
                 </div>
             </div>
-            <a href="<?php echo base_url();?>home" class="confirm-btn">ホームに戻る</a>
+            <a href="<?php echo base_url();?>home" class="confirm-btn"><?=$this->lang->line('home');?></a>
         </div>
         
     </div>
@@ -225,7 +232,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h1 class="modal-title" style="font-size: 25px;">地図編集</h1>
+                    <h1 class="modal-title" style="font-size: 25px;"><?=$this->lang->line('map_edit');?></h1>
                 </div>
                 <div class="modal-body">
                 <input id="mapImage" name="mapImage" type="file">

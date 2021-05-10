@@ -69,11 +69,11 @@ $dlogdb = null;
     
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">ゲートウェイ管理</h1>
+            <h1 class="page-title"><?=$this->lang->line('gateway_title');?></h1>
             <div class="content-grid">
                 <form id="form1" method="post" action="<?php echo base_url().'setting/'.$f_action;?>" onsubmit="return dataCheck();">
                     <div class="sys-info-block flexlyr">
-                        <p class=" confirm-msg">ゲートウェイ名</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('gateway_name');?></p>
                         <p class=" confirm-input">
                         <?php
                         echo '<input id="ReceiverName" name="ReceiverName" type="text" ';
@@ -83,7 +83,7 @@ $dlogdb = null;
                         echo ' required>';
                         ?>
                         </p>
-                        <p class=" confirm-msg">シリアル番号</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('serial_number');?></p>
                         <p class=" confirm-input">
                         <?php
                         echo '<input id="IMEI" name="IMEI" type="text" ';
@@ -93,16 +93,30 @@ $dlogdb = null;
                         echo ' required>';
                         ?>
                         </p>
-                        <p class=" confirm-msg">ゲートウェイの種類</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('gateway_type');?></p>
                         <p class=" confirm-input">
                             <select name="TypeID" id="TypeID">
+                                
                                 <?php
+
                                 if (isset($sres)) {
                                     if (!isset($res)) {
-                                        echo '<option value="0">選択</option>';
+                                        echo '<option value="0">'.$this->lang->line('choice_str').'</option>';
                                         $sel = "";
                                     }
-                                    foreach ($sres as $key => $val) {
+                                    if (isset($res)) {
+                                        if ($res[0]['TypeID'] == "6") {
+                                            echo '<option value="6" selected>RF Gateway</option>';
+                                            echo '<option value="7">LoRa Gateway</option>';
+                                        } elseif ($res[0]['TypeID'] == "7") {
+                                            echo '<option value="6">RF Gateway</option>';
+                                            echo '<option value="7" selected>LoRa Gateway</option>';
+                                        }
+                                    } else {
+                                        echo '<option value="6">RF Gateway</option>';
+                                        echo '<option value="7">LoRa Gateway</option>';
+                                    }
+                                    /* foreach ($sres as $key => $val) {
                                         if (isset($res)) {
                                             if ($res[0]['TypeID'] == $val['ID']) {
                                                 $sel = "selected";
@@ -112,12 +126,12 @@ $dlogdb = null;
                                         }
                                         echo '<option value="' . $val['ID'] . '" ';
                                         echo $sel . '>' . $val['TypeName'] . '</option>';
-                                    }
+                                    } */
                                 }
                                 ?>
                             </select>
                         </p>
-                        <p class=" confirm-msg">メモ</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('memo_str');?></p>
                         <p class=" confirm-input">
                         <?php
                         echo '<input id="Description" name="Description" type="text" ';
@@ -128,7 +142,7 @@ $dlogdb = null;
                         ?>
                         </p>
                     </div>
-                    <button type="submit" class="confirm-btn">ゲートウェイを登録する</button>
+                    <button type="submit" class="confirm-btn"><?=$this->lang->line('gateway_submit');?></button>
                 </form>
             </div>
         </div>

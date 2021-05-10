@@ -62,22 +62,22 @@
     
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">リスト管理</h1>
-            <p class="nrl1">フィルター選択時などで表示されるリストの順番を管理します。</p>
+            <h1 class="page-title"><?=$this->lang->line('list_title');?></h1>
+            <p class="nrl1"><?=$this->lang->line('list_description');?></p>
             <div class="list-content flexlyr">
                 <div class="list1-grid setting-grid">
-                    <p class="grid-label list1-label">グループ</p>
+                    <p class="grid-label list1-label"><?=$this->lang->line('group');?></p>
                     <div id="sortableGroup">
                         <?php echo $groupName;?>
                     </div>
                     <div class="operation-block flexlyr">
-                        <a  onclick="groupUndo()" class="text-btn">元に戻す</a>
-                        <a  onclick="groupDecide()" class="text-btn">決定</a>
+                        <a  onclick="groupUndo()" class="text-btn"><?=$this->lang->line('undo');?></a>
+                        <a  onclick="groupDecide()" class="text-btn"><?=$this->lang->line('decide');?></a>
                     </div>
                    
                 </div>
                 <div class="list2-grid setting-grid">
-                    <p class="grid-label list2-label">センサー</p>
+                    <p class="grid-label list2-label"><?=$this->lang->line('sensor');?></p>
                     
                     <div id="sortableSensor">
                         <?php echo $sensorName;?>
@@ -85,12 +85,12 @@
                     
 
                     <div class="operation-block flexlyr">
-                        <a  onclick="sensorUndo()" class="text-btn">元に戻す</a>
-                        <a  onclick="sensorDecide()" class="text-btn">決定</a>
+                        <a  onclick="sensorUndo()" class="text-btn"><?=$this->lang->line('group');?></a>
+                        <a  onclick="sensorDecide()" class="text-btn"><?=$this->lang->line('decide');?></a>
                     </div>
                 </div>
             </div>
-            <a href="<?php echo base_url()?>home" class="confirm-btn">ホームに戻る</a>
+            <a href="<?php echo base_url()?>home" class="confirm-btn"><?=$this->lang->line('home');?></a>
         </div>
     </div>
     <script>
@@ -122,7 +122,7 @@
                 data:{'data':data},
                 success:function(responce){
                     if(responce){
-                        alert("成功裏に変更されました。");
+                        alert("順番入れ替えがされました。");
                     }
                     else alert("失敗しました。");
                 }
@@ -157,7 +157,7 @@
                 data:{'data':data},
                 success:function(responce){
                     if(responce){
-                        alert("成功裏に変更されました。");
+                        alert("順番入れ替えがされました。");
                     }
                     else alert("失敗しました。");
                 }

@@ -83,51 +83,51 @@ if (isset($_GET['M'])) {
     
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">サブアカウント管理</h1>
+            <h1 class="page-title"><?=$this->lang->line('subaccount_title');?></h1>
             <div class="content-grid">
                 <form id="form1" method="post" action="<?php echo base_url().'setting/'.$f_action;?>">
                     <div class="sys-info-block flexlyr">
-                        <p class=" confirm-msg">ユーザー名</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('user_name');?></p>
                         <p class=" confirm-input">
                             <input id="UserName" name="UserName" type="text" value="<?php echo $subuser_name;?>"
                              required>
                         </p>
-                        <p class=" confirm-msg">パスワード</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('password_str');?></p>
                         <p class=" confirm-input">
                             <input id="Password" name="Password" type="text" value="<?php echo $subuser_pass;?>"
                             required>
                         </p>
                         <!-- ダミー -->
                         <input style="display: none" type="checkbox" class="checkboxes">
-                        <p class=" confirm-msg">システム設定</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('system_title');?></p>
                         <p class=" confirm-input">
                             <label class="container1">
                                 <input type="checkbox" class="checkboxes" <?php echo $roleid[5];?>>
                                 <span class="checkmark"></span>
                             </label>
                         </p>
-                        <p class=" confirm-msg">グループ設定</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('group_set');?></p>
                         <p class=" confirm-input">
                             <label class="container1">
                                 <input type="checkbox" class="checkboxes" <?php echo $roleid[4];?>>
                                 <span class="checkmark"></span>
                             </label>
                         </p>
-                        <p class=" confirm-msg">センサー管理</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('senser_manage');?></p>
                         <p class=" confirm-input">
                             <label class="container1">
                                 <input type="checkbox" class="checkboxes" <?php echo $roleid[3];?>>
                                 <span class="checkmark"></span>
                             </label>
                         </p>
-                        <p class=" confirm-msg">マッピング管理</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('maping_manage');?></p>
                         <p class=" confirm-input">
                             <label class="container1">
                                 <input type="checkbox" class="checkboxes" <?php echo $roleid[2];?>>
                                 <span class="checkmark"></span>
                             </label>
                         </p>
-                        <p class=" confirm-msg">リスト管理</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('list_manege');?></p>
                         <p class=" confirm-input">
                             <label class="container1">
                                 <input type="checkbox" class="checkboxes" <?php echo $roleid[1];?>>
@@ -136,7 +136,7 @@ if (isset($_GET['M'])) {
                         </p>
                     </div>
                     <input id="RoleID" name="RoleID" type="hidden">
-                    <button class="confirm-btn" onclick="form_submit();" type="submit">サブアカウントを登録する</button>
+                    <button class="confirm-btn" onclick="form_submit();" type="submit"><?=$this->lang->line('subaccount_submit');?></button>
                 </form>
             </div>
         </div>

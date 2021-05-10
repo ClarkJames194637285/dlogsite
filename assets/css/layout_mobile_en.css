@@ -225,7 +225,7 @@
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
     /* align-items: stretch; */
-    padding: 2rem 0;
+    padding: 3rem 0;
 }
 .home .content .main-content .content-grid .l-block {
     width: 100%;
@@ -256,7 +256,7 @@
     word-break: keep-all;
     font-size: 2rem;
     color: #262626;
-    bottom: -4rem;
+    bottom: -5rem;
     left: 50%;
 }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.monitor {
@@ -264,7 +264,7 @@
     background-size: 10rem;
 }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.monitor::after {
-    content: "センサー監視";
+    content: "Sensor Monitoring";
 }
 
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.message {
@@ -273,7 +273,7 @@
     background-size: 10rem;
 }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.message::after {
-    content: "メッセージ";
+    content: "Message";
 }
 
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.support,
@@ -283,10 +283,13 @@
     background-size: 10rem;
 }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.support::after {
-    content: "サポート情報";
+    content: "Support Information\A 「Go to the dlog support page.」";
+    white-space: pre-wrap;
+    width:170px;
+    bottom: -14rem;
 }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.update::after {
-    content: "サポート情報";
+    content: "Support Information";
 }
 
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.group,
@@ -296,13 +299,13 @@
     background-size: 10rem;
 }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.group::after {
-    content: "グループ管理";
+    content: "Group Management";
 }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.sensor::after {
-    content: "センサー管理";
+    content: "Sensor Management";
 }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.setting::after {
-    content: "設定";
+    content: "Setting";
 }
 
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.logout {
@@ -310,7 +313,7 @@
     background-size: 10rem;
 }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.logout::after {
-    content: "ログアウト";
+    content: "Logout";
 }
 
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.alert {
@@ -319,7 +322,7 @@
     background-size: 10rem;
 }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.alert::after {
-    content: "発生アラート";
+    content: "Occurrence Alert";
 }
 
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.system {
@@ -328,7 +331,7 @@
     background-size: 10rem;
 }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.system::after {
-    content: "システム通知";
+    content: "System Notification";
 }
 
 .content .main-content .content-grid .news-grid {

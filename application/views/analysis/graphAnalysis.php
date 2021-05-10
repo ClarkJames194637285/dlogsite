@@ -111,6 +111,13 @@
     <script>
         // A $( document ).ready() block.
         $( document ).ready(function() {
+            var mode='<?php echo $this->session->userdata('lang');?>';
+            var history='';
+            if(mode=='english'){
+                history='Sensor history';
+            }else{
+                history='センサーの履歴';
+            }
             $(document).on ("click", ".srh-block li a", function () {
                  // $(".trans-btn").removeClass('select-on');
                 //  $(this).parent('li').toggleClass('view-on');
@@ -166,7 +173,7 @@
                                             },
 
                                         title: {
-                                            text: 'センサーの履歴'
+                                            text: history
                                             },
                                         
                                         series: [{
@@ -222,7 +229,7 @@
                                     },
                                 
                                 title: {
-                                    text: 'センサーの履歴'
+                                    text: history
                                     },
                                 
                                 series: [{
@@ -261,7 +268,7 @@
                             },
 
                         title: {
-                            text: 'センサーの履歴'
+                            text: history
                             },
                         
                         series: [{
@@ -313,7 +320,7 @@
                                     },
 
                                 title: {
-                                    text: 'センサーの履歴'
+                                    text: history
                                     },
                                 
                                 series: [{

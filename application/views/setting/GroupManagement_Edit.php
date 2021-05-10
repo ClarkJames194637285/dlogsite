@@ -66,11 +66,11 @@ $dlogdb = null;
     
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">グループ管理</h1>
+            <h1 class="page-title"><?=$this->lang->line('group_title');?></h1>
             <div class="content-grid">
                 <form id="form1" method="post" action="<?php echo base_url().'setting/'.$f_action;?>">
                     <div class="sys-info-block flexlyr">
-                        <p class=" confirm-msg">グループ名</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('group_name');?></p>
                         <p class=" confirm-input">
                             <?php
                             echo '<input type="text" id="GroupName" name="GroupName" value="';
@@ -81,7 +81,7 @@ $dlogdb = null;
                             ?>
                         </p>
                     </div>
-                    <button type="submit" class="confirm-btn">グループを登録する</button>
+                    <button type="submit" class="confirm-btn"><?=$this->lang->line('group_submit');?></button>
                 </form>
             </div>
         </div>

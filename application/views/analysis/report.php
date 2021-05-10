@@ -21,20 +21,25 @@ switch ($method->chDevice()) {
         $info_class = "cell3";
         break;
 }
-
-$file_dir = base_url()."assets/res_data/report/";
+$file_dir = '../assets/res_data/report/';
 $user_id = $this->session->userdata('user_id');
 $user_name = $this->session->userdata('user_name');
+$file_save_dir = dirname(__FILE__, 4);
 $tname = "product";
 $fieldname = "ID";
 $dlogdb = new Dbclass();
 $dbpdo = $dlogdb->dbCi($this->config->item('host'),$this->config->item('username'),$this->config->item('password'), $this->config->item('dbname'));
 $t_n = 'report';
-$path = FCPATH.'assets/res_data/report/';
-$gpath = FCPATH.'assets/res_data/images/';
+$path = '../assets/res_data/report/';
+$ppath = dirname(__DIR__, 3) . '/assets/res_data/report/';
+$gpath = dirname(__FILE__, 4) . '/assets/res_data/images/';
 $file_name = "";
 $pdf_file = "";
 $csv_file = "";
+$usetting_tname = "usersetting";
+$temperatureunit_res = $dlogdb->dbSelect($dbpdo, $usetting_tname, "=", "UserID", $user_id);
+$ttu_res = $temperatureunit_res->fetchAll(\PDO::FETCH_ASSOC);
+$temperatureunit = $ttu_res[0];
 $rpcls = new Reportclass();
 if (!empty($_POST) && isset($_GET['M'])) {
     /* echo $_POST['txtBeginTime'] . '<br>';
@@ -57,17 +62,17 @@ if (!empty($_POST) && isset($_GET['M'])) {
     $file_name .= $tf3[0] . $tf3[1] . $tf3[2] . $tf4[0] . $tf4[1] . '00-';
     $file_name .= $insert_row[0]['nextid'];
     $ids = $insert_row[0]['nextid'];
-    $csvdata = $rpcls->setReportCsvdata($csvhed_list[0], $csvdata_list);
-    if (is_writable($path)) {
-        $file_handle = fopen($path . $file_name . '.csv', "w");
+    $csvdata = $rpcls->setReportCsvdata($csvhed_list[0], $csvdata_list, $temperatureunit['TemperatureUnit'], $this->lang);
+    if (is_writable($ppath)) {
+        $file_handle = fopen($ppath . $file_name . '.csv', "w");
         foreach ($csvdata as $val) {
             fwrite($file_handle, mb_convert_encoding($val, 'SJIS', 'UTF-8') . "\n");
         }
         fclose($file_handle);
     } else {
-        echo "ファイルを作成することができません。";
+        echo $this->lang->line('file_make_err_msg');
     }
-    $rpcls->makeJsonDataFile($csvdata_list);
+    $rpcls->makeJsonDataFile($csvdata_list, $temperatureunit['TemperatureUnit']);
     $report_insert_data = $rpcls->reportMakeData($csvhed_list, $csvdata_list, $ids, $file_name);
     $dlogdb->insertData($dbpdo, $t_n, $report_insert_data);
 } elseif (isset($_GET['Gu'])) {
@@ -77,7 +82,7 @@ if (!empty($_POST) && isset($_GET['M'])) {
     $unicode = true; // ドキュメントテキストがUnicodeの場合にTRUEとする
     $encoding = 'UTF-8'; // 文字コード
     $diskcache = false; // ディスクキャッシュを使うかどうか
-    $tcpdf = new \TCPDF($orientation, $unit, $format, $unicode, $encoding, $diskcache);
+    $tcpdf = new TCPDF($orientation, $unit, $format, $unicode, $encoding, $diskcache);
     $tcpdf->SetFont("kozgopromedium", "", 10);
     $tcpdf->SetAutoPageBreak(true, 5);
     $tcpdf->setPrintHeader(false);
@@ -91,15 +96,17 @@ if (!empty($_POST) && isset($_GET['M'])) {
     $img_name = $imginfo['basename'];
     file_put_contents($gpath . $img_name, $img);
     $gurl = $gpath . $img_name;
-    $rpcls->makePdfFile($tcpdf, $gurl, $file_name);
+    $rpcls->makePdfFile($tcpdf, $gurl, $file_name, $temperatureunit['TemperatureUnit'], $this->lang);
     if (DIRECTORY_SEPARATOR == '\\') {
-        $tcpdf->Output(FCPATH . 'assets\\res_data\\report\\' . $file_name . '.pdf', 'F'); // pdf表示設定
+        $tcpdf->Output(FCPATH . '\\assets\\res_data\\report\\' . $file_name . '.pdf', 'F');
+        // pdf表示設定
     } else {
-        $tcpdf->Output(FCPATH . 'assets/res_data/report/' . $file_name . '.pdf', 'F'); // pdf表示設定
+        $tcpdf->Output(FCPATH . '/assets/res_data/report/' . $file_name . '.pdf', 'F');
+        // pdf表示設定
     }
     
-    $pdf_file = $file_dir . $file_name . '.pdf';
-    $csv_file = $file_dir . $file_name . '.csv';
+    $pdf_file = $path . $file_name . '.pdf';
+    $csv_file = $path . $file_name . '.csv';
 }
 $file_name = json_encode($file_name, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 $reportlist = $dlogdb->getReport($dbpdo, $user_id);
@@ -155,7 +162,10 @@ $dlogdb = null;
 <!-- custom jscript -->
 <script type="text/javascript" src="<?php echo base_url()?>assets/js/custom.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>assets/js/wow.min.js"></script>
-
+<script type="text/javascript">
+    var from_time_msg = <?php echo json_encode($this->lang->line('from_time_msg'));?>;
+    var to_time_msg = <?php echo json_encode($this->lang->line('to_time_msg'));?>;
+</script>
 <style>
     @keyframes post_process {
         0% {
@@ -266,23 +276,66 @@ $dlogdb = null;
     };
     function tsyow() {
         if ($('.t-btn').hasClass('view-on')) {
-            // $('.btn-gtype-1').removeClass('view-on');
+            $('.btn-gtype-1').removeClass('view-on');
             $('.gtype-1').css('display', "none");
         } else {
-            // $('.btn-gtype-1').addClass('view-on');
+            $('.btn-gtype-1').addClass('view-on');
             $('.gtype-1').css('display', "");
         }
     }
     function thsyow() {
         if ($('.th-btn').hasClass('view-on')) {
-            // $('.btn-gtype-2').removeClass('view-on');
+            $('.btn-gtype-2').removeClass('view-on');
             $('.gtype-2').css('display', "none");
         } else {
-            // $('.btn-gtype-2').addClass('view-on');
+            $('.btn-gtype-2').addClass('view-on');
             $('.gtype-2').css('display', "");
         }
     }
     function allsyow() {
+        var i = 0
+        while (document.getElementById('group-' + i)) {
+            var target_id = document.getElementById('group-' + i);
+            $('.t-btn').addClass('view-on');
+            $('.th-btn').addClass('view-on');
+            $('.btn-gtype-1').addClass('view-on');
+            $('.btn-gtype-2').addClass('view-on');
+            $(target_id). addClass('view-on');
+            target_id.style = '';
+            i ++;
+        }
+    }
+    function groupsyow(no) {
+        var id = document.getElementById('group-' + no);
+        if (id.style.display == 'none') {
+            id.style = '';
+            $(id).addClass('view-on');
+        } else {
+            id.style = 'display: none';
+            $(id).removeClass('view-on');
+        }
+        var i = 0;
+        $('.t-btn').removeClass('view-on');
+        while (document.getElementById('group-' + i)) {
+            var target_id = document.getElementById('group-' + i);
+            if ($(target_id).hasClass('gtype-1') && $(target_id).hasClass('view-on')) {
+                $('.t-btn').addClass('view-on');
+                break;
+            }
+            i ++;
+        }
+        var i = 0;
+        $('.th-btn').removeClass('view-on');
+        while (document.getElementById('group-' + i)) {
+            var target_id = document.getElementById('group-' + i);
+            if ($(target_id).hasClass('gtype-2') && $(target_id).hasClass('view-on')) {
+                $('.th-btn').addClass('view-on');
+                break;
+            }
+            i ++;
+        }
+    }
+    /* function allsyow() {
         $('.t-btn').addClass('view-on');
         $('.th-btn').addClass('view-on');
         $('.btn-gtype-1').addClass('view-on');
@@ -318,7 +371,7 @@ $dlogdb = null;
             }
         });
   
-    }
+    } */
     // insert js
     $(document).on('click', '.post_window', function () {
         //背景をスクロールできないように　&　スクロール場所を維持
@@ -342,6 +395,7 @@ $dlogdb = null;
     var $actionUrl = "";
     function Generate(id, name) {
         $actionUrl = "<?php echo base_url()?>analysis/report?M=Make_report&ids=" + id;
+        $('.senser_name').text('[' + name + ']');
     };
     function Datacheck() {
         var begintime = document.getElementById('txtBeginTime');
@@ -349,10 +403,10 @@ $dlogdb = null;
         var form = document.getElementById('make_report');
         form.action = "";
         if (begintime.value == null || begintime.value == "") {
-            alert("From 日付時刻を選択してください。");
+            alert(from_time_msg);
             return false;
         } else if (endtime.value == null || endtime.value == "") {
-            alert("To 日付時刻を選択してください。");
+            alert(to_time_msg);
             return false;
         }
         form.action = $actionUrl;
@@ -369,117 +423,145 @@ $dlogdb = null;
         <?php $this->load->view('menu'); ?>
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">レポート </h1>
+            <h1 class="page-title"><?=$this->lang->line('report_title');?></h1>
             <section class="main-content ">
 
                 <div class="content-grid">
                     <div class="report_grid">
                         <div class="grid-header flexlyr">
-                            <div class="hd-cell cell1">センサー名</div>
-                            <div class="hd-cell cell2">シリアル番号</div>
-                            <div class="hd-cell cell3">センサーの種類</div>
-                            <div class="hd-cell cell4">温度</div>
-                            <div class="hd-cell cell5">湿度</div>
-                            <div class="hd-cell cell6">状態</div>
-                            <div class="hd-cell cell7">更新</div>
-                            <div class="hd-cell cell8">操作</div>
+                            <div class="hd-cell cell1"><?=$this->lang->line('sensor_name');?></div>
+                            <div class="hd-cell cell2"><?=$this->lang->line('serial_number');?></div>
+                            <div class="hd-cell cell3"><?=$this->lang->line('sensor_type');?></div>
+                            <div class="hd-cell cell4"><?=$this->lang->line('temper_str');?></div>
+                            <div class="hd-cell cell5"><?=$this->lang->line('humi_str');?></div>
+                            <div class="hd-cell cell6"><?=$this->lang->line('status_str');?></div>
+                            <div class="hd-cell cell7"><?=$this->lang->line('update_str');?></div>
+                            <div class="hd-cell cell8"><?=$this->lang->line('operation_str');?></div>
                         </div>
                         <?php
-                            $tlist = "";
-                            $thlist = "";
-                            foreach ($reportlist as $key => $val) {
-                                $list = $val;
-                                if(empty($list))continue;
-                                foreach ($list as $dkey => $dval) {
-                                    //var_dump($dval);
-                                    if ($dkey == 0) {
-                                        $type = 1;
+                        $tlist = "";
+                        $thlist = "";
+                        //var_dump($reportlist);
+                        foreach ($reportlist as $key => $val) {
+                            $list = $val;
+                            //if(empty($list)) continue;
+                            foreach ($list as $dkey => $dval) {
+                                //var_dump($dval);
+                                if ($dkey == 0) {
+                                    if (strlen($dval['IMEI']) == 12) {
+                                        $s_type = substr($dval['IMEI'], 5, 1);
+                                        if ($s_type == "1") {
+                                            $type = 1;
+                                        } else {
+                                            $type = 2;
+                                        }
+                                    } elseif (strlen($dval['IMEI']) == 8) {
+                                        $s_type = substr($dval['IMEI'], 1, 1);
+                                        if ($s_type == "1" || $s_type == "A") {
+                                            $type = 1;
+                                        } else {
+                                            $type = 2;
+                                        }
+                                    }
+                                    if ($temperatureunit['TemperatureUnit'] == "1") {
+                                        $ttu_str = "℉";
                                         if (floatval($dval['T_Average']) == -1000) {
                                             $T_Averege = '--';
                                         } else {
-                                            $T_Averege = $dval['T_Average'];
+                                            $temp_tf = $dval['T_Average'] * 1.8 + 32;
+                                            $T_Averege = round($temp_tf, 1);
+                                            // $T_Averege = $dval['T_Average'];
                                         }
-                                        if (floatval($dval['H_Average']) == -1000) {
-                                            $H_Averege = '--';
-                                            $th[$key] = "group-" . $dval['ProductID'];
-                                            $tlist .= $th[$key] . ",";
-                                        } else {
-                                            $H_Averege = $dval['H_Average'] * 100;
-                                            $th[$key] = "group-" . $dval['ProductID'];
-                                            $thlist .= $th[$key] . ",";
-                                            $type = 2;
-                                        }
-                                        if (empty($type_lis)) {
-                                            $temp_arr = array('Type' => $type);
-                                            $type_lis = array($temp_arr);
-                                        } else {
-                                            $temp_arr = array('Type' => $type);
-                                            array_push($type_lis, $temp_arr);
-                                        }
-                                        if ($dval['Status'] == 2) {
-                                            $status = 'normal';
-                                            $s_text = '正常';
-                                        } else {
-                                            $status = 'danger';
-                                            $s_text = 'オフライン';
-                                        }
-                                        echo '<div class="grid-content flexlyr view-on gtype-' . $dval['GroupID'];
-                                        echo ' group-' . $dval['GroupID'] . '">';
-                                        echo '<div class="ct-cell cell1">' . $dval['ProductName'] . '</div>';
-                                        echo '<div class="ct-cell cell2">' . $dval['IMEI'] . '</div>';
-                                        echo '<div class="ct-cell cell3">' . $dval['TypeName'] . '</div>';
-                                        echo '<div class="ct-cell cell4">';
-                                        echo $T_Averege . '℃</div>';
-                                        echo '<div class="ct-cell cell5">';
-                                        echo $H_Averege . '%</div>';
-                                        echo '<div class="ct-cell cell6"><span class="';
-                                        echo $status . '">' . $s_text . '</span></div>';
-                                        echo '<div class="ct-cell cell7">';
-                                        echo $dval['CreateTime'] . '</div>';
-                                        echo '<div class="ct-cell cell8">';
-                                        echo '<a class="post_window" onclick="Generate(' . $dval['ProductID'] . ', ';
-                                        echo '`' . $dval['ProductName'] . '`);">';
-                                        echo '<img src="'.base_url().'assets/img/asset_37.png" alt="" title="PDFを生成">';
-                                        echo '</a>';
-                                        echo '<a onclick="childShow(' . $dval['ProductID'] . ');">';
-                                        echo '<img src="'.base_url().'assets/img/asset_24.png" alt="" title="レポートを表示する"></a>';
-                                        echo '</div>';
-                                        echo '</div>';
-                                        echo '<div id="child_' . $dval['ProductID'];
-                                        echo '" name="child_' . $dval['ProductID'];
-                                        echo '" class="" style="display:none">';
-                                        // レポート表示用内包処理
-                                        echo '<div class="grid-content flexlyr">';
-                                        echo '<div class="ct-cell ' . $info_class . '">';
-                                        echo ($dkey + 1) . ',時刻:' . $dval['CreateTime'];
-                                        echo '</div>';
-                                        echo '<div class="ct-cell ' . $info_class . '">';
-                                        echo '<a class="bg-red" href="' . $file_dir . $dval['FileName'] . '.pdf" ';
-                                        echo 'target="_blank">PDFダウンロード</a>';
-                                        echo '</div>';
-                                        echo '<div class="ct-cell ' . $info_class . '">';
-                                        echo '<a class="bg-green" href="' . $file_dir . $dval['FileName'] . '.csv" ';
-                                        echo 'target="_blank">CSVダウンロード</a>';
-                                        echo '</div></div>';
                                     } else {
-                                        // レポート表示用内包処理
-                                        echo '<div class="grid-content flexlyr">';
-                                        echo '<div class="ct-cell ' . $info_class . '">';
-                                        echo ($dkey + 1) . ',時刻:' . $dval['CreateTime'];
-                                        echo '</div>';
-                                        echo '<div class="ct-cell ' . $info_class . '">';
-                                        echo '<a class="bg-red" href="' . $file_dir . $dval['FileName'] . '.pdf" ';
-                                        echo 'target="_blank">PDFダウンロード</a>';
-                                        echo '</div>';
-                                        echo '<div class="ct-cell ' . $info_class . '">';
-                                        echo '<a class="bg-green" href="' . $file_dir . $dval['FileName'] . '.csv" ';
-                                        echo 'target="_blank">CSVダウンロード</a>';
-                                        echo '</div></div>';
+                                        $ttu_str = "℃";
+                                        if (floatval($dval['T_Average']) == -1000) {
+                                            $T_Averege = '--';
+                                        } else {
+                                            $T_Averege = round($dval['T_Average'], 1);
+                                            // $T_Averege = $dval['T_Average'];
+                                        }
                                     }
+                                    
+                                    if (floatval($dval['H_Average']) == -1000) {
+                                        $H_Averege = '--';
+                                        $th[$key] = "group-" . $dval['ProductID'];
+                                        $tlist .= $th[$key] . ",";
+                                    } else {
+                                        $H_Averege = $dval['H_Average'] * 100;
+                                        $th[$key] = "group-" . $dval['ProductID'];
+                                        $thlist .= $th[$key] . ",";
+                                    }
+                                    if (empty($type_lis)) {
+                                        $temp_arr = array('Type' => $type);
+                                        $type_lis = array($temp_arr);
+                                    } else {
+                                        $temp_arr = array('Type' => $type);
+                                        array_push($type_lis, $temp_arr);
+                                    }
+                                    if ($dval['Status'] == 2) {
+                                        $status = 'normal';
+                                        $s_text = $this->lang->line('normal_str');
+                                    } else {
+                                        $status = 'danger';
+                                        $s_text = $this->lang->line('offline_str');
+                                    }
+                                    echo '<div class="grid-content flexlyr view-on gtype-' . $type_lis[$key]['Type'];
+                                    echo '" id="group-' . $key . '">';
+                                    echo '<div class="ct-cell cell1">' . $dval['ProductName'] . '</div>';
+                                    echo '<div class="ct-cell cell2">' . $dval['IMEI'] . '</div>';
+                                    echo '<div class="ct-cell cell3">' . $dval['TypeName'] . '</div>';
+                                    echo '<div class="ct-cell cell4">';
+                                    echo $T_Averege . $ttu_str.'</div>';
+                                    echo '<div class="ct-cell cell5">';
+                                    echo $H_Averege . '%</div>';
+                                    echo '<div class="ct-cell cell6"><span class="';
+                                    echo $status . '">' . $s_text . '</span></div>';
+                                    echo '<div class="ct-cell cell7">';
+                                    echo $dval['CreateTime'] . '</div>';
+                                    echo '<div class="ct-cell cell8">';
+                                    echo '<a class="post_window" onclick="Generate(' . $dval['ProductID'] . ', ';
+                                    echo '`' . $dval['ProductName'] . '`);">';
+                                    echo '<img src="'.base_url().'assets/img/asset_37.png" alt="" title="'.$this->lang->line('makepdf_str').'">';
+                                    echo '</a>';
+                                    echo '<a onclick="childShow(' . $dval['ProductID'] . ');">';
+                                    echo '<img src="'.base_url().'assets/img/asset_24.png" alt="" title="'.$this->lang->line('viewreport_str').'"></a>';
+                                    echo '</div>';
+                                    echo '</div>';
+                                    echo '<div id="child_' . $dval['ProductID'];
+                                    echo '" name="child_' . $dval['ProductID'];
+                                    echo '" class="" style="display:none">';
+                                    // レポート表示用内包処理
+                                    echo '<div class="grid-content flexlyr">';
+                                    echo '<div class="ct-cell ' . $info_class . '">';
+                                    echo ($dkey + 1) . ','.$this->lang->line('datetime_str').':' . $dval['CreateTime'];
+                                    echo '</div>';
+                                    echo '<div class="ct-cell ' . $info_class . '">';
+                                    echo '<a class="bg-red" href="' . $file_dir . $dval['FileName'] . '.pdf" ';
+                                    echo 'target="_blank">'.$this->lang->line('pdf_dl_str').'</a>';
+                                    echo '</div>';
+                                    echo '<div class="ct-cell ' . $info_class . '">';
+                                    echo '<a class="bg-green" href="' . $file_dir . $dval['FileName'] . '.csv" ';
+                                    echo 'target="_blank">'.$this->lang->line('csv_dl_str').'</a>';
+                                    echo '</div></div>';
+                                } else {
+                                    // レポート表示用内包処理
+                                    echo '<div class="grid-content flexlyr">';
+                                    echo '<div class="ct-cell ' . $info_class . '">';
+                                    echo ($dkey + 1) . ','.$this->lang->line('datetime_str').':' . $dval['CreateTime'];
+                                    echo '</div>';
+                                    echo '<div class="ct-cell ' . $info_class . '">';
+                                    echo '<a class="bg-red" href="' . $file_dir . $dval['FileName'] . '.pdf" ';
+                                    echo 'target="_blank">'.$this->lang->line('pdf_dl_str').'</a>';
+                                    echo '</div>';
+                                    echo '<div class="ct-cell ' . $info_class . '">';
+                                    echo '<a class="bg-green" href="' . $file_dir . $dval['FileName'] . '.csv" ';
+                                    echo 'target="_blank">'.$this->lang->line('csv_dl_str').'</a>';
+                                    echo '</div></div>';
                                 }
-                                echo '</div>';
                             }
-                            ?>
+                            echo '</div>';
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="side-bar flexlyr">
@@ -491,66 +573,46 @@ $dlogdb = null;
 
                     <!-- search filter type - フィルター -->
                     <div class="side-bar-block srh-filter-block flexlyr">
-                        <p class="side-block-header srh-filter">フィルター</p>
+                        <p class="side-block-header srh-filter"><?=$this->lang->line('filter_str');?></p>
 
                         <div class="srh-block">
                             <select name="" id="">
-                                <option value="" disabled selected>グループ</option>
+                                <option value="" disabled selected><?=$this->lang->line('grupu_str');?></option>
                             </select>
                             <ul class="filter-type">
                                 <?php
-                                $checklist=[];
-                                    foreach ($reportlist as $key => $val) {
-                                        $list = $val;
-                                        foreach ($list as $dkey => $dval) {
-                                            $check=true;
-                                            if(empty($checklist)){
-                                                $check=false;
-                                                $data=array(
-                                                    'GroupName'=>$dval['GroupName'],
-                                                    'GroupID'=>$dval['GroupID']
-                                                );
-                                                array_push($checklist,$data);
-                                            }
-                                            foreach($checklist as $checkkey => $checkval){
-                                                if($dval['GroupName']==$checkval['GroupName'])$check=false;
-                                            }
-                                            if ($check) {
-                                                $data=array(
-                                                    'GroupName'=>$dval['GroupName'],
-                                                    'GroupID'=>$dval['GroupID']
-                                                );
-                                                array_push($checklist,$data);
-                                            }
-                                           
+                                //var_dump($reportlist);
+                                foreach ($reportlist as $key => $val) {
+                                    $list = $val;
+                                    foreach ($list as $dkey => $dval) {
+                                        if ($dkey == 0) {
+                                            echo '<li class="view-on btn-gtype-' . $type_lis[$key]['Type'] . '">';
+                                            echo '<a onclick="groupsyow(`' . $key . '`);">';
+                                            echo $dval['GroupName'] . '</a></li>';
                                         }
                                     }
-                                    foreach($checklist as $val){
-                                        echo '<li class="view-on btn-gtype-' . $val['GroupID'] . '">';
-                                        echo '<a onclick="groupsyow(`' . $val['GroupID'] . '`);">';
-                                        echo $val['GroupName'] . '</a></li>';
-                                    }
-                                    ?>
+                                }
+                                ?>
                             </ul>
-                            <p class="set-view"><a onclick="allsyow();">全て表示する</a></p>
-                            <p class="set-view"><a href="<?php echo base_url()?>setting/listmanagement">並び替える</a></p>
+                            <p class="set-view"><a onclick="allsyow();"><?=$this->lang->line('show_all_str');?></a></p>
+                            <p class="set-view"><a href="<?php echo base_url()?>setting/listmanagement"><?=$this->lang->line('sort_str');?></a></p>
                         </div>
 
                         <div class="srh-block">
-                            <p class="srh-title">センサータイプ</p>
+                            <p class="srh-title"><?=$this->lang->line('sensortype_str');?></p>
                             <ul>
                                 <li class="t-btn view-on">
                                     <?php
                                         echo '<a';
                                         echo ' onclick="tsyow();"';
-                                        echo '>温度計</a>';
-                                        ?>
+                                        echo '>'.$this->lang->line('thermometer_str').'</a>';
+                                    ?>
                                 </li>
                                 <li class="th-btn view-on">
                                     <?php
                                         echo '<a';
                                         echo ' onclick="thsyow();"';
-                                        echo '>温湿度計</a>';
+                                        echo '>'.$this->lang->line('thermo_hygrometer_str').'</a>';
                                     ?>
                                 </li>
                             </ul>
@@ -565,18 +627,19 @@ $dlogdb = null;
                     ?>
             <form id="make_report" method="post" enctype="multipart/form-data">
                 <div class="modal-header">
-                    <h3 id="dialogGenerateName">PDFを生成 <font style="font-size:16px">[長距離温度センサー]</font>
+                    <h3 id="dialogGenerateName"><?=$this->lang->line('makepdf_str');?>
+                    <font style="font-size:16px" class="senser_name"></font>
                     </h3>
                     <button class="close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="sys-info-block flexlyr">
-                        <h5 class="form-section">日時を設定</h5>
+                        <h5 class="form-section"><?=$this->lang->line('datetime_set_str');?></h5>
                     </div>
                     <div class="sys-info-block flexlyr">
                         <div class="span6">
                             <div class="row-fluid">
-                                <div class="controls">から</div>
+                                <div class="controls"><?=$this->lang->line('datetime_from_str');?></div>
                                 <div class="controls">
                                     <div class="confirm-input">
                                         <input id="txtBeginTime" name="txtBeginTime" class="form_datetime"
@@ -587,7 +650,7 @@ $dlogdb = null;
                         </div>
                         <div class="span6">
                             <div class="row-fluid">
-                                <div class="controls">まで</div>
+                                <div class="controls"><?=$this->lang->line('datetime_until_str');?></div>
                                 <div class="controls">
                                     <div class="confirm-input">
                                         <input id="txtEndTime" name="txtEndTime" class="form_datetime"
@@ -600,29 +663,29 @@ $dlogdb = null;
                 </div>
                 <div class="modal-footer">
                     <button id="btnSubmit" type="button" onclick="Datacheck();"
-                        class="btn btn-primary bg-green">確認</button>
-                    <button id="btnCancel" class="btn btn-primary modal_close">キャンセル</button>
+                        class="btn btn-primary bg-green"><?=$this->lang->line('verification_str');?></button>
+                    <button id="btnCancel" class="btn btn-primary modal_close"><?=$this->lang->line('cancel_str');?></button>
                 </div>
             </form>
         </div>
         <!-- post後pdf作成　完了したらダウンロード用のmodal表示phpで作成する。 -->
         <div id="pconf" class="post_conform" role="dialog">
             <div class="modal-header">
-                <h3 id="dialogGeneratingName">PDFを生成</h3>
+                <h3 id="dialogGeneratingName"><?=$this->lang->line('makepdf_str');?></h3>
                 <button type="button" class="close" data-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div id="Layout_Generating" class="row-fluid" style="display: none;">
                     <img src="<?php echo base_url()?>assets/img/ajax-loading.gif"><br><br>
-                    <label class="Tips">生成しています。お待ちください...</label><br><br>
+                    <label class="Tips"><?=$this->lang->line('waiting_str');?></label><br><br>
                     <label id="labTime"></label>
                 </div>
                 <!-- 資料作成後に表示させる。 -->
                 <div id="Layout_Download" class="row-fluid" style="display: none;">
                     <img src="<?php echo base_url()?>assets/img/success.gif"><br><br>
-                    <p class="Tips">レポートの生成に成功しました。</p><br>
-                    <a id="btnPDF" href="<?php echo $pdf_file;?>" class="bg-red" target="_blank">PDFダウンロード</a>&nbsp;
-                    <a id="btnCSV" href="<?php echo $csv_file;?>" class="bg-green" target="_blank">CSVダウンロード</a>
+                    <p class="Tips"><?=$this->lang->line('successfully_str');?></p><br>
+                    <a id="btnPDF" href="<?php echo $pdf_file;?>" class="bg-red" target="_blank"><?=$this->lang->line('pdf_dl_str');?></a>&nbsp;
+                    <a id="btnCSV" href="<?php echo $csv_file;?>" class="bg-green" target="_blank"><?=$this->lang->line('csv_dl_str');?></a>
                 </div>
             </div>
         </div>
@@ -632,12 +695,16 @@ $dlogdb = null;
     </div>
 </body>
 <script>
+    // insert new 0504
+    var ttu_str = <?php echo json_encode($ttu_str); ?>;
+    var temper_str = <?php echo json_encode($this->lang->line('temper_str')); ?>;
+    var humi_str = <?php echo json_encode($this->lang->line('humi_str')); ?>;
     var filename = JSON.parse('<?php echo $file_name; ?>');
     var fp = "<?php echo base_url()?>assets/json/temphumi.json";
     // insert new
 
-    var data = [];
-    var data1 = [];
+    var datat = [];
+    var datah = [];
 
     var serch_str = location.search;
     if (serch_str.indexOf('Gu=') == -1 && serch_str.indexOf('M=') != -1) {
@@ -653,18 +720,18 @@ $dlogdb = null;
         $('.modal').fadeIn();
         $.getJSON(fp, function (tempdata) {
             for (var i = 0; i < tempdata.length; i++) {
-                var d = [];
-                d.push(tempdata[i][0]);
-                d.push(tempdata[i][1]);
-                data.push(d);
-                var d = [];
-                d.push(tempdata[i][0]);
-                d.push(tempdata[i][2]);
-                data1.push(d);
+                var dt = [];
+                dt.push(tempdata[i][0]);
+                dt.push(tempdata[i][1]);
+                datat.push(dt);
+                var dh = [];
+                dh.push(tempdata[i][0]);
+                dh.push(tempdata[i][2]);  
+                datah.push(dh);
             }
             var options = {
                 exporting: {
-                    url: 'http://export.highcharts.com/'
+                    url: 'https://export.highcharts.com/'
                 },
                 chart: {
                     zoomType: 'xy'
@@ -685,20 +752,20 @@ $dlogdb = null;
                 }],
                 yAxis: [{ // Primary yAxis
                     labels: {
-                        format: '{value}°C',
+                        format: '{value}' + ttu_str,
                         style: {
                             color: Highcharts.getOptions().colors[1]
                         }
                     },
                     title: {
-                        text: '温度（℃）',
+                        text: temper_str + '（' + ttu_str + '）',
                         style: {
                             color: Highcharts.getOptions().colors[1]
                         }
                     }
                 }, { // Secondary yAxis
                     title: {
-                        text: '湿度（%）',
+                        text: humi_str + '（%）',
                         style: {
                             color: Highcharts.getOptions().colors[0]
                         }
@@ -726,21 +793,20 @@ $dlogdb = null;
                         'rgba(255,255,255,0.25)'
                 },
                 series: [{
-                    name: '湿度',
+                    name: humi_str,
                     type: 'spline',
-                    dashStyle: 'shortdot',
+                    //dashStyle: 'shortdot',
                     yAxis: 1,
-                    data: data1,
+                    data: datah,
                     tooltip: {
-                        valueSuffix: ' %'
-                    }
-
+                        valueSuffix: '％'
+                    }    
                 }, {
-                    name: '温度',
+                    name: temper_str,
                     type: 'spline',
-                    data: data,
+                    data: datat,
                     tooltip: {
-                        valueSuffix: '°C'
+                        valueSuffix: ttu_str
                     }
                 }],
                 legend: {
@@ -750,7 +816,7 @@ $dlogdb = null;
                 }
             }
             var obj = {},
-                exportUrl = options.exporting.url;
+            exportUrl = options.exporting.url;
             obj.options = JSON.stringify(options);
             obj.type = 'image/png';
             obj.async = true;
@@ -771,14 +837,14 @@ $dlogdb = null;
                 /* data: dataString, */
                 data: obj,
                 success: function (data) {
-                    var imgContainer = $("#container");
-                    console.log('get the file from relative url: ', data);
+                    //var imgContainer = $("#container");
+                    //console.log('get the file from relative url: ', data);
                     // console.log(exportUrl + data);
                     /* $('#container').html('<img src="' + exportUrl + data + '"/>'); */
                     //$('<img>').attr('src', exportUrl + data).attr('width', '600px').appendTo(imgContainer);
                     search_str = location.search;
                     /* if (search_str.indexOf('Gu=') == -1) { */
-                    location.href = '<?php echo base_url()?>analysis/report?Gu=' + exportUrl + data + '&F=' + filename;
+                    location.href = '<?php echo base_url()?>analysis/report?F=' + filename + '&Gu=' + exportUrl + data;
                     /* } */
                 },
                 error: function (err) {

@@ -19,9 +19,9 @@ $dlogdb = new Dbclass();
 $dbpdo = $dlogdb->dbCi($this->config->item('host'),$this->config->item('username'),$this->config->item('password'), $this->config->item('dbname'));
 try{
     $userlist = $dlogdb->dbUpdate($dbpdo, $tname, $up_darry, $fieldname, $dstr);
-    if($userlist) $res_status = "正常に変更されました。";
+    if($userlist) $res_status = $this->lang->line('res_status_ok');
 }catch(exception  $e){
-    $res_status="変更が失敗しました。";
+    $res_status=$this->lang->line('res_status_ng');
 }
 
 $dlogdb = null;
@@ -61,12 +61,12 @@ $dlogdb = null;
     
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">ユーザー設定</h1>
+            <h1 class="page-title"><?php echo $this->lang->line('user_title'); ?></h1>
             <section class="main-content flexlyr">
                 <div class="content-grid">
                     
                     <p class="nrl confirm-msg"><?php echo $res_status; ?></p>
-                    <a href="<?php echo base_url().'home';?>" class="confirm-btn">ホームに戻る</a>
+                    <a href="<?php echo base_url().'home';?>" class="confirm-btn"><?php echo $this->lang->line('home'); ?></a>
                 </div>
             </section>
         </div>

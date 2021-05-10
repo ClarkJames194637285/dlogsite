@@ -1,8 +1,8 @@
 <?php
 $ragionid = array(
-    '初期表示' => 0,
-    '暑さ指数' => 1,
-    '飽差値' => 2
+    $this->lang->line('initial_sisplay') => 0,
+    $this->lang->line('heat_index') => 1,
+    $this->lang->line('saturation_value') => 2
 );
 $tname = "productgroup";
 $fieldname = "UserId";
@@ -80,6 +80,15 @@ $dlogdb = null;
     <script type="text/javascript" src="<?php echo base_url()?>assets/sitejs/page1_5-edit.js"></script>
     <script>
     var jdata = <?php echo json_encode($jdata);?>;
+    var serial_check_str = <?php echo json_encode($this->lang->line('serial_check_str'));?>;
+    var temperature_str = <?php echo json_encode($this->lang->line('temperature_str'));?>;
+    var temperature_humidity_str = <?php echo json_encode($this->lang->line('temperature_humidity_str'));?>;
+    var rf_temperature_str = <?php echo json_encode($this->lang->line('rf_temperature_str'));?>;
+    var rf_temperature_humidity_str = <?php echo json_encode($this->lang->line('rf_temperature_humidity_str'));?>;
+    var lora_temperature_str = <?php echo json_encode($this->lang->line('lora_temperature_str'));?>;
+    var lora_temperature_humidity_str = <?php echo json_encode($this->lang->line('lora_temperature_humidity_str'));?>;
+    var old_sensor_str = <?php echo json_encode($this->lang->line('old_sensor_str'));?>;
+    var group_name_msg = <?php echo json_encode($this->lang->line('group_name_msg'));?>;
     </script>
 </head>
 
@@ -93,11 +102,11 @@ $dlogdb = null;
     
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">センサー管理</h1>
+            <h1 class="page-title"><?=$this->lang->line('senser_manage');?></h1>
             <div class="content-grid">
                 <form id="form1" method="post" action="<?php echo base_url().'setting/'.$f_action;?>" onsubmit="return dataCheck();">
                     <div class="sys-info-block flexlyr">
-                        <p class=" confirm-msg">センサー名</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('senser_name');?></p>
                         <p class=" confirm-input">
                         <?php
                         echo '<input id="ProductName" name="ProductName" type="text" ';
@@ -107,7 +116,7 @@ $dlogdb = null;
                         echo ' required>';
                         ?>
                         </p>
-                        <p class=" confirm-msg">シリアル番号</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('serial_number');?></p>
                         <p class=" confirm-input">
                         <?php
                         echo '<input id="IMEI" name="IMEI" type="text" ';
@@ -117,7 +126,7 @@ $dlogdb = null;
                         echo ' onfocus="dbackup(this);" onBlur="imeiChenge();" required>';
                         ?>
                         </p>
-                        <p class=" confirm-msg">センサーの種類</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('sensor_type');?></p>
                         <?php
                         echo '<p id="TypeName" class=" confirm-input">';
                         if (isset($res)) {
@@ -132,13 +141,13 @@ $dlogdb = null;
                         ?>
 
                         
-                        <p class=" confirm-msg">グループ名</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('group_name');?></p>
                         <p class=" confirm-input">
                             <select name="GroupID" id="GroupID">
                             <?php
                             if (isset($pgres)) {
                                 if (!isset($res)) {
-                                    echo '<option value="0">選択</option>';
+                                    echo '<option value="0">'.$this->lang->line('choice_str').'</option>';
                                     $sel = "";
                                 }
                                 foreach ($pgres as $key => $val) {
@@ -156,7 +165,7 @@ $dlogdb = null;
                             ?>
                             </select>
                         </p>
-                        <p class=" confirm-msg">初期表示</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('initial_sisplay');?></p>
                         <p class=" confirm-input">
                             <select name="RegionID" id="RegionID">
                             <?php
@@ -173,7 +182,7 @@ $dlogdb = null;
                                 
                             </select>
                         </p>
-                        <p class=" confirm-msg">データ間隔</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('data_interval');?></p>
                         <p class=" confirm-input">
                             <?php
                             echo '<input id="TerminalDataInterval" name="TerminalDataInterval" type="text" ';
@@ -183,7 +192,7 @@ $dlogdb = null;
                             echo ' required>';
                             ?>
                         </p>
-                        <p class=" confirm-msg">メモ</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('memo_str');?></p>
                         <p class=" confirm-input">
                             <?php
                             echo '<input id="Description" name="Description" type="text" ';
@@ -194,7 +203,7 @@ $dlogdb = null;
                             ?>
                         </p>
                     </div>
-                    <button type="submit" class="confirm-btn">センサーを登録する</button>
+                    <button type="submit" class="confirm-btn"><?=$this->lang->line('sensor_submit');?></button>
                 </form>
             </div>
         </div>

@@ -152,15 +152,15 @@
     
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">アラーム履歴</h1>
+            <h1 class="page-title"><?=$this->lang->line('alarmHistory_title');?></h1>
             <section class="main-content ">
 
                 <div class="content-grid">
                     <div class="alarm-header flexlyr">
-                        <p>グループ名<br>センサー名</p>
-                        <p>測定値 / アラート</p>
-                        <p>電池/電波</p>
-                        <p>更新日時</p>
+                        <p><?=$this->lang->line('group_name');?><br><?=$this->lang->line('sensor_name');?></p>
+                        <p><?=$this->lang->line('measured_value');?> / <?=$this->lang->line('alert');?></p>
+                        <p><?=$this->lang->line('battery');?>/<?=$this->lang->line('Radio_waves');?></p>
+                        <p><?=$this->lang->line('update_time');?></p>
                     </div>
                     <?php
                     if (!empty($his_list)) {
@@ -273,21 +273,21 @@
                                     echo '<div class="alarm-block flexlyr table cgroup-' . $key . '" style="display: none">';
                                     if (isset($alarmconfig_list)) {
                                         echo '<table border=1><tbody>';
-                                            echo '<tr><td>センサー名:</td><td>' . $val['ProductName'] . '</td></tr>';
-                                            echo '<tr><td>センサーID:</td><td>' . $val['IMEI'] . '</td></tr>';
-                                            echo '<tr><td>製品名:</td><td>' . $val['Model'] . '</td></tr>';
-                                            echo '<tr><td>グループ名:</td><td>' . $val['GroupName'] . '</td></tr>';
-                                            echo '<tr><td>メモ:</td><td>' . $val['Description'] . '</td></tr>';
+                                            echo '<tr><td>'.$this->lang->line('sensor_name').':</td><td>' . $val['ProductName'] . '</td></tr>';
+                                            echo '<tr><td>'.$this->lang->line('sensor_Id').':</td><td>' . $val['IMEI'] . '</td></tr>';
+                                            echo '<tr><td>'.$this->lang->line('product_name').':</td><td>' . $val['Model'] . '</td></tr>';
+                                            echo '<tr><td>'.$this->lang->line('group_name').':</td><td>' . $val['GroupName'] . '</td></tr>';
+                                            echo '<tr><td>'.$this->lang->line('note').':</td><td>' . $val['Description'] . '</td></tr>';
                                         foreach ($alarmconfig_list as $akey => $aval) {
                                             $aobject = explode('|', $aval['AObject']);
                                             $av_tmp = explode('|', $aval['AEvent']);
                                             $aevent1 = explode(',', $av_tmp[0]);
                                             $aevent2 = explode(',', $av_tmp[1]);
                                             if ($aval['AlarmType'] == '1' && $aobject[1] == $val['GroupID']) {
-                                                echo '<tr><td>アラーム１（低温）:</td><td>' . $aevent1[0] . '</td></tr>';
-                                                echo '<tr><td>アラーム１（高温）:</td><td>' . $aevent1[1] . '</td></tr>';
-                                                echo '<tr><td>アラーム２（低温）:</td><td>' . $aevent2[0] . '</td></tr>';
-                                                echo '<tr><td>アラーム２（高温）:</td><td>' . $aevent2[1] . '</td></tr>';
+                                                echo '<tr><td>'.$this->lang->line('alarm1_low').':</td><td>' . $aevent1[0] . '</td></tr>';
+                                                echo '<tr><td>'.$this->lang->line('alarm1_high').':</td><td>' . $aevent1[1] . '</td></tr>';
+                                                echo '<tr><td>'.$this->lang->line('alarm2_low').':</td><td>' . $aevent2[0] . '</td></tr>';
+                                                echo '<tr><td>'.$this->lang->line('alarm2_high').':</td><td>' . $aevent2[1] . '</td></tr>';
                                                 break;
                                             }
                                         }
@@ -308,11 +308,11 @@
                     
                     <!-- search filter type - フィルター -->
                     <div class="side-bar-block srh-filter-block flexlyr">
-                        <p class="side-block-header srh-filter">フィルター</p>
+                        <p class="side-block-header srh-filter"><?=$this->lang->line('filter');?></p>
 
                         <div class="srh-block">
                             <select name="" id="">
-                                <option value="" disabled selected>グループ</option>
+                                <option value="" disabled selected><?=$this->lang->line('group');?></option>
                             </select>
                             <ul class="filter-type">
                                 <?php
@@ -323,15 +323,15 @@
                                 }
                                 ?>
                             </ul>
-                            <p class="set-view"><a onclick="allsyow();">全て表示する</a></p>
-                            <p class="set-view"><a href="<?php echo base_url()?>setting/listmanagement">並び替える</a></p>
+                            <p class="set-view"><a onclick="allsyow();"><?=$this->lang->line('showAll');?></a></p>
+                            <p class="set-view"><a href="<?php echo base_url()?>setting/listmanagement"><?=$this->lang->line('rearrange');?></a></p>
                         </div>
 
                         <div class="srh-block">
-                            <p class="srh-title">センサータイプ</p>
+                            <p class="srh-title"><?=$this->lang->line('sensortype');?></p>
                             <ul>
-                                <li class="t-btn view-on"><a onclick="tsyow();">温度計</a></li>
-                                <li class="th-btn view-on"><a onclick="thsyow();">温湿度計</a></li>
+                                <li class="t-btn view-on"><a onclick="tsyow();"><?=$this->lang->line('temperature');?></a></li>
+                                <li class="th-btn view-on"><a onclick="thsyow();"><?=$this->lang->line('humidity');?></a></li>
                             </ul>
                         </div>
 

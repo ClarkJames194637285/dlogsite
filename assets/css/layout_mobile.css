@@ -225,7 +225,7 @@
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
     /* align-items: stretch; */
-    padding: 2rem 0;
+    padding: 3rem 0;
 }
 .home .content .main-content .content-grid .l-block {
     width: 100%;
@@ -283,7 +283,8 @@
     background-size: 10rem;
 }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.support::after {
-    content: "サポート情報";
+    content: "サポート情報 \A 「dlogサポートページに \A移動します。」";
+    bottom: -9rem;
 }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.update::after {
     content: "サポート情報";

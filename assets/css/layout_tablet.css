@@ -226,7 +226,7 @@
 .home .content .main-content .content-grid {
     display: flex;
     align-items: stretch;
-    padding: 4rem 8rem 0 4rem;
+    padding: 4rem 8rem 3rem 4rem;
 }
 .content .main-content .content-grid .shortcut-grid {
     width: 100%;
@@ -277,9 +277,10 @@
     padding-top: 5rem;
     background: url(../img/btn_icon_05.png) center center no-repeat;
     background-size: 10rem;
-}
+    }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.support::after {
-    content: "サポート情報";
+    content: "サポート情報 \A 「dlogサポートページに \A移動します。」";
+    bottom: -9rem;
 }
 .content .main-content .content-grid .shortcut-grid .shortcut-btn.update::after {
     content: "サポート情報";
@@ -368,12 +369,12 @@
     line-height: 1.5;
 }
 .PieChart-grid .PieCharts.left-block {
-    width: 33%;
+    width: 40%;
     border: solid #707070 1px;
     justify-content: center;
 }
 .PieChart-grid .PieCharts.right-block {
-    width: 64%;
+    width: 55%;
     border: solid #707070 1px;
     justify-content: center;
 }

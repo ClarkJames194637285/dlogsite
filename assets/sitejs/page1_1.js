@@ -12,7 +12,9 @@ $(function(){
 
 function oldPasscheck(pass_formId, on_off) {
     var form = document.getElementById('form1');    
-    var url = $('#base_url').text() + 'setting/userSetting';
+    //var url = $('#base_url').text() + 'setting/userSetting';
+    var url = location.href;
+    //alert(url);
     if (on_off == 0) {
         form.action = url;
         form.submit();
@@ -22,13 +24,13 @@ function oldPasscheck(pass_formId, on_off) {
 function CheckPassword() {
     var newpassid = document.getElementById("newpass");
     var confirmid = document.getElementById("confirm");
-    var recaptcha = document.getElementById("recaptcha");
+    //var recaptcha = document.getElementById("recaptcha");
     var input1 = newpassid.value;
     var input2 = confirmid.value;
     if (input2 != "") {
-        if (input1 != input2 && input2 == "") {
-            // alert("入力値が一致しません。");
-            confirmid.setCustomValidity("入力値が一致しません。");
+        if (input1 != input2) {
+            alert(err_str);
+            //confirmid.setCustomValidity("入力値が一致しません。");
             //recaptcha.style = "display: none";
         } else {
             confirmid.setCustomValidity('');
@@ -36,7 +38,8 @@ function CheckPassword() {
             return true;
         }
     } else {
-        var url = $('#base_url').text() + 'setting/userSetting';
+        //var url = $('#base_url').text() + 'setting/userSetting';
+        var url = location.href;
         var form = document.getElementById('form1');
         form.action = url;
     }
@@ -45,20 +48,20 @@ function CheckPassword() {
 function formSubmit() {
     var form = document.getElementById('form1');
     if (CheckPassword()) {
-        var url = $('#base_url').text() + 'setting/userSetting/confirm';
+        //var url = $('#base_url').text() + 'setting/userSetting/confirm';
+        var url = location.href + '/confirm';
         form.action = url;
         form.submit();
     }    
 }
 
-var onloadCallback = function() {
+/* var onloadCallback = function() {
     grecaptcha.render('recaptcha', {
         'sitekey' : sitekey,
         'callback' : verifyCallback,
         'expired-callback' : expiredCallback
     });
 };
-
 var verifyCallback = function() {
     document.getElementById("warning").textContent = "";
     //document.getElementById("update").disabled = false;
@@ -83,4 +86,4 @@ var myAlert = function(response) {
 
     update.style = "";
     //recaptcha.style = "display: none;";
-};
+}; */
