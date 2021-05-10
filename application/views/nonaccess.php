@@ -70,7 +70,7 @@
             <h1 class="page-title"></h1>
             <section class="main-content flexlyr">
                 <div class="content-grid">
-                    <p class="title">このページには、アクセスできません。</p>
+                    <p class="title">現在のユーザー権限では、このページは、書き込み、変更は出来ません</p>
                     <a href="<?php echo base_url();?>home" class="confirm-btn">ホームに戻る</a>
                 </div>
             </section>
