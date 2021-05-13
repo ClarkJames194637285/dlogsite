@@ -32,3 +32,11 @@ $lang['humidity_alarm']                               = '湿度アラーム';
 $lang['offline_alarm']                                = 'オフラインアラーム';
 $lang['save']                                         = '設定を保存する';
 
+//alert
+$lang['empty_input']                                  = 'メッセージを入力ください。';
+$lang['success']                                      = '正常に送信されました。';
+$lang['fail']                                         = 'メセジー送信に失敗しました。';
+$lang['delete_success']                               = '削除に成功しました。';
+$lang['delete_fail']                                  = '削除に失敗しました。';
+
+

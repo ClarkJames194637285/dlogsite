@@ -1,7 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 // Home
-$lang['home']                               = 'Home';
+$lang['homepage']                               = 'Home';
 $lang['search']                             = 'Search';
 //setting
 $lang['setting']                            = 'Basic Setting';

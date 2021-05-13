@@ -62,7 +62,7 @@ class Passforget extends CI_Controller
         // $this->load->model('user_model');
 
         if (!$this->sendMail($email, $username)) {
-            $this->session->set_flashdata('error', 'メール送信に失敗しました。');
+            $this->session->set_flashdata('error', $this->lang->line('mail_failed'));
 
             if (ENVIRONMENT !== 'production') {
                 var_dump($this->email->print_debugger());
@@ -145,12 +145,12 @@ class Passforget extends CI_Controller
 
             return $this->load->view('pass_forget_reset', compact('payload', 'token'));
         } catch (\Throwable $exception) {
-            $this->session->set_flashdata('error', 'おっとっと！');
+            $this->session->set_flashdata('error', $this->lang->line('whoops'));
 
             return $this->load->view('pass_forget_reset', compact('payload', 'token'));
         }
 
-        $this->session->set_flashdata('error', 'おっとっと！');
+        $this->session->set_flashdata('error', $this->lang->line('whoops'));
 
         return $this->load->view('pass_forget_reset', compact('payload', 'token'));
     }
@@ -178,13 +178,13 @@ class Passforget extends CI_Controller
 	private function verifyToken(string $payload_string, string $received_token)
     {
         $token = crypt($payload_string, self::SALT);
-        $this->throw_if($token != $received_token, new TokenException('トークンが無効です。'));
+        $this->throw_if($token != $received_token, new TokenException($this->lang->line('token_invalid')));
 
         $json = base64_decode($payload_string);
         $payload = json_decode($json, true);
-        $this->throw_if($payload == null, new TokenException('ペイロードが無効です。'));
+        $this->throw_if($payload == null, new TokenException($this->lang->line('payload_invalid')));
         $time=time();
-        $this->throw_if($payload['exp'] < time(), new TokenException('トークンの有効期限が切れています。'));
+        $this->throw_if($payload['exp'] < time(), new TokenException($this->lang->line('token_expired')));
 
         return $payload['data'];
     }
@@ -205,7 +205,7 @@ class Passforget extends CI_Controller
     public function username_check($username)
     {
         if (!$this->user_model->getUserByEmailAndUsername($this->input->post('email'), $username)) {
-            $this->form_validation->set_message(__FUNCTION__, 'メールアドレスまたはパスワードが登録と一致しません。');
+            $this->form_validation->set_message(__FUNCTION__, $this->lang->line('incorrect_password_email'));
 
             return false;
         }
@@ -216,7 +216,7 @@ class Passforget extends CI_Controller
     public function captcha_check($captcha)
     {
         if (!Captcha::is_valid($captcha)) {
-            $this->form_validation->set_message(__FUNCTION__, '認証コード入力が正しくありません。');
+            $this->form_validation->set_message(__FUNCTION__, $this->lang->line('incorrect_authontication_code'));
 
             return false;
         }

@@ -43,12 +43,12 @@
     
         <!-- Page Content  -->
         <div class="content">
-            <h1 class="page-title">マッピング管理</h1>
+            <h1 class="page-title"><?=$this->lang->line('map_title');?></h1>
             <?= ($error = $this->session->flashdata('error')) ? "<div class='alert alert-danger'>{$error}</div>" : "" ?>
             <div class="content-grid">
                 <form id="form1" method="post" action="<?php echo base_url()?>setting/mappingManagement/update">
                     <div class="sys-info-block flexlyr">
-                        <p class=" confirm-msg">マッピング名</p>
+                        <p class=" confirm-msg"><?=$this->lang->line('map_name');?></p>
                         <p class=" confirm-input">
                             <?php
                             echo '<input type="text" id="mapId" name="mapId" style="display:none;" value="';
@@ -64,7 +64,7 @@
                             ?>
                         </p>
                     </div>
-                    <button type="submit" class="confirm-btn">マッピングを登録する</button>
+                    <button type="submit" class="confirm-btn"><?=$this->lang->line('map_register');?></button>
                 </form>
             </div>
         </div>

@@ -66,6 +66,7 @@ $lang['saturation_value']                         = 'Saturation Value';
 $lang['data_interval']                            = 'Data Interval';
 $lang['memo_str']                                 = 'Note';
 $lang['sensor_submit']                            = 'Register a sensor';
+
 $lang['serial_check_str']                         = 'The serial number is already registered!';
 $lang['temperature_str']                          = 'Temperature Sensor';
 $lang['temperature_humidity_str']                 = 'Temperature/Humidity Sensor';
@@ -73,7 +74,9 @@ $lang['rf_temperature_str']                       = 'RF Temperature Sensor';
 $lang['rf_temperature_humidity_str']              = 'RF Temperature/Humidity Sensor';
 $lang['lora_temperature_str']                     = 'LoRa Temperature Sensor';
 $lang['lora_temperature_humidity_str']            = 'LoRa Temperature/Humidity Sensor';
-$lang['old_sensor_str']                           = 'Old Sensor ?';
+$lang['old_sensor_str']                           = 'Old Sensor Type! Please consult with the administrator for registration';
+$lang['serial_no_msg']                            = 'Please enter your serial number！';
+$lang['old_sensor_register']                      = 'Old Sensor can not be registed.';
 $lang['group_name_msg']                           = 'Please select a group name!';
 // GatewayManagement.php
 $lang['gateway_title']                            = 'Gateway Management';
@@ -88,7 +91,15 @@ $lang['map']                                      = 'Map';
 $lang['untitled']                                 = 'Untitled';
 $lang['map_upload']                               = 'Please upload map image';
 $lang['map']                                      = 'Map';
+$lang['map_name']                                 = 'Map Name';
+$lang['map_register']                             = 'Register';
 $lang['map_edit']                                 = 'Map Edit';
+
+$lang['map_select']                               = 'Select the map you want to edit.';
+$lang['map_sort']                                 = 'The order has been changed.';
+$lang['map_delete']                               = 'The map has been deleted.';
+$lang['map_delete_fail']                          = 'Failed to delete the map.';
+
 //list management
 $lang['list_title']                                = 'List Management';
 $lang['list_description']                          = 'Manages the order of the list displayed when a filter is selected.';
@@ -96,3 +107,5 @@ $lang['group']                                     = 'Group';
 $lang['sensor']                                    = 'Sensor';
 $lang['undo']                                      = 'Rearrange';
 $lang['decide']                                     = 'Decide';
+
+$lang['list_fail']                                 = 'The operation has failed.';

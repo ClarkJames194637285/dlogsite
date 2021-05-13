@@ -438,7 +438,7 @@
                 },
                 success:function(responce){
                     if(responce==1){
-                        alert('正常にマップに登録されました。');
+                        alert('<?=$this->lang->line('map_register');?>');
                         $.ajax({
                             url:"<?php echo base_url()?>MappingMonitoring/showMapSensor",
                             type:'post',
@@ -460,7 +460,7 @@
                             }
                         })
                     }
-                    else {alert('マップに登録が失敗しました。');}
+                    else {alert('<?=$this->lang->line('map_register_failed');?>');}
                 }
             })
     }

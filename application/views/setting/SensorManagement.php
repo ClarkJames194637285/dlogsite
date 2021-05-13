@@ -40,20 +40,25 @@ if (isset($_GET['M'])) {
             $update_stmt = $dlogdb->dbUpdate($dbpdo, $ptname, $up_data, $fieldname, $_GET['ids']);
             break;
         case 'Add':
-            $insert_data = array(
-                'IMEI' => $_POST['IMEI'],
-                'ProductName' => $_POST['ProductName'],
-                'TypeID' => (int)$_POST['TypeID'],
-                'UserID' => (int)$userid,
-                'GroupID' => (int)$_POST['GroupID'],
-                'RegionID' => (int)$_POST['RegionID'],
-                'TerminalDataInterval' => (int)$_POST['TerminalDataInterval'],
-                'Description' => $_POST['Description'],
-                'CreateTime' => $ctime->format('Y-m-d H:i:s'),
-                'ExpireTime' => $ctime->format('Y-m-d H:i:s'),
-                'isdelete' => 0
-            );
-            $insertuser = $dlogdb->insertData($dbpdo, $ptname, $insert_data);
+            $message=$this->lang->line('old_sensor_register');
+            if($_POST['TypeID']==0) {
+                echo "<script>alert('".$message."');</script>";
+            }else{
+                $insert_data = array(
+                    'IMEI' => $_POST['IMEI'],
+                    'ProductName' => $_POST['ProductName'],
+                    'TypeID' => (int)$_POST['TypeID'],
+                    'UserID' => (int)$userid,
+                    'GroupID' => (int)$_POST['GroupID'],
+                    'RegionID' => (int)$_POST['RegionID'],
+                    'TerminalDataInterval' => (int)$_POST['TerminalDataInterval'],
+                    'Description' => $_POST['Description'],
+                    'CreateTime' => $ctime->format('Y-m-d H:i:s'),
+                    'ExpireTime' => $ctime->format('Y-m-d H:i:s'),
+                    'isdelete' => 0
+                );
+                $insertuser = $dlogdb->insertData($dbpdo, $ptname, $insert_data);
+            }
             break;
         case 'Delete':
             $delete_id = explode(',', $_GET['ids']);

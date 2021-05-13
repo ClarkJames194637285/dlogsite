@@ -12,7 +12,7 @@
     <ul class="list-unstyled components">
         <li class="f-layer menu0">
             <a href="<?php echo base_url()?>home">
-                <img src="<?php echo base_url()?>assets/img/asset_03.png" alt=""><p><?=$this->lang->line('home');?></p>
+                <img src="<?php echo base_url()?>assets/img/asset_03.png" alt=""><p><?=$this->lang->line('homepage');?></p>
             </a>
         </li>
         <li class="f-layer menu1 collapseItem">
@@ -34,7 +34,7 @@
                    
                    
                 <?php } else{ ?>
-                    <?php if($this->user_check==31){?>
+                    <?php if($this->user_check==63){?>
                         <li class="menu1_1">
                             <a href="<?php echo base_url()?>setting/userSetting"><?=$this->lang->line('userSetting');?></a>
                         </li>
@@ -44,7 +44,7 @@
                         <a href="<?php echo base_url()?>setting/systemSetting"><?=$this->lang->line('systemSetting');?></a>
                     </li>
 
-                    <?php if($this->user_check==31){?>
+                    <?php if($this->user_check==63){?>
                         <li class="menu1_3">
                             <a href="<?php echo base_url()?>setting/subAccountManagement"><?=$this->lang->line('accountManagement');?></a>
                         </li>
@@ -58,7 +58,7 @@
                         <a href="<?php echo base_url()?>setting/sensorManagement"><?=$this->lang->line('sensorManagement');?></a>
                     </li>
 
-                    <?php if($this->user_check==31){?>
+                    <?php if($this->user_check==63){?>
                         <li class="menu1_6">
                             <a href="<?php echo base_url()?>setting/gatewayManagement"><?=$this->lang->line('gatewayManagement');?></a>
                         </li>

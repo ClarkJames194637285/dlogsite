@@ -31,3 +31,10 @@ $lang['humidity_alarm']                               = 'Humidity Alarm';
 $lang['offline_alarm']                                = 'Offline Alarm';
 $lang['save']                                         = 'Save settings';
 
+//alert
+$lang['empty_input']                                  = 'Please enter a message.';
+$lang['success']                                      = 'Message was sent to administrator successfully.';
+$lang['fail']                                         = 'The sending has been failed.';
+$lang['delete_success']                               = 'successfully deleted.';
+$lang['delete_fail']                                  = 'The deletion has been failed.';
+

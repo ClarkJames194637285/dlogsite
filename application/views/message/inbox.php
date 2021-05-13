@@ -159,10 +159,10 @@
                     data:{id},
                     success: function (data) {
                         if(data==1){
-                            alert('削除に成功しました。');
+                            alert('<?=$this->lang->line('delete_success');?>');
                             window.location.href="<?php echo site_url('Inbox/')?>"+<?php echo $page;?>;
                         }
-                        else alert('削除に失敗しました。');
+                        else alert('<?=$this->lang->line('delete_fail');?>');
                     },
                     error: function (error) {
                         console.log(`Error ${error}`);
@@ -179,10 +179,10 @@
                     data:{'delete':'true'},
                     success: function (data) {
                         if(data==1){
-                            alert('削除に成功しました。');
+                            alert('<?=$this->lang->line('delete_success');?>');
                             window.location.href="<?php echo site_url('Inbox/')?>"+<?php echo $page;?>;
                         }
-                        else alert('削除に失敗しました。');
+                        else alert('<?=$this->lang->line('delete_fail');?>');
                     },
                     error: function (error) {
                         console.log(`Error ${error}`);

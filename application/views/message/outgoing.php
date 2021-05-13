@@ -80,7 +80,10 @@
 <script>
     function sendMessage(){
         var message=$('#message').val();
-        if(message=="") {alert('メッセージを入力します。');return;}
+        if(message=="") {
+            alert('<?=$this->lang->line('empty_input');?>');
+            return;
+        }
         $.ajax({
             url: 'Outgoing/recordMessage',
             type: 'post',
@@ -90,9 +93,10 @@
             dataType: 'json',
             success: function(res) {
                 if(res==1){
-                    alert('正常に送信されました。');
+                    alert('<?=$this->lang->line('success');?>');
+                    $('#message').val("");
                 }else{
-                    alert('メール送信に失敗しました。');
+                    alert('<?=$this->lang->line('fail');?>');
                 }
                
             }

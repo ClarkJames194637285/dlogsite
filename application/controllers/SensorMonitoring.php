@@ -24,6 +24,10 @@ class SensorMonitoring extends MY_Controller
     }
 	public function index()
 	{
+			$this->config->load('db_config');
+			$this->load->library('DbClass');
+			$this->load->library('MethodClass');
+			$this->config->load('openSSL_config');
 			$data['unread']=$this->unread_message;
 			$data['user_name']=$_SESSION['user_name'];
 			// $this->load->view('sensorMonitoring');

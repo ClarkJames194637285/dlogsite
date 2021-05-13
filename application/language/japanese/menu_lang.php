@@ -1,7 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 // Home
-$lang['home']                               = 'ホーム';
+$lang['homepage']                               = 'ホーム';
 $lang['search']                             = '検索';
 //setting
 $lang['setting']                            = '基本設定';

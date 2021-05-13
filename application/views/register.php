@@ -78,7 +78,7 @@
                 <?= validation_errors(); ?>
             </ul>
 
-            <?= form_open('Register/confirm'); ?>
+            <?= form_open('Register/confirm','autocomplete="off"'); ?>
             <section class="main-content flexlyr">
                 <div class="content-grid">
                     <div class="register-block flexlyr">
