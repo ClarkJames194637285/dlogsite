@@ -129,7 +129,7 @@
                        
                         <?php $n=0;
                        foreach($OutboxMessage as $message){?>
-                            <div class="grid-content flexlyr">
+                            <div class="grid-content flexlyr" id="message_<?php echo $message->ID;?>">
                                 <div class="ct-cell cell1 none">
                                     <label class="container1">
                                         <input type="checkbox">
@@ -172,10 +172,10 @@
                     data:{id},
                     success: function (data) {
                         if(data==1){
-                            alert('削除に成功しました。');
+                            alert('<?=$this->lang->line('delete_success');?>');
                             window.location.href="<?php echo site_url('Outbox/')?>"+<?php echo $page;?>;
                         }
-                        else alert('削除に失敗しました。');
+                        else alert('<?=$this->lang->line('delete_fail');?>');
                     },
                     error: function (error) {
                         console.log(`Error ${error}`);
@@ -192,10 +192,10 @@
                     data:{'delete':'true'},
                     success: function (data) {
                         if(data==1){
-                            alert('削除に成功しました。');
+                            alert('<?=$this->lang->line('delete_success');?>');
                             window.location.href="<?php echo site_url('Outbox/')?>"+<?php echo $page;?>;
                         }
-                        else alert('削除に失敗しました。');
+                        else alert('<?=$this->lang->line('delete_fail');?>');
                     },
                     error: function (error) {
                         console.log(`Error ${error}`);
@@ -203,6 +203,32 @@
                 });
 
             }else{
+                var data=[];
+                var id='';
+                $(".message_grid").children('.grid-content').each(function(index){
+                    var check=$(this).find('input').prop( "checked" );
+                    if(check){
+                        var id=$(this).attr("id");
+                        messageId=id.substring(8);
+                        data.push([messageId,index]);
+                    }
+                })
+                $.ajax({
+                    url: "<?php echo current_url();?>/deleteMulti",
+                    type: "post",
+                    async: false,
+                    data:{'data':data},
+                    success: function (res) {
+                        if(res==1){
+                            alert('<?=$this->lang->line('delete_success');?>');
+                            window.location.href="<?php echo site_url('Outbox/')?>"+<?php echo $page;?>;
+                        }
+                        else alert('<?=$this->lang->line('delete_fail');?>');
+                    },
+                    error: function (error) {
+                        console.log(`Error ${error}`);
+                    }
+                });
                 return 0;
             }
             
@@ -222,6 +248,14 @@
                 });
             }
         });
+        // $('.grid-content input[type=checkbox]').click(function(event){
+        //     if(this.checked){
+        //         $('#select-all').attr("checked",true);
+        //     }else{
+        //         $('#select-all').attr("checked",false);
+        //     }
+            
+        // })
     </script>  
 </body>
 

@@ -42,14 +42,14 @@ class Register extends CI_Controller
         $this->load->model('user_model');
         $terms_of_service = $this->input->post('terms_of_service');
         if(!$terms_of_service){
-            $this->session->set_flashdata('error', '利用規約に同意してください。');
+            $this->session->set_flashdata('error', $this->lang->line('termsofservice'));
             return $this->load->view('register');
         }
-        $this->form_validation->set_rules('captcha', '認証コード', 'required|callback_captcha_check');
-        $this->form_validation->set_rules('username', 'ユーザー名', 'trim|required|min_length[4]|callback_username_check');
-        $this->form_validation->set_rules('email', 'メールアドレス', 'required|valid_email');
-        $this->form_validation->set_rules('password', 'パスワード', 'trim|required|min_length[6]');
-        $this->form_validation->set_rules('password_confirm', 'パスワードの再入力', 'required|matches[password]');
+        $this->form_validation->set_rules('captcha', $this->lang->line('authentication_code'), 'required|callback_captcha_check');
+        $this->form_validation->set_rules('username', $this->lang->line('user_name'), 'trim|required|min_length[4]|callback_username_check');
+        $this->form_validation->set_rules('email', $this->lang->line('mailaddress'), 'required|valid_email');
+        $this->form_validation->set_rules('password', $this->lang->line('password'), 'trim|required|min_length[6]');
+        $this->form_validation->set_rules('password_confirm', $this->lang->line('confirm_password'), 'required|matches[password]');
 
         if ($this->form_validation->run() == FALSE) {
             return $this->load->view('register');
@@ -93,7 +93,7 @@ class Register extends CI_Controller
     public function captcha_check($captcha)
     {
         if (!Captcha::is_valid($captcha)) {
-            $this->form_validation->set_message(__FUNCTION__, '認証コード入力が正しくありません。');
+            $this->form_validation->set_message(__FUNCTION__, $this->lang->line('invalid_code'));
 
             return false;
         }

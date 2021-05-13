@@ -1,3 +1,55 @@
+<?php
+$ragionid = array(
+    $this->lang->line('initial_sisplay') => 0,
+    $this->lang->line('heat_index') => 1,
+    $this->lang->line('saturation_value') => 2
+);
+$tname = "productgroup";
+$fieldname = "UserId";
+$userid = $this->session->userdata('user_id');
+$user_name = $this->session->userdata('user_name');
+$like = "=";
+$dlogdb = new Dbclass();
+$dbpdo = $dlogdb->dbCi($this->config->item('host'),$this->config->item('username'),$this->config->item('password'), $this->config->item('dbname'));
+
+// dataupdate
+if (isset($_GET['M'])) {
+    switch ($_GET['M']) {
+        case 'Edit':
+            $edit_id = (int)$_GET['ids'];
+            $f_action = "SensorManagement?M=Edit&ids=" .$edit_id;
+            $sensor = $dlogdb->getProductSensor($dbpdo, $userid, $edit_id);
+            $res = $sensor->fetchAll(\PDO::FETCH_ASSOC);
+            break;
+        case 'Add':
+            $f_action = "SensorManagement?M=Add";
+            break;
+    }
+}
+$pg = $dlogdb->dbSelect($dbpdo, $tname, $like, $fieldname, $userid);
+$pgres = $pg->fetchAll(\PDO::FETCH_ASSOC);
+//var_dump($pgres);
+$allsensor = $dlogdb->getProductSensor($dbpdo, $userid);
+$allres = $allsensor->fetchAll(\PDO::FETCH_ASSOC);
+//var_dump($allres);
+$jdata = '';
+// print_r($res);return 0;
+if (isset($allres)) {
+    foreach ($allres as $key => $val) {
+        $data[$key] = array(
+            'IMEI' => $val['IMEI'],
+            'TypeName' => $val['TypeName'],
+            'TypeID' => $val['TypeID'],
+            'GroupID' => $val['GroupID']
+        );
+    }
+    $jdata = $data;
+}
+
+
+$dlogdb = null;
+
+?>
     <!-- slider, preloader style -->
     <link rel="stylesheet" href="<?php echo base_url()?>assets/css/animate.css" type="text/css">
     <link rel="stylesheet" href="<?php echo base_url()?>assets/css/loaders.css" type="text/css">
@@ -22,6 +74,19 @@
     <!-- custom jscript -->
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/custom.js"></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/wow.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets/sitejs/page1_5-edit.js"></script>
+    <script>
+        var jdata = <?php echo json_encode($jdata);?>;
+        var serial_check_str = <?php echo json_encode($this->lang->line('serial_check_str'));?>;
+        var temperature_str = <?php echo json_encode($this->lang->line('temperature_str'));?>;
+        var temperature_humidity_str = <?php echo json_encode($this->lang->line('temperature_humidity_str'));?>;
+        var rf_temperature_str = <?php echo json_encode($this->lang->line('rf_temperature_str'));?>;
+        var rf_temperature_humidity_str = <?php echo json_encode($this->lang->line('rf_temperature_humidity_str'));?>;
+        var lora_temperature_str = <?php echo json_encode($this->lang->line('lora_temperature_str'));?>;
+        var lora_temperature_humidity_str = <?php echo json_encode($this->lang->line('lora_temperature_humidity_str'));?>;
+        var old_sensor_str = <?php echo json_encode($this->lang->line('old_sensor_str'));?>;
+        var group_name_msg = <?php echo json_encode($this->lang->line('group_name_msg'));?>;
+    </script>
 <!-- <script>
     function auto_reload()
         {
@@ -37,6 +102,14 @@
   }
   .modal-footer {
     background-color: #f9f9f9;
+  }
+  .def_alert{
+      height:20px;
+      font-size:20px;
+  }
+  .btn-style{
+    margin-top: 25px;
+    margin-bottom: -15px;
   }
   form label{
     float: left;
@@ -135,26 +208,29 @@
         <div class="modal-content">
             <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" >&times;</button>
-            <h4>センサーを追加</h4>
+            <h4><?=$this->lang->line('sensor_add');?></h4>
             </div>
             <div class="modal-body" style="padding:40px 50px;">
             <form>
                 <div class="form-group">
-                    <label for="name"></span> センサー名</label>
+                    <label for="name"></span> <?=$this->lang->line('sensor_name');?></label>
                     <input type="text" class="form-control" id="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="IMEI"></span> シリアル番号</label>
-                    <input type="text" class="form-control" id="IMEI" required>
+                    <label for="IMEI"></span> <?=$this->lang->line('sensor_number');?></label>
+                    <input type="text" class="form-control" id="IMEI" onfocus="dbackup(this);" onBlur="imeiChenge();" required>
                 </div>
                 <div class="form-group">
-                    <label for="typeId"></span> タイプーID</label>
-                    <input type="text" class="form-control" id="typeId" required>
+                    <label for="TypeName"></span> <?=$this->lang->line('sensor_type');?></label>
+                    <p id="TypeName" class="def_alert"></p>
+                    <input type="hidden" id="TypeID" name="TypeID">
                 </div>
                 
                 
-                <button class="btn btn-warning btn-size" data-dismiss="modal">キャンセル</button>
-                <button id="register" class="btn btn-success btn-size">センサーを追加</button>
+                <div class="btn-style">
+                    <button class="btn btn-warning btn-size" data-dismiss="modal"><?=$this->lang->line('cancel');?></button>
+                    <button id="register" class="btn btn-success btn-size"><?=$this->lang->line('add');?></button>
+                </div>
             </form>
             </div>
             
@@ -222,9 +298,12 @@
         $("#register").on("click",function(e){
             // e.preventDefault();
             var IMEI=$("#IMEI").val();
-            var typeId=$("#typeId").val();
+            var typeId=$("#TypeID").val();
             var name=$("#name").val();
-            if((IMEI=="")||(name==""))return;
+            if(typeId==0){
+                alert('<?=$this->lang->line('old_sensor_str');?>');
+                return;
+            }
             var that = $(this);
             that.off('click'); // remove handler
             
@@ -242,7 +321,7 @@
                     $("#newGroup").modal('hide');
                     res=JSON.parse(responce);
                     if(res){
-                        alert("正常に追加されました。");
+                        alert("<?=$this->lang->line('success');?>");
                         $.get(
                             "SensorMonitoring/getTerminalInfo",
                             function(responce){
@@ -287,7 +366,7 @@
                             );
                         }
                     // else alert("センソが追加されませんでした。");
-                    else {alert("同じセンサーがすでに存在します")};
+                    else {alert("<?=$this->lang->line('double');?>")};
                     
                     that.on('click'); // add handler back after ajax
                 },

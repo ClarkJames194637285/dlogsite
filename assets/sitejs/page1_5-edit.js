@@ -9,17 +9,21 @@ function imeiChenge() {
     var imei = document.getElementById('IMEI');
     var type_id = document.getElementById('TypeID');
     var dobj = JSON.stringify(jdata);
-    dobj = JSON.parse(dobj);
     var imei_str = imei.value.trim();
-    for (var i = 0; i < dobj.length; i++) {
-        var jd = JSON.stringify(dobj[i]);
-        jd = JSON.parse(jd);
-        if (jd.IMEI.trim() == imei_str) {
-            alert(serial_check_str);
-            typename.textContent = "";
-            return;
+    if(dobj!=="null"){
+        dobj = JSON.parse(dobj);
+    
+        for (var i = 0; i < dobj.length; i++) {
+            var jd = JSON.stringify(dobj[i]);
+            jd = JSON.parse(jd);
+            if (jd.IMEI.trim() == imei_str) {
+                alert(serial_check_str);
+                typename.textContent = "";
+                return;
+            }
         }
     }
+    
     
     var s_type_name = "";
     var s_type_id = 0;

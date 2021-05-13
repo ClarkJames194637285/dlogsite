@@ -21,22 +21,22 @@ window.onload = function () {
     var color=[];
     var working= parseFloat($('#working').text());
     if(working!==0){
-        leftdata.push({ y: working, name:"正常" });
+        leftdata.push({ y: working, name:normal });
         color.push("#33B800");
     }
     var warning1=parseFloat($('#warning1').text());
     if(warning1!==0){
-        leftdata.push({ y: warning1, name:"警告1" });
+        leftdata.push({ y: warning1, name:warning1});
         color.push("#C4DB00");
     }
     var warning2=parseFloat($('#warning2').text());
     if(warning2!==0){
-        leftdata.push({ y: warning2, name:"警告2" });
+        leftdata.push({ y: warning2, name:warning2 });
         color.push("red");
     }
     var notWorking=parseFloat($('#notWorking').text());
     if(notWorking!==0){
-        leftdata.push({ y: notWorking, name:"オフライン" });
+        leftdata.push({ y: notWorking, name:offline });
         color.push("#3F3F3F");
     }
     console.log(color);

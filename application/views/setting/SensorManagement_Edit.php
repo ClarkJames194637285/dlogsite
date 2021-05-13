@@ -33,6 +33,7 @@ $allsensor = $dlogdb->getProductSensor($dbpdo, $userid);
 $allres = $allsensor->fetchAll(\PDO::FETCH_ASSOC);
 //var_dump($allres);
 $jdata = '';
+// print_r($res);return 0;
 if (isset($allres)) {
     foreach ($allres as $key => $val) {
         $data[$key] = array(

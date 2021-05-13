@@ -68,13 +68,19 @@ class Outbox extends MY_Controller
 	public function delete(){
         $data = $this->input->post('id');
 		if($data){
-            // var result = $this->Outbox_model->delete_message($id);
             $result=$this->Outbox_model->delete_message($data);   
             echo $result;
-               
         }else{
             echo 0;
         }
     }
+
+    public function deleteMulti(){
+		$data=$this->input->post('data');
+		foreach($data as $val){
+            $result=$this->Outbox_model->delete_message($val[0]);   
+		}
+		echo $result;
+	}
     
 }

@@ -42,10 +42,10 @@
     <script src="<?php echo base_url()?>assets/fileinput/js/fileinput.js" type="text/javascript"></script>
     <?php
     $site_lang=$this->session->userdata('lang');
-    if ($site_lang=='japanese') {?>
-        <script src="<?php echo base_url()?>assets/fileinput/js/locales/ja.js" type="text/javascript"></script>
-        <?php } else { ?>
+    if ($site_lang=='english') {?>
         <script src="<?php echo base_url()?>assets/fileinput/js/locales/en.js" type="text/javascript"></script>
+        <?php } else { ?>
+        <script src="<?php echo base_url()?>assets/fileinput/js/locales/ja.js" type="text/javascript"></script>
     <?php }
     ?>
     <script src="<?php echo base_url()?>assets/fileinput/themes/fas/theme.js" type="text/javascript"></script>
@@ -89,64 +89,38 @@
         .mousemove(function() {
             isDragging = true;
         })
-        .mouseup(function() {
+        .mouseup(function(){
             var wasDragging = isDragging;
             if (wasDragging) {
-                mapDecide();
-            }
-        });
-    } );
- 
-    function eidtMap(){
-        var data=[];var count=0;var mapId='';var mapName='';
-        $('#sortableMap').children('div').each(function(index){
-            var check=$(this).find('input').prop('checked');
-            if(!check){
-                return;
-            }
-            count++;
-            if(count>1){
-                alert('一度二つ以上編集することができません。');
-                return;
-            }
-            mapId=$(this).attr('id');
-            mapName=$.trim($(this).text());
-        });
-        if(count==0){
-            alert('編集するマップを選択します。');
-            return;
-        }
-        
-        if(mapId){
-            mapId=mapId.substring(3);
-            location.href = "<?php echo base_url()?>setting/mappingmanagement/edit?mapId="+mapId+"&mapName="+mapName;
-        }else{
-            location.href = "<?php echo base_url()?>setting/mappingmanagement/add";
-        }
-        
-    }
-    function mapDecide(){
-        var data=[];
-            $('#sortableMap').children('div').each(function(index){
-                var id = $(this).attr('id');
-                if(id){
-                    mapId=id.substring(3);
-                    data.push([mapId,index]);
-                }
-            });
-           $.ajax({
-                url:"<?php echo base_url()?>setting/mappingManagement/mapDecide",
-                type:'post',
-                data:{'data':data},
-                success:function(responce){
-                    if(responce){
-                        alert("順番入れ替えがされました。");
-                    }
-                    else alert("失敗しました。");
-                }
+                setTimeout(function(){
+                    var data=[];
+                    var id='';
+                    document.querySelectorAll('#sortableMap div').forEach(function(node,index){
+                        var id = node.getAttribute('id');
+                        if(id){
+                            mapId=id.substring(3);
+                            data.push([mapId,index]);
+                        }
+                    });
+                    $.ajax({
+                    url:"<?php echo base_url()?>setting/mappingManagement/mapDecide",
+                        type:'post',
+                        data:{'data':data},
+                        success:function(responce){
+                            if(responce){
+                                alert("<?=$this->lang->line('map_sort');?>");
+                            }
+                            else alert("<?=$this->lang->line('map_delete_fail');?>");
+                        }
+                        
+                    })
                 
-           })
-    }
+                },1000);
+            }
+        })
+    } );
+
+
     function deleteMap(){
         var data=[];
         $('#sortableMap').children('div').each(function(index){
@@ -165,10 +139,10 @@
             data:{'data':data},
             success:function(responce){
                 if(responce){
-                    alert("順番入れ替えがされました。");
+                    alert("<?=$this->lang->line('map_delete');?>");
                     location.href = "<?php echo base_url()?>setting/mappingmanagement";
                 }
-                else alert("失敗しました。");
+                else alert("<?=$this->lang->line('map_delete_fail');?>");
             }
         })
     }
@@ -253,8 +227,8 @@
       })
       function upload(){
             mapname=$('#map_name').text();
-            if(mapname=="名称未設定"){
-                alert("編集するマップを選択します。");
+            if(mapname=="<?=$this->lang->line('untitled');?>"){
+                alert("<?=$this->lang->line('map_select');?>");
                 return;
             }
             $("#uploadimageModal").modal('show');

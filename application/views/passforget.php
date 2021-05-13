@@ -58,7 +58,7 @@
             <?= validation_errors(); ?>
         </ul>
 
-        <?= form_open('Passforget/confirm'); ?>
+        <?= form_open('Passforget/confirm','autocomplete="off"'); ?>
         <section class="main-content flexlyr">
             <div class="content-grid">
                 <div class="mail-send-block flexlyr">

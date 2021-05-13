@@ -85,7 +85,7 @@
                     
 
                     <div class="operation-block flexlyr">
-                        <a  onclick="sensorUndo()" class="text-btn"><?=$this->lang->line('group');?></a>
+                        <a  onclick="sensorUndo()" class="text-btn"><?=$this->lang->line('undo');?></a>
                         <a  onclick="sensorDecide()" class="text-btn"><?=$this->lang->line('decide');?></a>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                         $( "#sortableGroup" ).sortable();
                         $( "#sortableGroup" ).disableSelection();
                     }
-                    else alert("失敗しました。");
+                    else alert("<?=$this->lang->line('list_fail');?>");
                 }
                 
            })
@@ -122,9 +122,9 @@
                 data:{'data':data},
                 success:function(responce){
                     if(responce){
-                        alert("順番入れ替えがされました。");
+                        alert("<?=$this->lang->line('map_sort');?>");
                     }
-                    else alert("失敗しました。");
+                    else alert("<?=$this->lang->line('list_fail');?>");
                 }
                 
            })
@@ -140,7 +140,7 @@
                         $( "#sortableSensor" ).sortable();
                         $( "#sortableSensor" ).disableSelection();
                     }
-                    else alert("失敗しました。");
+                    else alert("<?=$this->lang->line('list_fail');?>");
                 }
                 
            })
@@ -157,9 +157,9 @@
                 data:{'data':data},
                 success:function(responce){
                     if(responce){
-                        alert("順番入れ替えがされました。");
+                        alert("<?=$this->lang->line('map_sort');?>");
                     }
-                    else alert("失敗しました。");
+                    else alert("<?=$this->lang->line('list_fail');?>");
                 }
                 
            })

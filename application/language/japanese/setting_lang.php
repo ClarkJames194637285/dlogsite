@@ -11,6 +11,7 @@ $lang['hour']                                     = '時間';
 $lang['min']                                      = '分';
 $lang['sec']                                      = '秒';
 $lang['home']                                     = 'ホームに戻る';
+
 $lang['pass_chenge']                              = 'パスワードの変更';
 $lang['current_pass']                             = '現在のパスワード';
 $lang['new_pass']                                 = '新しいパスワード';
@@ -66,6 +67,7 @@ $lang['saturation_value']                         = '飽差値';
 $lang['data_interval']                            = 'データ間隔';
 $lang['memo_str']                                 = 'メモ';
 $lang['sensor_submit']                            = 'センサーを登録する';
+
 $lang['serial_check_str']                         = 'シリアル番号はすでに登録済みです！';
 $lang['temperature_str']                          = '温度センサー';
 $lang['temperature_humidity_str']                 = '温湿度センサー';
@@ -73,7 +75,9 @@ $lang['rf_temperature_str']                       = 'RF温度センサー';
 $lang['rf_temperature_humidity_str']              = 'RF温湿度センサー';
 $lang['lora_temperature_str']                     = 'LoRa湿度センサー';
 $lang['lora_temperature_humidity_str']            = 'LoRa温湿度センサー';
-$lang['old_sensor_str']                           = '旧型センサー?';
+$lang['old_sensor_str']                           = '旧タイプのセンサーです。登録は管理者とご相談ください!';
+$lang['serial_no_msg']                            = 'シリアル番号を入力してください！';
+$lang['old_sensor_register']                      = '旧型センサーは登録できません。';
 $lang['group_name_msg']                           = 'グループ名を選択してください！';
 // GatewayManagement.php
 $lang['gateway_title']                            = 'ゲートウェイ管理';
@@ -88,11 +92,21 @@ $lang['map']                                      = 'マップ';
 $lang['untitled']                                 = '名称未設定';
 $lang['map_upload']                               = '地図の画像をアップロードする';
 $lang['map']                                      = 'マップ';
+$lang['map_name']                                 = 'マッピング名';
+$lang['map_register']                             = 'マッピングを登録する';
 $lang['map_edit']                                 = '地図編集';
+
+$lang['map_select']                               = '編集するマップを選択します。';
+$lang['map_sort']                                 = '順番入れ替えがされました。';
+$lang['map_delete']                               = '地図が削除されました。';
+$lang['map_delete_fail']                          = '失敗しました。';
+
 //list management
 $lang['list_title']                                = 'リスト管理';
 $lang['list_description']                          = 'フィルター選択時などで表示されるリストの順番を管理します。';
 $lang['group']                                     = 'グループ';
 $lang['sensor']                                    = 'センサー';
 $lang['undo']                                      = '元に戻す';
-$lang['decide']                                     = '決定';
+$lang['decide']                                    = '決定';
+
+$lang['list_fail']                                 = '失敗しました。';

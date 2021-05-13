@@ -27,7 +27,12 @@
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/custom.js"></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/home.js"></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/wow.min.js"></script>
-
+<script>
+    var normal="<?=$this->lang->line('normal');?>";
+    var warning1="<?=$this->lang->line('Warning1');?>";
+    var warning2="<?=$this->lang->line('Warning1');?>";
+    var offline="<?=$this->lang->line('offline');?>";
+</script>
 </head>
 
 <body id="pg_index" class="pg_index home">
