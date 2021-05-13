@@ -100,6 +100,7 @@ $lang['map_select']                               = '編集するマップを選
 $lang['map_sort']                                 = '順番入れ替えがされました。';
 $lang['map_delete']                               = '地図が削除されました。';
 $lang['map_delete_fail']                          = '失敗しました。';
+$lang['map_double_register']                      ='同じ名前のマップが既に存在しています。';
 
 //list management
 $lang['list_title']                                = 'リスト管理';

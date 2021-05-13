@@ -48,9 +48,9 @@ class Passforget extends CI_Controller
         $this->config->load('db_config');
         $this->config->load('openSSL_config');
 
-        $this->form_validation->set_rules('captcha', '認証コード', 'required|callback_captcha_check');
-        $this->form_validation->set_rules('username', 'ユーザー名', 'trim|required|min_length[4]|callback_username_check');
-        $this->form_validation->set_rules('email', 'メールアドレス', 'required|valid_email');
+        $this->form_validation->set_rules('captcha', $this->lang->line('authentication_code'), 'required|callback_captcha_check');
+        $this->form_validation->set_rules('username', $this->lang->line('user_name'), 'trim|required|min_length[4]|callback_username_check');
+        $this->form_validation->set_rules('email', $this->lang->line('mailaddress'), 'required|valid_email');
 
         if ($this->form_validation->run() == FALSE) {
             return $this->load->view('passforget');

@@ -92,7 +92,7 @@ class MappingManagement extends MY_Controller
 					$check=false;
 					foreach($data as $map){
 						if($map['name']==$mapName){
-							$this->session->set_flashdata('error', '同じ名前のマップが既に存在しています。');
+							$this->session->set_flashdata('error', $this->lang->line('map_double_register'));
 							$check=true;
 							break;
 						}

@@ -247,7 +247,7 @@ if (isset($_POST['login'])) {
                     <?php }?>
                 </div>
                 <div class="form-input">
-                    <form id="form" class="login" action="<?php echo base_url();?>" method="post">
+                    <form id="form" class="login" action="<?php echo base_url();?>" method="post" autocomplete="off">
                         <input type="text" class="input-form langCng" 
                         placeholder="<?=$this->lang->line('username');?>" name="user_name"
                         <?php
