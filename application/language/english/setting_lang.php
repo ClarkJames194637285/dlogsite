@@ -99,6 +99,7 @@ $lang['map_select']                               = 'Select the map you want to 
 $lang['map_sort']                                 = 'The order has been changed.';
 $lang['map_delete']                               = 'The map has been deleted.';
 $lang['map_delete_fail']                          = 'Failed to delete the map.';
+$lang['map_double_register']                      ='The same map already exists.';
 
 //list management
 $lang['list_title']                                = 'List Management';
